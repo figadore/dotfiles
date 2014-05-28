@@ -1,0 +1,8 @@
+# ignore everything
+*
+#except
+!.gitignore
+!.bash_profile*
+!.bashrc*
+!.screenrc
+
