@@ -1,0 +1,427 @@
+"{{{ misc
+"erase all autocommands so far
+:autocmd! 
+" vim settings instead of vi settings. make sure this is first
+set nocompatible 
+
+"something about security
+set modelines=0
+
+"set history and undo levels to more
+set undolevels=100
+set history=100
+
+"allow backspace to erase more in insert mode
+set backspace=indent,eol,start
+
+"enable filetype based indenting
+if (has("autocmd"))
+	filetype plugin indent on
+else
+endif 
+
+"turn on auto-indenting
+set autoindent
+set smartindent
+
+"autowrap text and comments at textwidth if set
+set formatoptions+=tc
+"don't break a line if it was greater than textwidth when insert mode entered
+set formatoptions+=l
+"unknown
+set formatoptions+=qwb
+"continue comments after hitting enter (r) and 'o' (o)
+set formatoptions+=ro
+
+"set tab width
+set tabstop=4
+set shiftwidth=4
+
+let defaultfdc=2
+"set 80 char wrapping for certain file types
+autocmd BufRead *.php,*.php call SetCodeWrapping()
+function! SetCodeWrapping()
+	"turn on wrapping 
+	set wrap
+	"set width to 80
+	setlocal textwidth=80
+	"more space for split windows
+	let defaultfdc=1
+	execute ":setlocal fdc=".defaultfdc
+endfunction
+
+execute ":se fdc=".defaultfdc
+
+"Shortcut to auto indent entire file
+nmap <leader>i gg=G''
+"imap <leader>i <ESC>gg=Ga'' "i don't want this in insert mode anymore
+"custom leader ','
+let mapleader = ","
+
+"shortcut to open file explorer
+":map <leader>, :NERDTreeToggle<CR>
+:map <leader>n :NERDTreeToggle<CR>
+:map <leader>, :CtrlP<CR>
+"remap comma's functionality to ctrl-backslash
+nmap \ , 
+vmap \ , 
+
+
+"add line numbers
+set nu
+"enable syntax highlighting
+syntax on
+syntax enable
+"set ignore case in search
+set ic
+"incremental search (move tmp cursor as you type)
+set incsearch
+"highlight search
+set hls
+
+"view diff from last save
+if !exists(":DiffOrig")
+	command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
+		\ | wincmd p | diffthis
+endif
+
+"mark end of change-to text with a '$'
+set cpoptions+=$
+
+"let currentview = printf("%s/%s.view", getcwd(), bufname("%"))
+"function! Currentview()
+"	return printf("%s/%s.view", getcwd(), bufname("%"))
+"endfunction
+"function! Mkview()
+"	mkview printf("%s/%s.view", getcwd(), bufname("%"))
+"endfunction
+"function! Loadview()
+"	mkview printf("%s/%s.view", getcwd(), bufname("%"))
+"endfunction
+
+" this could overwrite some settings from above. 
+"autocmd BufWinLeave *.* Mkview() 
+autocmd BufWinLeave *.* if bufname("%")!=""|mkview|endif 
+"printf("%s/%s.view", getcwd(), bufname("%"))
+autocmd BufWinEnter *.* silent loadview 
+"printf("%s/%s.view", getcwd(), bufname("%"))
+"map double semi-colon to escape
+":imap ;; <Esc>
+:imap jj <Esc>
+
+"open current buffer in new tab
+nmap <leader>o :tabedit %<CR>
+"close current tab
+nmap <leader>q :tabclose<CR>
+"alt-q, close tab
+nmap œ :tabclose<CR>
+"alt-j, navigate to last tab
+map ∆ :tabl<CR>
+"alt-k, navigate to first tab
+map ˚ :tabfir<CR>
+"alt-h, navigate to previous tab
+map ˙ :tabp<CR>
+"alt-l, navigate to next tab
+map ¬ :tabn<CR>
+"alt-c, create new tab
+map ç :tabnew<CR>
+"alt-r, rename tab
+map ® :TabooRename 
+
+"set vim filetype to marker folded
+:au Filetype vim exec "se fdm=marker"
+
+"autofold document with {,}
+nnoremap <leader>f :call AutoFold()<CR>
+nnoremap <leader>F :call AutoFold2()<CR>
+
+function! AutoFold()
+	set foldmethod=marker 
+	set foldmarker={,} 
+	"set foldmethod=manual
+endfunction
+function! AutoFold2()
+	"set foldmethod=marker 
+	"set foldmarker={,} 
+	set foldmethod=manual
+endfunction
+
+"doesn't work
+"function! RmView()
+"	:echo ':let @" = expand("%")<CR> !rmview <C-R>" <CR>'
+"	":!rmview <C-R>"
+"endfunction
+"
+"command! Rmview ":call RmView()"
+
+
+
+"reese's command for custom fold text
+set foldtext=MyFoldText()
+function! MyFoldText()
+	let line = getline(v:foldstart)
+	let line2 = getline(v:foldstart + 1)
+	let sub = substitute(line . "|" . line2, '/\*\|\*/\|{{{\d\=', '', 'g') "}}} close  fold on this line
+	let ind = indent(v:foldstart)
+	let lines = v:foldend-v:foldstart + 1
+	let i = 0
+	let spaces = ''
+	while i < (ind - ind/4)
+		let spaces .= ' '
+		let i = i+1
+	endwhile
+	"let chars = eval(s/././ng)
+	"winwidth('.')
+	let offset = 10 + float2nr(log10(lines)) + &foldcolumn + &numberwidth
+	let filler = winwidth(0) - strlen(spaces . sub) - offset	
+	return spaces . sub . repeat('-', filler) . '('. lines . ' lines)'
+endfunction
+if has("win32") || has("win16")
+	autocmd! bufwritepost _vimrc source %
+else
+	autocmd! bufwritepost .vimrc source %
+endif
+
+"autoclose html tags with ctrl _
+":au Filetype html,php,phtml,xml,ctp source ~/.vim/scripts/closetag.vim
+
+"autoclose html tags 
+"au Filetype html,php,phtml,xml,ctp source ~/.vim/ftplugin/xml.vim
+
+"alias :W as :w, so write command works with caps or not
+cnoreabbrev W w
+cnoreabbrev Q q
+cnoreabbrev Qa qa
+
+"alias leader-s as :w
+nmap <leader>s :w<CR>
+
+"shortcut to prepare for paste
+"nnoremap <leader>p :se paste!<CR> "doesn't provide feedback on current mode
+function! PasteToggle()
+    if &paste
+        setlocal nopaste 
+        echom "Paste mode disabled"
+    else    
+        setlocal paste
+        echom "Paste mode enabled"
+    endif   
+endfunction
+nnoremap <leader>p :call PasteToggle()<CR>
+
+"shortcut to prepare for copy
+function! CopyToggle()
+    if &foldcolumn
+		let b:defaultfdc = &fdc
+        setlocal nonu
+        setlocal foldcolumn=0
+        echom "Copy mode enabled"
+    else    
+        setlocal nu
+        "setlocal foldcolumn=defaultfdc
+		"execute ":setlocal fdc=".defaultfdc
+		execute ":se fdc=".b:defaultfdc
+        echom "Copy mode disabled"
+    endif   
+endfunction
+nnoremap <leader>c :call CopyToggle()<CR>
+
+"less syntax highlighting
+"au BufNewFile,BufRead *.less set filetype=less
+
+"required settings for taboo.vim (tab renaming)
+set sessionoptions+=tabpages,globals
+
+"statusline {{{
+
+set statusline=%f "filename
+set statusline+=%m "modified flag
+set statusline+=%r "read only flag
+set statusline+=\ #%n "buffer number
+set statusline+=%= "right-align the rest
+set statusline+=%l,%v "line/column number
+"syntastic settings, show errors in statusline
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+"}}}
+
+" make j and k act normally for wrapped lines
+nnoremap j gj
+nnoremap k gk
+
+" make K work like k
+nnoremap K k
+vnoremap K k
+
+" show tabs as '|    '
+set list
+set listchars=tab:\|\ 
+" show trailing whitespace chars 
+set listchars+=trail:�,nbsp:�
+"show symbol if line wraps 
+"set listchars+=extends:#
+"}}}
+
+"{{{Bundles
+
+"list bundles "{{{
+
+function! GetBundles()
+	Bundle 'gmarik/vundle'
+	"Add your bundles here
+	"uber awesome syntax and errors highlighter
+	Bundle 'Syntastic' 
+	Bundle 'altercation/vim-colors-solarized' 
+	"Git plugin
+	Bundle 'https://github.com/tpope/vim-fugitive' 
+	"...All your other bundles...
+	"vdebug
+	Bundle 'joonty/vdebug.git'
+	"NERDTree
+	Bundle 'scrooloose/nerdtree'
+	"tab names
+	"Bundle 'shinymayhem/Tab-Rename'
+	Bundle 'shinymayhem/taboo.vim'
+	"fuzzy file finder
+	Bundle 'kien/ctrlp.vim'
+	"less syntax highlighting
+	Bundle 'groenewege/vim-less'
+	"snipmate
+	Bundle "MarcWeber/vim-addon-mw-utils"
+	Bundle "tomtom/tlib_vim"
+	Bundle "garbas/vim-snipmate"
+	Bundle "honza/vim-snippets"
+endfunction
+"}}}
+
+"install bundles  {{{
+
+"on first load, read/source bundles 
+if has("win32") || has("win16")
+
+	cd ~/
+	"gvim _vimrc
+		let vundle_readme=expand('~/vimfiles/bundle/vundle/README.md')
+		if !filereadable(vundle_readme)
+			echo "follow instructions at https://github.com/gmarik/vundle/wiki/Vundle-for-Windows"
+			echo "" 
+		else
+			"echo "vundle already installed"
+		endif   
+		set rtp+=~/vimfiles/bundle/vundle/
+		call vundle#rc('~/vimfiles/bundle')
+		call GetBundles()
+	
+else
+	" Setting up Vundle - the vim plugin bundler
+		let iCanHazVundle=1
+		let vundle_readme=expand('~/.vim/bundle/vundle/README.md')
+		if !filereadable(vundle_readme)
+			echo "Installing Vundle.."
+			echo "" 
+			silent !mkdir -p ~/.vim/bundle
+			silent !git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
+			let iCanHazVundle=0
+		endif   
+		set rtp+=~/.vim/bundle/vundle/
+		call vundle#rc()
+		call GetBundles()
+		if iCanHazVundle == 0
+			echo "Installing Bundles, please ignore key map error messages"
+			echo "" 
+			:BundleInstall
+		endif   
+	" Setting up Vundle - the vim plugin bundler end
+endif
+"}}}
+
+
+let g:vdebug_options = {'break_on_open':0}
+"taboo_rename vdebug tab
+noremap <F8> :TabooRename debugger<CR>
+"auto renaming doesn't work because of python waiting or something
+"let g:vdebug_keymap = { 'run':"" }
+"noremap <F5> :python debugger.run()<CR> :TabooRename debugger<CR>
+
+"syntastic, show errors list when detected
+let g:syntastic_auto_loc_list=1
+
+"set colorscheme *after* solarized bundle sourced
+if has('gui_running')
+	set guioptions -=m
+	set guioptions -=T
+	"remove vertical and horizontal scrollbars?
+	set guioptions -=LlRrb
+	set bg=dark
+	"colorscheme slate
+	colorscheme solarized
+	"cursor colors
+	highlight Cursor guifg=black guibg=white
+	highlight iCursor guifg=white guibg=steelblue
+	"cursorline colors
+	hi CursorLine gui=underline guibg=gray10 
+	":hi CursorLine cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
+	"setguicursor=n-v-c:block-Cursor
+	"setguicursor+=i:ver100-iCursor
+	"setguicursor+=n-v-c:blinkon0
+	"setguicursor+=i:blinkwait10
+else
+	"cursor colors
+	"hi CursorLine gui=underline guibg=gray10 
+	"ctermfg=white 
+	"ctermbg=darkred ctermfg=white guibg=darkred guifg=white
+	"colorscheme slate
+	set bg=dark
+	colorscheme solarized
+	hi CursorLine ctermbg=0 cterm=underline 
+	if &term =~ "xterm-256color\\|xterm\\|rxvt"
+		"use orange cursor in insert mode
+		let &t_SI = "\<Esc>]12;orange\x7"
+		"red cursor
+		let &t_EI = "\<Esc>]12;red\007"
+		"reset cursor when vim exits
+		autocmd VimLeave * silent !echo -ne "\033]112\007"
+	endif
+endif
+"customize bundles {{{
+"undo italic gui comments
+highlight Comment cterm=none gui=none
+
+"highlight FoldColumn guibg=Black guifg=White 
+"highlight FoldColumn ctermbg=black ctermfg=white
+:highlight FoldColumn guibg=Black guifg=White 
+:highlight FoldColumn ctermbg=black ctermfg=white
+
+"show cursorline on window enter, hide on leave
+"do this after solarized theme loaded
+autocmd WinEnter * setlocal cursorline
+autocmd WinLeave * setlocal nocursorline
+
+
+"customize renamed tab format
+let g:taboo_renamed_tab_format=" [%N]%f%m "
+
+"ctrlp show hidden files
+"let g:ctrlp_show_hidden=1
+"ignore files and/or directories
+let g:ctrlp_custom_ignore = {
+	\ 'dir': '\v[\/](\.git|vendor|\.vim)$'
+	\ }
+
+"snipmate options
+let g:snips_author = "Reese Wilson"
+let g:snipMate= {
+\	'scope_aliases':{
+\		'php':'php,html',
+\		'javascript':'javascript,javascript-jquery',
+\		'css':'css'
+\	}
+\ }
+let g:snipMate.no_default_aliases = 1
+
+"}}}
+"}}}
+
+"hack to allow "crontab -e" on mac
+au BufEnter /private/tmp/crontab.* setl backupcopy=yes
