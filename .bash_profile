@@ -16,7 +16,8 @@ PATH=$PATH:$HOME/bin
 export PATH
 
 #terminal colors plugin support
-export GREP_OPTIONS=’–color=auto’ export CLICOLOR=1;
+export GREP_OPTIONS="--color=always";
+export CLICOLOR=1;
 
 #disable renaming terminal
 PROMPT_COMMAND=""
