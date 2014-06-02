@@ -7,5 +7,6 @@
 !.screenrc
 !.bin/title
 !.syncedvimrc
+!.profile
 *.swo
 *.swp
