@@ -25,7 +25,9 @@ export PROMPT_COMMAND
 
 #brew stuff
 export RBENV_ROOT=/usr/local/var/rbenv
-if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+
+#modified by me with 2> to avoid error display when not found
+if which rbenv 2> /dev/null > /dev/null; then eval "$(rbenv init -)";  fi
 
 #for rvm
 source ~/.profile
