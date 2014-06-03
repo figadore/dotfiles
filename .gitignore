@@ -2,6 +2,7 @@
 *
 #except
 !.gitignore
+!.gitconfig
 !.bash_profile*
 !.bashrc*
 !.screenrc
