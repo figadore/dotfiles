@@ -1,5 +1,7 @@
 [user]
-	email = reese@shinymayhem.com
+	email = reesew@tzmedical.com
 	name = Reese Wilson
 [push]
 	default = current
+[core]
+	editor = vim
