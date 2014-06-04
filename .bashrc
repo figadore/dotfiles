@@ -18,3 +18,7 @@ PATH=$PATH:$HOME/bin
 export PATH
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+
+#disable renaming terminal
+PROMPT_COMMAND=""
+export PROMPT_COMMAND
