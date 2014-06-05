@@ -6,6 +6,7 @@
 !.bash_profile*
 !.bashrc*
 !.screenrc
+!.inputrc
 !.bin/title
 !.vimrc
 !.syncedvimrc
