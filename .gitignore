@@ -10,5 +10,6 @@
 !.bin/title
 !.syncedvimrc
 !.profile
+!.tmux.conf
 *.swo
 *.swp
