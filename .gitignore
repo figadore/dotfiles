@@ -6,8 +6,10 @@
 !.bash_profile*
 !.bashrc*
 !.screenrc
+!.inputrc
 !.bin/title
 !.syncedvimrc
 !.profile
+!.tmux.conf
 *.swo
 *.swp
