@@ -8,8 +8,8 @@ set nocompatible
 set modelines=0
 
 "set history and undo levels to more
-set undolevels=100
-set history=100
+set undolevels=300
+set history=300
 
 "allow backspace to erase more in insert mode
 set backspace=indent,eol,start
@@ -36,6 +36,9 @@ set formatoptions+=ro
 "set tab width
 set tabstop=4
 set shiftwidth=4
+
+"use tabs instead of spaces
+set noexpandtab
 
 let defaultfdc=2
 "set 80 char wrapping for certain file types
@@ -199,32 +202,32 @@ nmap <leader>s :w<CR>
 "shortcut to prepare for paste
 "nnoremap <leader>p :se paste!<CR> "doesn't provide feedback on current mode
 function! PasteToggle()
-    if &paste
-        setlocal nopaste 
-        echom "Paste mode disabled"
-    else    
-        setlocal paste
-        echom "Paste mode enabled"
-    endif   
+	if &paste
+		setlocal nopaste 
+		echom "Paste mode disabled"
+	else	
+		setlocal paste
+		echom "Paste mode enabled"
+	endif   
 endfunction
 nnoremap <leader>p :call PasteToggle()<CR>
 
 "shortcut to prepare for copy
 function! CopyToggle()
-    if &foldcolumn
+	if &foldcolumn
 		let b:defaultfdc = &fdc
-        setlocal nonu
-        setlocal nolist
-        setlocal foldcolumn=0
-        echom "Copy mode enabled"
-    else    
-        setlocal nu
-        setlocal list
-        "setlocal foldcolumn=defaultfdc
+		setlocal nonu
+		setlocal nolist
+		setlocal foldcolumn=0
+		echom "Copy mode enabled"
+	else	
+		setlocal nu
+		setlocal list
+		"setlocal foldcolumn=defaultfdc
 		"execute ":setlocal fdc=".defaultfdc
 		execute ":se fdc=".b:defaultfdc
-        echom "Copy mode disabled"
-    endif   
+		echom "Copy mode disabled"
+	endif   
 endfunction
 nnoremap <leader>c :call CopyToggle()<CR>
 
@@ -256,7 +259,7 @@ nnoremap k gk
 nnoremap K k
 vnoremap K k
 
-" show tabs as '|    '
+" show tabs as '|	'
 set list
 set listchars=tab:\|\ 
 " show trailing whitespace chars 
@@ -386,6 +389,9 @@ else
 		"reset cursor when vim exits
 		autocmd VimLeave * silent !echo -ne "\033]112\007"
 	endif
+	"highlight whitespace at beginning of line
+	hi PreWhitespace ctermbg=darkgreen guibg=darkgreen
+	match PreWhitespace /^\ \+/
 endif
 "customize bundles {{{
 "undo italic gui comments
