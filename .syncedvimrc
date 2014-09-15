@@ -214,10 +214,12 @@ function! CopyToggle()
     if &foldcolumn
 		let b:defaultfdc = &fdc
         setlocal nonu
+        setlocal nolist
         setlocal foldcolumn=0
         echom "Copy mode enabled"
     else    
         setlocal nu
+        setlocal list
         "setlocal foldcolumn=defaultfdc
 		"execute ":setlocal fdc=".defaultfdc
 		execute ":se fdc=".b:defaultfdc
