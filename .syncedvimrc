@@ -267,6 +267,7 @@ set listchars+=trail:¯,nbsp:¯
 
 "{{{Bundles
 
+
 "list bundles "{{{
 
 function! GetBundles()
@@ -295,6 +296,7 @@ function! GetBundles()
 	Bundle "garbas/vim-snipmate"
 	Bundle "honza/vim-snippets"
 	Bundle "shinymayhem/cypher-vim-syntax"
+	Bundle 'https://github.com/sukima/xmledit'
 endfunction
 "}}}
 
@@ -339,6 +341,12 @@ else
 endif
 "}}}
 
+
+let g:xmledit_enable_html = 1 "make it work on html files
+"override xmledit html callback, don't add extra attributes
+function! HtmlAttribCallback( xml_tag )
+	return 0
+endfunction
 
 let g:vdebug_options = {'break_on_open':0}
 "taboo_rename vdebug tab
