@@ -34,6 +34,7 @@ set formatoptions+=qwb
 set formatoptions+=ro
 
 "set tab width
+set expandtab
 set tabstop=4
 set shiftwidth=4
 
@@ -195,6 +196,10 @@ cnoreabbrev Qa qa
 
 "alias leader-s as :w
 nmap <leader>s :w<CR>
+
+"allow jumping between errors
+nmap ]l :lnext<CR>
+nmap [l :lprevious<CR>
 
 "shortcut to prepare for paste
 "nnoremap <leader>p :se paste!<CR> "doesn't provide feedback on current mode
