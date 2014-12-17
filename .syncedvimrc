@@ -297,6 +297,7 @@ function! GetBundles()
 	Bundle "honza/vim-snippets"
 	Bundle "shinymayhem/cypher-vim-syntax"
 	Bundle 'https://github.com/sukima/xmledit'
+	Bundle 'joonty/vim-phpunitqf.git'
 endfunction
 "}}}
 
@@ -436,3 +437,14 @@ let g:snipMate.no_default_aliases = 1
 
 "hack to allow "crontab -e" on mac
 au BufEnter /private/tmp/crontab.* setl backupcopy=yes
+
+"run phpunit on a group
+function! s:PhpUnit(group)
+	echom "group=" + a:group
+	let g:phpunit_args_append = "--group " . a:group
+	exec ":Test"
+endfunction
+
+"leader-t runs phpunit on specified group
+command! -nargs=1 Phpunit call s:PhpUnit(<q-args>)
+map <leader>t :Phpunit 
