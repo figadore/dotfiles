@@ -453,3 +453,51 @@ endfunction
 "leader-t runs phpunit on specified group
 command! -nargs=1 Phpunit call s:PhpUnit(<q-args>)
 map <leader>t :Phpunit 
+
+"indent the = sign on a range of lines
+map <leader>ec :call IndentRange()<CR>
+map <F1> :call IndentRange()<CR>
+
+function! GetIndentColum()
+	normal 0f=
+	return col(".")
+	"let b:EqualColumn = col(".")
+endfunction
+
+function! IndentEqualsTo(column)
+	"echom col(".")
+	"echom b:EqualColumn
+	normal 0f=
+	while col(".") < a:column
+		exe "normal i l"
+	endwhile
+endfunction
+
+function! IndentRange()
+	let l:first_line = line("'<")
+	let l:last_line = line("'>")
+	let l:current_line = l:first_line
+	let l:biggest_indent_line = l:first_line
+	let l:biggest_indent = 0
+	"go through each line, searching for biggest indent
+	while l:current_line <= l:last_line
+		exe "normal " . l:current_line . "G"
+		let column = GetIndentColum()
+		if l:column > l:biggest_indent
+			let l:biggest_indent = l:column
+			let l:biggest_indent_line = l:current_line
+		endif
+		let l:current_line = l:current_line + 1
+	endwhile
+	"start over, indenting each line as we go
+	let l:current_line = l:first_line
+	while l:current_line <= l:last_line
+		exe "normal " . l:current_line . "G"
+		let l:column = IndentEqualsTo(l:biggest_indent)
+		if l:column > l:biggest_indent
+			let l:biggest_indent = l:column
+			let l:biggest_indent_line = l:current_line
+		endif
+		let l:current_line = l:current_line + 1
+	endwhile
+endfunction
