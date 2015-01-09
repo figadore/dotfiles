@@ -404,8 +404,8 @@ else
 		autocmd VimLeave * silent !echo -ne "\033]112\007"
 	endif
 	"highlight whitespace at beginning of line
-	hi PreWhitespace ctermbg=darkgreen guibg=darkgreen
-	match PreWhitespace /^\ \+/
+	"hi PreWhitespace ctermbg=darkgreen guibg=darkgreen
+	"match PreWhitespace /^\ \+/
 endif
 "customize bundles {{{
 "undo italic gui comments
