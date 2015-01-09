@@ -458,9 +458,14 @@ map <leader>t :Phpunit
 map <leader>ec :call IndentRange()<CR>
 map <F1> :call IndentRange()<CR>
 
-function! GetIndentColum()
+function! GetIndentColumn()
 	normal 0f=
 	return col(".")
+	"let b:EqualColumn = col(".")
+endfunction
+
+function! ResetIndent()
+	s/ \+=/ =/g
 	"let b:EqualColumn = col(".")
 endfunction
 
@@ -482,7 +487,8 @@ function! IndentRange()
 	"go through each line, searching for biggest indent
 	while l:current_line <= l:last_line
 		exe "normal " . l:current_line . "G"
-		let column = GetIndentColum()
+		call ResetIndent()
+		let column = GetIndentColumn()
 		if l:column > l:biggest_indent
 			let l:biggest_indent = l:column
 			let l:biggest_indent_line = l:current_line
