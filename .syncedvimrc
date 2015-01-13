@@ -8,8 +8,8 @@ set nocompatible
 set modelines=0
 
 "set history and undo levels to more
-set undolevels=100
-set history=100
+set undolevels=300
+set history=300
 
 "allow backspace to erase more in insert mode
 set backspace=indent,eol,start
@@ -36,6 +36,9 @@ set formatoptions+=ro
 "set tab width
 set tabstop=4
 set shiftwidth=4
+
+"use tabs instead of spaces
+set noexpandtab
 
 let defaultfdc=2
 "set 80 char wrapping for certain file types
@@ -199,30 +202,32 @@ nmap <leader>s :w<CR>
 "shortcut to prepare for paste
 "nnoremap <leader>p :se paste!<CR> "doesn't provide feedback on current mode
 function! PasteToggle()
-    if &paste
-        setlocal nopaste 
-        echom "Paste mode disabled"
-    else    
-        setlocal paste
-        echom "Paste mode enabled"
-    endif   
+	if &paste
+		setlocal nopaste 
+		echom "Paste mode disabled"
+	else	
+		setlocal paste
+		echom "Paste mode enabled"
+	endif   
 endfunction
 nnoremap <leader>p :call PasteToggle()<CR>
 
 "shortcut to prepare for copy
 function! CopyToggle()
-    if &foldcolumn
+	if &foldcolumn
 		let b:defaultfdc = &fdc
-        setlocal nonu
-        setlocal foldcolumn=0
-        echom "Copy mode enabled"
-    else    
-        setlocal nu
-        "setlocal foldcolumn=defaultfdc
+		setlocal nonu
+		setlocal nolist
+		setlocal foldcolumn=0
+		echom "Copy mode enabled"
+	else	
+		setlocal nu
+		setlocal list
+		"setlocal foldcolumn=defaultfdc
 		"execute ":setlocal fdc=".defaultfdc
 		execute ":se fdc=".b:defaultfdc
-        echom "Copy mode disabled"
-    endif   
+		echom "Copy mode disabled"
+	endif   
 endfunction
 nnoremap <leader>c :call CopyToggle()<CR>
 
@@ -254,7 +259,7 @@ nnoremap k gk
 nnoremap K k
 vnoremap K k
 
-" show tabs as '|    '
+" show tabs as '|	'
 set list
 set listchars=tab:\|\ 
 " show trailing whitespace chars 
@@ -264,6 +269,7 @@ set listchars+=trail:¯,nbsp:¯
 "}}}
 
 "{{{Bundles
+
 
 "list bundles "{{{
 
@@ -293,6 +299,7 @@ function! GetBundles()
 	Bundle "garbas/vim-snipmate"
 	Bundle "honza/vim-snippets"
 	Bundle "shinymayhem/cypher-vim-syntax"
+	Bundle 'https://github.com/sukima/xmledit'
 endfunction
 "}}}
 
@@ -337,6 +344,12 @@ else
 endif
 "}}}
 
+
+let g:xmledit_enable_html = 1 "make it work on html files
+"override xmledit html callback, don't add extra attributes
+function! HtmlAttribCallback( xml_tag )
+	return 0
+endfunction
 
 let g:vdebug_options = {'break_on_open':0}
 "taboo_rename vdebug tab
@@ -384,6 +397,9 @@ else
 		"reset cursor when vim exits
 		autocmd VimLeave * silent !echo -ne "\033]112\007"
 	endif
+	"highlight whitespace at beginning of line
+	"hi PreWhitespace ctermbg=darkgreen guibg=darkgreen
+	"match PreWhitespace /^\ \+/
 endif
 "customize bundles {{{
 "undo italic gui comments
@@ -426,3 +442,111 @@ let g:snipMate.no_default_aliases = 1
 
 "hack to allow "crontab -e" on mac
 au BufEnter /private/tmp/crontab.* setl backupcopy=yes
+
+"run phpunit on a group
+function! s:PhpUnit(group)
+	echom "group=" + a:group
+	let g:phpunit_args_append = "--group " . a:group
+	exec ":Test"
+endfunction
+
+"leader-t runs phpunit on specified group
+command! -nargs=1 Phpunit call s:PhpUnit(<q-args>)
+map <leader>t :Phpunit 
+
+"indent the = sign on a range of lines
+map <leader>ec :call IndentRange()<CR>
+map <F1> :call IndentRange()<CR>
+
+function! GetIndentColumn()
+	normal 0f=
+	return col(".")
+	"let b:EqualColumn = col(".")
+endfunction
+
+function! ResetIndent()
+	s/ \+=/ =/g
+	"let b:EqualColumn = col(".")
+endfunction
+
+function! IndentEqualsTo(column)
+	"echom col(".")
+	"echom b:EqualColumn
+	normal 0f=
+	while col(".") < a:column
+		exe "normal i l"
+	endwhile
+endfunction
+
+function! IndentRange()
+	let l:first_line = line("'<")
+	let l:last_line = line("'>")
+	let l:current_line = l:first_line
+	let l:biggest_indent_line = l:first_line
+	let l:biggest_indent = 0
+	"go through each line, searching for biggest indent
+	while l:current_line <= l:last_line
+		exe "normal " . l:current_line . "G"
+		call ResetIndent()
+		let column = GetIndentColumn()
+		if l:column > l:biggest_indent
+			let l:biggest_indent = l:column
+			let l:biggest_indent_line = l:current_line
+		endif
+		let l:current_line = l:current_line + 1
+	endwhile
+	"start over, indenting each line as we go
+	let l:current_line = l:first_line
+	while l:current_line <= l:last_line
+		exe "normal " . l:current_line . "G"
+		let l:column = IndentEqualsTo(l:biggest_indent)
+		if l:column > l:biggest_indent
+			let l:biggest_indent = l:column
+			let l:biggest_indent_line = l:current_line
+		endif
+		let l:current_line = l:current_line + 1
+	endwhile
+endfunction
+
+" ex command for toggling hex mode - define mapping if desired
+command -bar Hexmode call ToggleHex()
+
+" helper function to toggle hex mode
+function ToggleHex()
+  " hex mode should be considered a read-only operation
+  " save values for modified and read-only for restoration later,
+  " and clear the read-only flag for now
+  let l:modified=&mod
+  let l:oldreadonly=&readonly
+  let &readonly=0
+  let l:oldmodifiable=&modifiable
+  let &modifiable=1
+  if !exists("b:editHex") || !b:editHex
+    " save old options
+    let b:oldft=&ft
+    let b:oldbin=&bin
+    " set new options
+    setlocal binary " make sure it overrides any textwidth, etc.
+    silent :e " this will reload the file without trickeries 
+              "(DOS line endings will be shown entirely )
+    let &ft="xxd"
+    " set status
+    let b:editHex=1
+    " switch to hex editor
+    %!xxd
+  else
+    " restore old options
+    let &ft=b:oldft
+    if !b:oldbin
+      setlocal nobinary
+    endif
+    " set status
+    let b:editHex=0
+    " return to normal editing
+    %!xxd -r
+  endif
+  " restore values for modified and read only state
+  let &mod=l:modified
+  let &readonly=l:oldreadonly
+  let &modifiable=l:oldmodifiable
+endfunction
