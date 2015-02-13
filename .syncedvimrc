@@ -508,6 +508,9 @@ function! IndentRange()
 	endwhile
 endfunction
 
+"fix nerdtree weird characters
+let g:NERDTreeDirArrows=0
+
 " ex command for toggling hex mode - define mapping if desired
 command -bar Hexmode call ToggleHex()
 
