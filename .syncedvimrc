@@ -192,9 +192,21 @@ endif
 "au Filetype html,php,phtml,xml,ctp source ~/.vim/ftplugin/xml.vim
 
 "alias :W as :w, so write command works with caps or not
-cnoreabbrev W w
-cnoreabbrev Q q
-cnoreabbrev Qa qa
+"don't use cnoreabbrev because it breaks case sensitive search (e.g. for capital Q)
+"cnoreabbrev W w
+"cnoreabbrev Q q
+"cnoreabbrev Qa qa
+if has("user_commands")
+    command! -bang -nargs=? -complete=file E e<bang> <args>
+    command! -bang -nargs=? -complete=file W w<bang> <args>
+    command! -bang -nargs=? -complete=file Wq wq<bang> <args>
+    command! -bang -nargs=? -complete=file WQ wq<bang> <args>
+    command! -bang Wa wa<bang>
+    command! -bang WA wa<bang>
+    command! -bang Q q<bang>
+    command! -bang QA qa<bang>
+    command! -bang Qa qa<bang>
+endif
 
 "alias leader-s as :w
 nmap <leader>s :w<CR>
@@ -221,6 +233,10 @@ function! CopyToggle()
 		setlocal foldcolumn=0
 		echom "Copy mode enabled"
 	else	
+		if (exists('b:defaultfdc'))
+		else
+			let b:defaultfdc = defaultfdc
+		endif
 		setlocal nu
 		setlocal list
 		"setlocal foldcolumn=defaultfdc
@@ -508,11 +524,14 @@ function! IndentRange()
 	endwhile
 endfunction
 
+"fix nerdtree weird characters
+let g:NERDTreeDirArrows=0
+
 " ex command for toggling hex mode - define mapping if desired
-command -bar Hexmode call ToggleHex()
+command! -bar Hexmode call ToggleHex()
 
 " helper function to toggle hex mode
-function ToggleHex()
+function! ToggleHex()
   " hex mode should be considered a read-only operation
   " save values for modified and read-only for restoration later,
   " and clear the read-only flag for now
