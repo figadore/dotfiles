@@ -4,6 +4,7 @@
 !.gitignore
 !.gitconfig
 !.bash_profile*
+!.bash_aliases*
 !.bashrc*
 !.screenrc
 !.inputrc
