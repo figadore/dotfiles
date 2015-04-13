@@ -2,6 +2,7 @@
 *
 #except
 !.gitignore
+!.gitignore_global
 !.gitconfig
 !.bash_profile*
 !.bashrc*
@@ -11,5 +12,6 @@
 !.vimrc
 !.syncedvimrc
 !.profile
+!.tmux.conf
 *.swo
 *.swp
