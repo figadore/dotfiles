@@ -38,7 +38,7 @@ set tabstop=4
 set shiftwidth=4
 
 "use tabs instead of spaces
-set noexpandtab
+set expandtab
 
 let defaultfdc=2
 "set 80 char wrapping for certain file types
