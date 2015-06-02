@@ -3,3 +3,5 @@
 	name = Reese Wilson
 [push]
 	default = current
+[core]
+	excludesfile = ~/.gitignore_global

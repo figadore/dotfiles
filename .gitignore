@@ -2,6 +2,7 @@
 *
 #except
 !.gitignore
+!.gitignore_global
 !.gitconfig
 !.bash_profile*
 !.bash_aliases*
