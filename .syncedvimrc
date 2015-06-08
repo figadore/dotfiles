@@ -39,7 +39,7 @@ set tabstop=4
 set shiftwidth=4
 
 "use tabs instead of spaces
-set noexpandtab
+set expandtab
 
 let defaultfdc=2
 "set 80 char wrapping for certain file types
@@ -111,7 +111,7 @@ autocmd BufWinEnter *.* silent loadview
 "printf("%s/%s.view", getcwd(), bufname("%"))
 "map double semi-colon to escape
 ":imap ;; <Esc>
-:imap jj <Esc>
+:inoremap jk <Esc>
 
 "open current buffer in new tab
 nmap <leader>o :tabedit %<CR>
@@ -211,6 +211,12 @@ endif
 
 "alias leader-s as :w
 nmap <leader>s :w<CR>
+"alias alt-w as :w
+nmap ∑ :w<CR>
+
+"allow jumping between errors
+nmap ]l :lnext<CR>
+nmap [l :lprevious<CR>
 
 "allow jumping between errors
 nmap ]l :lnext<CR>
