@@ -3,28 +3,28 @@
 :retab
 
 "add spaces before and after '='
-:%s/\(\a\|\d\)=/\1 =
-:%s/=\(\a\|\d\|\$\)/= \1
+:%s/\(\a\|\d\)=/\1 =/gc
+:%s/=\(\a\|\d\|\$\)/= \1/gc
 
 "add spaces before and after '+='
-:%s/\(\a\|\d\)+=/\1 +=
-:%s/+=\(\a\|\d\|\$\)/+= \1
+:%s/\(\a\|\d\)+=/\1 +=/gc
+:%s/+=\(\a\|\d\|\$\)/+= \1/gc
 
 "add spaces after <= (less or equal)
-:%s/<=\(\a\|\d\|\$\)/<= \1
+:%s/<=\(\a\|\d\|\$\)/<= \1/gc
 
 "add spaces after >= (greater or equal)
-:%s/>=\(\a\|\d\|\$\)/>= \1
+:%s/>=\(\a\|\d\|\$\)/>= \1/gc
 
 "add space before < (less than)
-:%s/\(\a\|\d\)</\1 <
+:%s/\(\a\|\d\)</\1 </gc
 
 "add space after < (less than)
-:%s/<\(\a\|\$\|\d\)/< \1
+:%s/<\(\a\|\$\|\d\)/< \1/gc
 
 "add spaces before and after '=>'
-:%s/\(\S\)=>/\1 =>
-:%s/=>\(\S\)/=> \1
+:%s/\(\S\)=>/\1 =>/gc
+:%s/=>\(\S\)/=> \1/gc
 
 "remove trailing whitespace
 :%s/\s\+\n/\r
@@ -99,8 +99,8 @@
 :%s/$_\([a-z]\)/$\1/gI
 :%s/this->_\([a-z]\)/this->\1/gI
 
-"add spaces between function args
-:%s/,\$/, \$
+""add spaces between function args
+":%s/,\$/, \$
 
 "controller return this display() to return $return
 :%s/return \$this->display(\$result);/\$return = \$this->display(\$result);\r        return \$return;
