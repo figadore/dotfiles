@@ -105,9 +105,9 @@
 "controller return this display() to return $return
 :%s/return \$this->display(\$result);/\$return = \$this->display(\$result);\r        return \$return;
 
-"add spaces before and after '+' and '-'
-:%s/\(+\|-\)\(\$\|\d\)/\1 \2/cg
-:%s/\(\d\|\a\)\(+\|-\) /\1 \2 /gc
+""add spaces before and after '+' and '-'
+":%s/\(+\|-\)\(\$\|\d\)/\1 \2/cg
+":%s/\(\d\|\a\)\(+\|-\) /\1 \2 /gc
 
 "find multiline functions and arrays and make sure parenthesis are on separate lines
 "/\a([^)\n]\+\(\n[^;]*\)\+);
