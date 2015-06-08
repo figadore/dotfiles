@@ -218,10 +218,6 @@ nmap ∑ :w<CR>
 nmap ]l :lnext<CR>
 nmap [l :lprevious<CR>
 
-"allow jumping between errors
-nmap ]l :lnext<CR>
-nmap [l :lprevious<CR>
-
 "shortcut to prepare for paste
 "nnoremap <leader>p :se paste!<CR> "doesn't provide feedback on current mode
 function! PasteToggle()
