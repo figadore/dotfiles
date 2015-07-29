@@ -110,7 +110,7 @@ autocmd BufWinEnter *.* silent loadview
 "printf("%s/%s.view", getcwd(), bufname("%"))
 "map double semi-colon to escape
 ":imap ;; <Esc>
-:imap jj <Esc>
+:inoremap jk <Esc>
 
 "open current buffer in new tab
 nmap <leader>o :tabedit %<CR>
@@ -210,6 +210,12 @@ endif
 
 "alias leader-s as :w
 nmap <leader>s :w<CR>
+"alias alt-w as :w
+nmap ∑ :w<CR>
+
+"allow jumping between errors
+nmap ]l :lnext<CR>
+nmap [l :lprevious<CR>
 
 "shortcut to prepare for paste
 "nnoremap <leader>p :se paste!<CR> "doesn't provide feedback on current mode
