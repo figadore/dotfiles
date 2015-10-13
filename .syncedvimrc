@@ -213,6 +213,10 @@ nmap <leader>s :w<CR>
 "alias alt-w as :w
 nmap ∑ :w<CR>
 
+"allow jumping between errors
+nmap ]l :lnext<CR>
+nmap [l :lprevious<CR>
+
 "shortcut to prepare for paste
 "nnoremap <leader>p :se paste!<CR> "doesn't provide feedback on current mode
 function! PasteToggle()
@@ -369,7 +373,10 @@ function! HtmlAttribCallback( xml_tag )
 	return 0
 endfunction
 
-let g:vdebug_options = {'break_on_open':0}
+if !exists('g:vdebug_options')
+    let g:vdebug_options = {}
+endif
+let g:vdebug_options["break_on_open"]=0
 "taboo_rename vdebug tab
 noremap <F8> :TabooRename debugger<CR>
 "auto renaming doesn't work because of python waiting or something
@@ -546,25 +553,28 @@ function! ToggleHex()
     " save old options
     let b:oldft=&ft
     let b:oldbin=&bin
+    let b:oldeol=&eol
     " set new options
     setlocal binary " make sure it overrides any textwidth, etc.
     silent :e " this will reload the file without trickeries 
               "(DOS line endings will be shown entirely )
+    setlocal noeol
     let &ft="xxd"
     " set status
     let b:editHex=1
     " switch to hex editor
-    %!xxd
+    %!xxd -ps
   else
     " restore old options
     let &ft=b:oldft
+    let &eol=b:oldeol
     if !b:oldbin
       setlocal nobinary
     endif
     " set status
     let b:editHex=0
     " return to normal editing
-    %!xxd -r
+    %!xxd -r -ps
   endif
   " restore values for modified and read only state
   let &mod=l:modified
