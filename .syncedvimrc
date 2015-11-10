@@ -581,3 +581,10 @@ function! ToggleHex()
   let &readonly=l:oldreadonly
   let &modifiable=l:oldmodifiable
 endfunction
+
+" make tab autocompletion work like bash, with highlighting
+set wildmode=longest,list,full
+set wildmenu
+
+" ignore case in command completion
+set wildignorecase
