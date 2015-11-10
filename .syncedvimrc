@@ -34,8 +34,8 @@ set formatoptions+=qwb
 set formatoptions+=ro
 
 "set tab width
-set tabstop=4
-set shiftwidth=4
+set tabstop=2
+set shiftwidth=2
 
 "use tabs instead of spaces
 set expandtab
@@ -322,6 +322,8 @@ function! GetBundles()
 	Bundle "honza/vim-snippets"
 	Bundle "shinymayhem/cypher-vim-syntax"
 	Bundle 'https://github.com/sukima/xmledit'
+    " relative line numbers
+	Bundle "jeffkreeftmeijer/vim-numbertoggle"
 endfunction
 "}}}
 
@@ -588,3 +590,6 @@ set wildmenu
 
 " ignore case in command completion
 set wildignorecase
+
+" enable eslint
+let g:syntastic_javascript_checkers = ['eslint']
