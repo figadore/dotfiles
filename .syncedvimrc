@@ -197,15 +197,15 @@ endif
 "cnoreabbrev Q q
 "cnoreabbrev Qa qa
 if has("user_commands")
-    command! -bang -nargs=? -complete=file E e<bang> <args>
-    command! -bang -nargs=? -complete=file W w<bang> <args>
-    command! -bang -nargs=? -complete=file Wq wq<bang> <args>
-    command! -bang -nargs=? -complete=file WQ wq<bang> <args>
-    command! -bang Wa wa<bang>
-    command! -bang WA wa<bang>
-    command! -bang Q q<bang>
-    command! -bang QA qa<bang>
-    command! -bang Qa qa<bang>
+	command! -bang -nargs=? -complete=file E e<bang> <args>
+	command! -bang -nargs=? -complete=file W w<bang> <args>
+	command! -bang -nargs=? -complete=file Wq wq<bang> <args>
+	command! -bang -nargs=? -complete=file WQ wq<bang> <args>
+	command! -bang Wa wa<bang>
+	command! -bang WA wa<bang>
+	command! -bang Q q<bang>
+	command! -bang QA qa<bang>
+	command! -bang Qa qa<bang>
 endif
 
 "alias leader-s as :w
@@ -385,7 +385,7 @@ function! HtmlAttribCallback( xml_tag )
 endfunction
 
 if !exists('g:vdebug_options')
-    let g:vdebug_options = {}
+	let g:vdebug_options = {}
 endif
 let g:vdebug_options["break_on_open"]=0
 "taboo_rename vdebug tab
@@ -552,45 +552,45 @@ command! -bar Hexmode call ToggleHex()
 
 " helper function to toggle hex mode
 function! ToggleHex()
-  " hex mode should be considered a read-only operation
-  " save values for modified and read-only for restoration later,
-  " and clear the read-only flag for now
-  let l:modified=&mod
-  let l:oldreadonly=&readonly
-  let &readonly=0
-  let l:oldmodifiable=&modifiable
-  let &modifiable=1
-  if !exists("b:editHex") || !b:editHex
-    " save old options
-    let b:oldft=&ft
-    let b:oldbin=&bin
-    let b:oldeol=&eol
-    " set new options
-    setlocal binary " make sure it overrides any textwidth, etc.
-    silent :e " this will reload the file without trickeries 
-              "(DOS line endings will be shown entirely )
-    setlocal noeol
-    let &ft="xxd"
-    " set status
-    let b:editHex=1
-    " switch to hex editor
-    %!xxd -ps
-  else
-    " restore old options
-    let &ft=b:oldft
-    let &eol=b:oldeol
-    if !b:oldbin
-      setlocal nobinary
-    endif
-    " set status
-    let b:editHex=0
-    " return to normal editing
-    %!xxd -r -ps
-  endif
-  " restore values for modified and read only state
-  let &mod=l:modified
-  let &readonly=l:oldreadonly
-  let &modifiable=l:oldmodifiable
+	" hex mode should be considered a read-only operation
+	" save values for modified and read-only for restoration later,
+	" and clear the read-only flag for now
+	let l:modified=&mod
+	let l:oldreadonly=&readonly
+	let &readonly=0
+	let l:oldmodifiable=&modifiable
+	let &modifiable=1
+	if !exists("b:editHex") || !b:editHex
+		" save old options
+		let b:oldft=&ft
+		let b:oldbin=&bin
+		let b:oldeol=&eol
+		" set new options
+		setlocal binary " make sure it overrides any textwidth, etc.
+		silent :e " this will reload the file without trickeries 
+		"(DOS line endings will be shown entirely )
+		setlocal noeol
+		let &ft="xxd"
+		" set status
+		let b:editHex=1
+		" switch to hex editor
+		%!xxd -ps
+	else
+		" restore old options
+		let &ft=b:oldft
+		let &eol=b:oldeol
+		if !b:oldbin
+			setlocal nobinary
+		endif
+		" set status
+		let b:editHex=0
+		" return to normal editing
+		%!xxd -r -ps
+	endif
+	" restore values for modified and read only state
+	let &mod=l:modified
+	let &readonly=l:oldreadonly
+	let &modifiable=l:oldmodifiable
 endfunction
 
 " make tab autocompletion work like bash, with highlighting
