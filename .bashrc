@@ -22,3 +22,9 @@ export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 #disable renaming terminal
 PROMPT_COMMAND=""
 export PROMPT_COMMAND
+
+# The next line updates PATH for the Google Cloud SDK.
+source '/home/reesew/google-cloud-sdk/path.bash.inc'
+
+# The next line enables shell command completion for gcloud.
+source '/home/reesew/google-cloud-sdk/completion.bash.inc'
