@@ -14,12 +14,6 @@ set history=300
 "allow backspace to erase more in insert mode
 set backspace=indent,eol,start
 
-"enable filetype based indenting
-if (has("autocmd"))
-	filetype plugin indent on
-else
-endif 
-
 "turn on auto-indenting
 set autoindent
 set smartindent
@@ -72,9 +66,6 @@ vmap \ ,
 
 "add line numbers
 set nu
-"enable syntax highlighting
-syntax on
-syntax enable
 "set ignore case in search
 set ic
 "incremental search (move tmp cursor as you type)
@@ -340,6 +331,10 @@ function! GetBundles()
 	Bundle 'https://github.com/sukima/xmledit'
 	" relative line numbers
 	Bundle "jeffkreeftmeijer/vim-numbertoggle"
+	" jade syntax highlighting
+	Bundle "digitaltoad/vim-jade"
+	" Indent whitespace highlighting
+	Bundle "nathanaelkane/vim-indent-guides"
 endfunction
 "}}}
 
@@ -552,7 +547,9 @@ function! IndentRange()
 endfunction
 
 "fix nerdtree weird characters
-let g:NERDTreeDirArrows=0
+let g:NERDTreeDirArrows=1
+let g:NERDTreeDirArrowExpandable="+"
+let g:NERDTreeDirArrowCollapsible="~"
 
 " ex command for toggling hex mode - define mapping if desired
 command! -bar Hexmode call ToggleHex()
@@ -609,3 +606,22 @@ set wildignorecase
 
 " enable eslint
 let g:syntastic_javascript_checkers = ['eslint']
+
+"Indent guides configuration
+let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_default_mapping = 1 "leader-ig
+let g:indent_guides_auto_colors = 0
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=9 ctermfg=10
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=black ctermfg=10
+
+
+"Save these lines until the end to help with plugin filetype detection
+"enable filetype based indenting
+if (has("autocmd"))
+	filetype plugin indent on
+else
+endif
+
+"enable syntax highlighting
+syntax on
+syntax enable
