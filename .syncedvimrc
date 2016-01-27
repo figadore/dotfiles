@@ -118,18 +118,25 @@ nmap <leader>o :tabedit %<CR>
 nmap <leader>q :tabclose<CR>
 "alt-q, close tab
 nmap œ :tabclose<CR>
+nmap q :tabclose<CR>
 "alt-j, navigate to last tab
 map ∆ :tabl<CR>
+map j :tabl<CR>
 "alt-k, navigate to first tab
 map ˚ :tabfir<CR>
+map k :tabfir<CR>
 "alt-h, navigate to previous tab
 map ˙ :tabp<CR>
+map h :tabp<CR>
 "alt-l, navigate to next tab
 map ¬ :tabn<CR>
+map l :tabn<CR>
 "alt-c, create new tab
 map ç :tabnew<CR>
+map c :tabnew<CR>
 "alt-r, rename tab
 map ® :TabooRename 
+map r :TabooRename 
 
 "set vim filetype to marker folded
 :au Filetype vim exec "se fdm=marker"
