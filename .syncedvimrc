@@ -1,4 +1,6 @@
 "{{{ misc
+"start a new autocommand group
+:augroup vimrc
 "erase all autocommands so far
 :autocmd! 
 " vim settings instead of vi settings. make sure this is first
@@ -466,14 +468,24 @@ let g:ctrlp_custom_ignore = {
 
 "snipmate options
 let g:snips_author = "Reese Wilson"
-let g:snipMate= {
-\	'scope_aliases':{
-\		'php':'php,html',
-\		'javascript':'javascript,javascript-jquery',
-\		'css':'css'
-\	}
-\ }
-let g:snipMate.no_default_aliases = 1
+" "the following lines break snipmate if .vimrc is sourced again
+" let g:snipMate= {
+" \	'scope_aliases':{
+" \		'php':'php,html',
+" \		'javascript':'javascript,javascript-jquery',
+" \		'css':'css'
+" \	}
+" \ }
+
+" "alternatively
+"let g:snipMate = {}
+"let g:snipMate.scope_aliases = {}
+"let g:snipMate.scope_aliases['php'] = 'php,html'
+"let g:snipMate.scope_aliases['javascript'] = 'javascript,javascript-jquery'
+"let g:snipMate.scope_aliases['css'] = 'css'
+"
+" let g:snipMate.no_default_aliases = 1
+
 
 "}}}
 "}}}
@@ -625,3 +637,6 @@ endif
 "enable syntax highlighting
 syntax on
 syntax enable
+
+"end autocommand group
+:augroup END
