@@ -337,6 +337,8 @@ function! GetBundles()
 	Bundle "digitaltoad/vim-jade"
 	" Indent whitespace highlighting
 	Bundle "nathanaelkane/vim-indent-guides"
+	" better json syntax handling
+	Bundle "elzr/vim-json"
 endfunction
 "}}}
 
@@ -615,6 +617,9 @@ set wildmenu
 
 " ignore case in command completion
 set wildignorecase
+
+" change json filetype from javascript for eslint
+au BufNewFile,BufRead *.json set filetype=json
 
 " enable eslint
 let g:syntastic_javascript_checkers = ['eslint']
