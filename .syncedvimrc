@@ -208,6 +208,10 @@ if has("user_commands")
 	command! -bang Qa qa<bang>
 endif
 
+" Allow saving as sudo even if vim wasn't started with sudo
+cmap w!! w !sudo tee > /dev/null %
+
+
 "alias leader-s as :w
 nmap <leader>s :w<CR>
 "alias alt-w as :w
