@@ -483,14 +483,15 @@ let g:snips_author = "Reese Wilson"
 " \	}
 " \ }
 
-" "alternatively
+ "alternatively
 "let g:snipMate = {}
-"let g:snipMate.scope_aliases = {}
-"let g:snipMate.scope_aliases['php'] = 'php,html'
-"let g:snipMate.scope_aliases['javascript'] = 'javascript,javascript-jquery'
-"let g:snipMate.scope_aliases['css'] = 'css'
-"
-" let g:snipMate.no_default_aliases = 1
+let g:snipMate.scope_aliases = get(g:, 'snipMate', {})
+let g:snipMate.scope_aliases = {}
+let g:snipMate.scope_aliases['php'] = 'php,html'
+let g:snipMate.scope_aliases['javascript'] = 'javascript,javascript-jquery'
+let g:snipMate.scope_aliases['css'] = 'css'
+
+ let g:snipMate.no_default_aliases = 1
 
 
 "}}}
