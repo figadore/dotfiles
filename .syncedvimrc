@@ -643,10 +643,12 @@ let g:indent_guides_auto_colors = 0
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=9 ctermfg=10
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=black ctermfg=10
 
-" Highlight column 81 and beyond
-autocmd VimEnter,Colorscheme * :hi ColorColumn ctermbg=9
-hi ColorColumn ctermbg=9
-let &colorcolumn=join(range(81,999),",")
+if version >= 703
+  " Highlight column 81 and beyond
+  autocmd VimEnter,Colorscheme * :hi ColorColumn ctermbg=9
+  hi ColorColumn ctermbg=9
+  let &colorcolumn=join(range(81,999),",")
+endif
 
 "Save these lines until the end to help with plugin filetype detection
 "enable filetype based indenting
