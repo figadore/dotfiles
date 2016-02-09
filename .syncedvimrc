@@ -623,7 +623,10 @@ set wildmode=longest,list,full
 set wildmenu
 
 " ignore case in command completion
-set wildignorecase
+try
+  set wildignorecase
+catch
+endtry
 
 " change json filetype from javascript for eslint
 au BufNewFile,BufRead *.json set filetype=json
