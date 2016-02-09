@@ -107,6 +107,8 @@ autocmd BufWinEnter *.* silent loadview
 
 "open current buffer in new tab
 nmap <leader>o :tabedit %<CR>
+"open current buffer in new tab and closes in previous
+nmap <leader>O :tabedit %<CR> \| :tabp <CR>\| :q <CR>\| :tabn <CR>
 "close current tab
 nmap <leader>q :tabclose<CR>
 "alt-q, close tab
@@ -207,6 +209,10 @@ if has("user_commands")
 	command! -bang QA qa<bang>
 	command! -bang Qa qa<bang>
 endif
+
+" Allow saving as sudo even if vim wasn't started with sudo
+cmap w!! w !sudo tee > /dev/null %
+
 
 "alias leader-s as :w
 nmap <leader>s :w<CR>
@@ -479,14 +485,15 @@ let g:snips_author = "Reese Wilson"
 " \	}
 " \ }
 
-" "alternatively
+ "alternatively
 "let g:snipMate = {}
-"let g:snipMate.scope_aliases = {}
-"let g:snipMate.scope_aliases['php'] = 'php,html'
-"let g:snipMate.scope_aliases['javascript'] = 'javascript,javascript-jquery'
-"let g:snipMate.scope_aliases['css'] = 'css'
-"
-" let g:snipMate.no_default_aliases = 1
+let g:snipMate = get(g:, 'snipMate', {})
+let g:snipMate.scope_aliases = {}
+let g:snipMate.scope_aliases['php'] = 'php,html'
+let g:snipMate.scope_aliases['javascript'] = 'javascript,javascript-jquery'
+let g:snipMate.scope_aliases['css'] = 'css'
+
+ let g:snipMate.no_default_aliases = 1
 
 
 "}}}
@@ -616,7 +623,10 @@ set wildmode=longest,list,full
 set wildmenu
 
 " ignore case in command completion
-set wildignorecase
+try
+  set wildignorecase
+catch
+endtry
 
 " change json filetype from javascript for eslint
 au BufNewFile,BufRead *.json set filetype=json
@@ -633,6 +643,10 @@ let g:indent_guides_auto_colors = 0
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=9 ctermfg=10
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=black ctermfg=10
 
+" Highlight column 81 and beyond
+autocmd VimEnter,Colorscheme * :hi ColorColumn ctermbg=9
+hi ColorColumn ctermbg=9
+let &colorcolumn=join(range(81,999),",")
 
 "Save these lines until the end to help with plugin filetype detection
 "enable filetype based indenting
