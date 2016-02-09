@@ -107,6 +107,8 @@ autocmd BufWinEnter *.* silent loadview
 
 "open current buffer in new tab
 nmap <leader>o :tabedit %<CR>
+"open current buffer in new tab and closes in previous
+nmap <leader>O :tabedit %<CR> \| :tabp <CR>\| :q <CR>\| :tabn <CR>
 "close current tab
 nmap <leader>q :tabclose<CR>
 "alt-q, close tab
@@ -492,7 +494,7 @@ let g:snips_author = "Reese Wilson"
 
  "alternatively
 "let g:snipMate = {}
-let g:snipMate.scope_aliases = get(g:, 'snipMate', {})
+let g:snipMate = get(g:, 'snipMate', {})
 let g:snipMate.scope_aliases = {}
 let g:snipMate.scope_aliases['php'] = 'php,html'
 let g:snipMate.scope_aliases['javascript'] = 'javascript,javascript-jquery'
