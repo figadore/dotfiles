@@ -345,6 +345,8 @@ function! GetBundles()
 	Bundle "nathanaelkane/vim-indent-guides"
 	" better json syntax handling
 	Bundle "elzr/vim-json"
+	" leader-w to move to next camelcase or underscore word
+	Bundle "bkad/camelcasemotion"
 endfunction
 "}}}
 
@@ -452,6 +454,9 @@ endif
 "customize bundles {{{
 "undo italic gui comments
 highlight Comment cterm=none gui=none
+
+"set up default mappings for camelcasemotion
+call camelcasemotion#CreateMotionMappings('<leader>')
 
 "highlight FoldColumn guibg=Black guifg=White 
 "highlight FoldColumn ctermbg=black ctermfg=white
