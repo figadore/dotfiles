@@ -519,7 +519,7 @@ command! -nargs=1 Phpunit call s:PhpUnit(<q-args>)
 map <leader>t :Phpunit 
 
 "indent the = sign on a range of lines
-map <leader>ec :call IndentRange()<CR>
+"map <leader>ec :call IndentRange()<CR>
 map <F1> :call IndentRange()<CR>
 
 function! GetIndentColumn()
