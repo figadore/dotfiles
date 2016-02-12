@@ -352,6 +352,8 @@ function! GetBundles()
 	Bundle "nathanaelkane/vim-indent-guides"
 	" better json syntax handling
 	Bundle "elzr/vim-json"
+	" leader-w to move to next camelcase or underscore word
+	Bundle "bkad/camelcasemotion"
 endfunction
 "}}}
 
@@ -460,6 +462,9 @@ endif
 "undo italic gui comments
 highlight Comment cterm=none gui=none
 
+"set up default mappings for camelcasemotion
+call camelcasemotion#CreateMotionMappings('<leader>')
+
 "highlight FoldColumn guibg=Black guifg=White 
 "highlight FoldColumn ctermbg=black ctermfg=white
 :highlight FoldColumn guibg=Black guifg=White 
@@ -521,7 +526,7 @@ command! -nargs=1 Phpunit call s:PhpUnit(<q-args>)
 map <leader>t :Phpunit 
 
 "indent the = sign on a range of lines
-map <leader>ec :call IndentRange()<CR>
+"map <leader>ec :call IndentRange()<CR>
 map <F1> :call IndentRange()<CR>
 
 function! GetIndentColumn()
@@ -650,10 +655,12 @@ let g:indent_guides_auto_colors = 0
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=9 ctermfg=10
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=black ctermfg=10
 
-" Highlight column 81 and beyond
-autocmd VimEnter,Colorscheme * :hi ColorColumn ctermbg=9
-hi ColorColumn ctermbg=9
-let &colorcolumn=join(range(81,999),",")
+if version >= 703
+  " Highlight column 81 and beyond
+  autocmd VimEnter,Colorscheme * :hi ColorColumn ctermbg=9
+  hi ColorColumn ctermbg=9
+  let &colorcolumn=join(range(81,999),",")
+endif
 
 "Save these lines until the end to help with plugin filetype detection
 "enable filetype based indenting
