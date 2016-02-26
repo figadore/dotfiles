@@ -9,8 +9,8 @@ map <C-a><C-a> :b#<Return>
 
 "vim
 map <A-c> gH
-map <A-j> :tabfirst<Return>
-map <A-k> :tablast<Return>
+map <A-k> :tabfirst<Return>
+map <A-j> :tablast<Return>
 map <A-h> :tabprevious<Return>
 map <A-l> :tabn<Return>
 "map <A-q> :tabclose<Return>
