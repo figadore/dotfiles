@@ -13,7 +13,10 @@ map <A-j> :tabfirst<Return>
 map <A-k> :tablast<Return>
 map <A-h> :tabprevious<Return>
 map <A-l> :tabn<Return>
+"map <A-q> :tabclose<Return>
 map <A-q> :q<Return>
+map <A-Q> :bd -s lastactive<Return>
+map <A-w> :bd -s lastactive<Return>
 
 "custom
 map gp :tabp<Return>
@@ -21,6 +24,10 @@ map <A-p> <C-^>
 map <C-A-h> :tabp<Return>
 map <C-A-l> :tabn<Return>
 
-source! /home/reese/.vimperatorrc.local
+
+"se gui=toolbars=noaddons,bookmarks,menu,navigation,tabs
+se gui=
+
+source! "Z:\\Z-reese\\.vimperatorrc.local"
 
 " vim: set ft=vimperator:
