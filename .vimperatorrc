@@ -1,0 +1,16 @@
+"3.11.3 (created: 2016/01/30 14:42:44)
+
+map gp :tabp<Return>
+map <C-a>n :tabn<Return>
+map <C-a>p :tabp<Return>
+map <C-a><C-p> :tabp<Return>
+map <C-a><C-n> :tabn<Return>
+map <C-a><C-a> :b#<Return>
+map <A-c> gH
+map <A-q> :q<Return>
+map <A-l> :tabn<Return>
+map <C-A-h> :tabp<Return>
+map <C-A-l> :tabn<Return>
+source! /home/reese/.vimperatorrc.local
+
+" vim: set ft=vimperator:
