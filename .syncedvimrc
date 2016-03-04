@@ -131,7 +131,7 @@ map ç :tabnew<CR>
 "map c :tabnew<CR>
 "alt-r, rename tab
 map ® :TabooRename
-map r :TabooRename
+"map r :TabooRename
 
 "set vim filetype to marker folded
 :au Filetype vim exec "se fdm=marker"
