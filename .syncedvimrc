@@ -191,11 +191,7 @@
 
   "{{{ Custom functions and mappings
 
-  " View diff from last save
-  if !exists(":DiffOrig")
-    command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
-      \ | wincmd p | diffthis
-  endif
+  " {{{ copy/paste mode
 
   " Shortcut to prepare for paste
   "nnoremap <leader>p :se paste!<CR> "doesn't provide feedback on current mode
@@ -244,16 +240,9 @@
 
   nnoremap <leader>c :call CopyToggle()<CR>
 
-  " Run phpunit on a group
-  function! s:PhpUnit(group)
-    echom "group=" + a:group
-    let g:phpunit_args_append = "--group " . a:group
-    exec ":Test"
-  endfunction
+  "}}}
 
-  " Leader-t runs phpunit on specified group
-  command! -nargs=1 Phpunit call s:PhpUnit(<q-args>)
-  map <leader>t :Phpunit
+  " {{{ Indenting
 
   " Indent the = sign on a range of lines
   "map <leader>ec :call IndentRange()<CR>
@@ -308,6 +297,9 @@
       let l:current_line = l:current_line + 1
     endwhile
   endfunction
+  "}}}
+
+  " {{{ Hex mode
 
   " ex command for toggling hex mode - define mapping if desired
   command! -bar Hexmode call ToggleHex()
@@ -354,6 +346,24 @@
     let &readonly=l:oldreadonly
     let &modifiable=l:oldmodifiable
   endfunction
+  "}}}
+
+  " View diff from last save
+  if !exists(":DiffOrig")
+    command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
+      \ | wincmd p | diffthis
+  endif
+
+  " Run phpunit on a group
+  function! s:PhpUnit(group)
+    echom "group=" + a:group
+    let g:phpunit_args_append = "--group " . a:group
+    exec ":Test"
+  endfunction
+
+  " Leader-t runs phpunit on specified group
+  command! -nargs=1 Phpunit call s:PhpUnit(<q-args>)
+  map <leader>t :Phpunit
 
   "}}}
 
@@ -379,7 +389,7 @@
   endfunction
 
   " Reese's command for custom fold text: first line concat next line
-  set foldtext=MyFoldText()
+  "set foldtext=MyFoldText()
   function! MyFoldText()
     let line = getline(v:foldstart)
     let line2 = getline(v:foldstart + 1)
@@ -653,7 +663,7 @@
 
   "}}}
 
-  " {{{ Conclusion
+  "{{{ Conclusion
   " Save these lines until the end to help with plugin filetype detection
   " Enable filetype based indenting
   if (has("autocmd"))
