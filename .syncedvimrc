@@ -25,10 +25,6 @@
   " Highlight search
   set hls
 
-  " Save current view when leaving, load when entering buffer
-  autocmd BufWinLeave *.* if bufname("%")!=""|mkview|endif
-  autocmd BufWinEnter *.* silent loadview
-
   " Settings for taboo tab renaming, save tabs and globals in sessions on save
   set sessionoptions+=tabpages,globals
 
@@ -42,8 +38,21 @@
   catch
   endtry
 
+  " Save current view when leaving, load when entering buffer
+  autocmd BufWinLeave *.* if bufname("%")!=""|mkview|endif
+  autocmd BufWinEnter *.* silent loadview
+
   " Hack to allow "crontab -e" on mac
   au BufEnter /private/tmp/crontab.* setl backupcopy=yes
+
+  "source this and vimrc on write. not sure why it breaks some things
+  if has("win32") || has("win16")
+    autocmd! bufwritepost _vimrc source %
+    autocmd! bufwritepost .syncedvimrc source ~/_vimrc
+  else
+    autocmd! bufwritepost .vimrc source %
+    autocmd! bufwritepost .syncedvimrc source ~/.vimrc
+  endif
 
   "}}}
 
@@ -389,7 +398,6 @@
   endfunction
 
   " Reese's command for custom fold text: first line concat next line
-  "set foldtext=MyFoldText()
   function! MyFoldText()
     let line = getline(v:foldstart)
     let line2 = getline(v:foldstart + 1)
@@ -408,11 +416,31 @@
     let filler = winwidth(0) - strlen(spaces . sub) - offset
     return spaces . sub . repeat('-', filler) . '('. lines . ' lines)'
   endfunction
-  if has("win32") || has("win16")
-    autocmd! bufwritepost _vimrc source %
-  else
-    autocmd! bufwritepost .vimrc source %
-  endif
+
+  "from http://www.gregsexton.org/2011/03/improving-the-text-displayed-in-a-fold/
+  function! CustomFoldText()
+    "get first non-blank line
+    let fs = v:foldstart
+    while getline(fs) =~ '^\s*$' | let fs = nextnonblank(fs + 1)
+    endwhile
+    if fs > v:foldend
+      let line = getline(v:foldstart)
+    else
+      let line = substitute(getline(fs), '\t', repeat(' ', &tabstop), 'g')
+    endif
+
+    let w = winwidth(0) - &foldcolumn - (&number ? 8 : 0)
+    let foldSize = 1 + v:foldend - v:foldstart
+    let foldSizeStr = " " . foldSize . " lines "
+    let foldLevelStr = repeat("+--", v:foldlevel)
+    let lineCount = line("$")
+    let foldPercentage = printf("[%.1f", (foldSize*1.0)/lineCount*100) . "%] "
+    let expansionString = repeat(".", w - strwidth(foldSizeStr.line.foldLevelStr.foldPercentage))
+    return line . expansionString . foldSizeStr . foldPercentage . foldLevelStr
+  endfunction
+
+  "set foldtext=MyFoldText()
+  set foldtext=CustomFoldText()
 
   "}}}
 
