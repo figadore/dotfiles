@@ -45,7 +45,7 @@
   " Hack to allow "crontab -e" on mac
   au BufEnter /private/tmp/crontab.* setl backupcopy=yes
 
-  "source this and vimrc on write. not sure why it breaks some things
+  " Source this and vimrc on write/save
   if has("win32") || has("win16")
     autocmd! bufwritepost _vimrc source %
     autocmd! bufwritepost .syncedvimrc source ~/_vimrc
@@ -94,21 +94,6 @@
   " Use tabs instead of spaces
   set expandtab
 
-  let defaultfdc=2
-  " Set 80 char wrapping for certain file types
-  autocmd BufRead *.php,*.php call SetCodeWrapping()
-  function! SetCodeWrapping()
-    " Turn on wrapping
-    set wrap
-    " Set width to 80
-    setlocal textwidth=80
-    " More space for split windows
-    let defaultfdc=1
-    execute ":setlocal fdc=".defaultfdc
-  endfunction
-
-  execute ":se fdc=".defaultfdc
-
   " Mark end of change-to text with a '$'
   set cpoptions+=$
 
@@ -155,8 +140,8 @@
   map ç :tabnew<CR>
   "map c :tabnew<CR>
   " Alt-r, rename tab
-  map ® :TabooRename
-  "map r :TabooRename
+  map ® :TabooRename 
+  "map r :TabooRename 
 
   " Alias :W as :w, so write command works with caps or not
   " Don't use cnoreabbrev because it breaks case sensitive search (e.g. for capital Q)
@@ -215,6 +200,22 @@
   endfunction
 
   nnoremap <leader>p :call PasteToggle()<CR>
+
+  " Fold columns
+  let defaultfdc=2
+  "" Set 80 char wrapping for certain file types
+  "autocmd BufRead *.php,*.php call SetCodeWrapping()
+  "function! SetCodeWrapping()
+  "  " Turn on wrapping
+  "  set wrap
+  "  " Set width to 80
+  "  setlocal textwidth=80
+  "  " More space for split windows
+  "  let defaultfdc=1
+  "  execute ":setlocal fdc=".defaultfdc
+  "endfunction
+
+  execute ":se fdc=".defaultfdc
 
   " Shortcut to prepare for copy
   function! CopyToggle()
@@ -582,7 +583,7 @@
   let g:ctrlp_custom_ignore = {
     \ 'dir': '\v[\/](\.git|vendor|\.vim)$'
     \ }
- 
+
   " change json filetype from javascript for eslint
   au BufNewFile,BufRead *.json set filetype=json
   " disable json quote concealing
