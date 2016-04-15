@@ -7,3 +7,5 @@
 	excludesfile = ~/.gitignore_global
 [color]
 	ui = true
+[http]
+	cookiefile = /home/reese/.gitcookies
