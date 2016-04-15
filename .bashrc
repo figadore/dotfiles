@@ -34,6 +34,11 @@ pathadd() {
 pathadd $HOME/bin
 pathadd $HOME/.rvm/bin
 pathadd $HOME/.local/bin
+pathadd /usr/local/go/bin
+
+export GOPATH=$HOME/go
+
+pathadd $GOPATH/bin
 
 # Disable auto renaming terminal
 PROMPT_COMMAND=""
@@ -42,3 +47,9 @@ export PROMPT_COMMAND
 # Terminal grep colors support
 #export GREP_OPTIONS="--color=always"; #deprecated
 alias grep='grep --color'
+
+# The next line updates PATH for the Google Cloud SDK.
+source '/home/reese/google-cloud-sdk/path.bash.inc'
+
+# The next line enables shell command completion for gcloud.
+source '/home/reese/google-cloud-sdk/completion.bash.inc'
