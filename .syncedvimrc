@@ -464,7 +464,7 @@
     "Bundle 'shinymayhem/Tab-Rename'
     Bundle 'shinymayhem/taboo.vim'
     "fuzzy file finder
-    Bundle 'kien/ctrlp.vim'
+    Bundle 'ctrlpvim/ctrlp.vim'
     "less syntax highlighting
     Bundle 'groenewege/vim-less'
     "snipmate
