@@ -198,8 +198,26 @@
       echom "Paste mode enabled"
     endif
   endfunction
+  function! PasteXclip()
+    setlocal paste
+    r ! xclip -o -sel clipboard
+    setlocal nopaste
+  endfunction
+  function! PasteSystem()
+    setlocal paste
+    normal! "*p
+    setlocal nopaste
+  endfunction
+  function! PasteGui()
+    setlocal paste
+    normal! "+p
+    setlocal nopaste
+  endfunction
 
   nnoremap <leader>p :call PasteToggle()<CR>
+  "add paste shortcuts below to .vimrc, depending on environment
+  "nnoremap <c-p> :call PasteXclip()<CR>
+  "nnoremap <c-P> :call PasteSystem()<CR>
 
   " Fold columns
   let defaultfdc=2
@@ -571,6 +589,7 @@
   " Shortcut to open file explorers
   :map <leader>n :NERDTreeToggle<CR>
   :map <leader>, :CtrlP<CR>
+  let g:ctrlp_map = ''
 
   " Fix nerdtree weird characters
   let g:NERDTreeDirArrows=1
