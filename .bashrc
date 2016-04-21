@@ -48,6 +48,8 @@ export PROMPT_COMMAND
 #export GREP_OPTIONS="--color=always"; #deprecated
 alias grep='grep --color'
 
+eval `dircolors ~/.dircolors`
+
 # The next line updates PATH for the Google Cloud SDK.
 source '/home/reese/google-cloud-sdk/path.bash.inc'
 
