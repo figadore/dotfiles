@@ -481,7 +481,7 @@
     Bundle 'scrooloose/nerdtree'
     "tab names
     "Bundle 'shinymayhem/Tab-Rename'
-    Bundle 'shinymayhem/taboo.vim'
+    Bundle 'gcmt/taboo.vim'
     "fuzzy file finder
     Bundle 'ctrlpvim/ctrlp.vim'
     "less syntax highlighting
@@ -570,8 +570,8 @@
   "noremap <F5> :python debugger.run()<CR> :TabooRename debugger<CR>
 
   " Customize renamed tab format
-  let g:taboo_renamed_tab_format=" [%N]%f%m "
-
+  let g:taboo_tab_format=" [%N:%W] %f%m "
+  let g:taboo_renamed_tab_format=" [%N:%W] %l%m "
 
   " Syntastic, show errors list when detected
   let g:syntastic_auto_loc_list=1
