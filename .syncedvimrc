@@ -697,7 +697,9 @@
     " Highlight column 81 and beyond
     autocmd VimEnter,Colorscheme * :hi ColorColumn ctermbg=9
     hi ColorColumn ctermbg=9
-    let &colorcolumn=join(range(81,999),",")
+    "let &colorcolumn=join(range(81,999),",")
+    "let &colorcolumn=join(range(81,100),",")
+    let &colorcolumn="81,101"
   endif
 
 
