@@ -51,7 +51,15 @@ alias grep='grep --color'
 eval `dircolors ~/.dircolors`
 
 # The next line updates PATH for the Google Cloud SDK.
-source '/home/reese/google-cloud-sdk/path.bash.inc'
+#source '/home/reese/google-cloud-sdk/path.bash.inc'
+script_link="$( readlink "$BASH_SOURCE" )" || script_link="$BASH_SOURCE"
+apparent_sdk_dir="${script_link%/*}"
+if [ "$apparent_sdk_dir" == "$script_link" ]; then
+  apparent_sdk_dir=.
+fi
+sdk_dir="$( command cd -P "$apparent_sdk_dir" > /dev/null && pwd -P )"
+bin_path="$sdk_dir/bin"
+pathadd bin_path
 
 # The next line enables shell command completion for gcloud.
 source '/home/reese/google-cloud-sdk/completion.bash.inc'
