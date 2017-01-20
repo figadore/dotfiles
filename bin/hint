@@ -38,27 +38,31 @@ case $@ in
     ;;
   aws)
     cmt Rename IAM user
-    cmd docker run -it --rm -v ~/.aws:/root/.aws blendle/aws-cli iam update-user --user-name old-user --new-user-name new-user
+    cmd 'docker run -it --rm -v ~/.aws:/root/.aws blendle/aws-cli iam update-user --user-name old-user --new-user-name new-user'
     ;;
   bash)
     cmt Replace all instances in previous command
-    cmd !!:gs/sduo/sudo
+    cmd '!!:gs/sduo/sudo'
     cmt Find file by name
-    cmd find ./ -name 'filename'
+    cmd "find ./ -name 'filename'"
     cmt Find file containing text
     cmd grep -rI "text" ./
     ;;
   docker)
     cmt Remove all exited containers
-    cmd docker rm -v $(docker ps -q -f status=exited -f status=created)
+    cmd 'docker rm -v $(docker ps -q -f status=exited -f status=created)'
     cmt Remove all images without tags
-    cmd docker rmi $(docker images -q -f "dangling=true")
+    cmd 'docker rmi $(docker images -q -f "dangling=true")'
     cmt Remove all dangling volumes
-    cmd "docker volume ls -qf \"dangling=true\" | xargs docker volume rm"
+    cmd 'docker volume ls -qf \"dangling=true\" | xargs docker volume rm'
+    cmt Remove all excess networks
+    cmd 'docker network rm $(docker network ls -q)'
+    cmt Create dev network
+    cmd 'docker network create --driver bridge dev'
     ;;
   duplicity)
     cmt Restore a file
-    cmd PASSPHRASE=whatever duplicity --encrypt-key 47E4BB4F --file-to-restore ref.txt scp://reese@home.shinymayhem.com/gazelle-backup/home ~/ref.txt.restored
+    cmd 'PASSPHRASE=whatever duplicity --encrypt-key 47E4BB4F --file-to-restore ref.txt scp://reese@home.shinymayhem.com/gazelle-backup/home ~/ref.txt.restored'
     ;;
   kube|kubernetes)
     cmt Get kube service urls
@@ -79,6 +83,8 @@ case $@ in
     cmd "kxpo <podname>"
     cmt Create new
     cmd kubectl create -f new.yaml
+    cmt Replace existing
+    cmd kubectl replace -f updated.yaml
     cmd kc new.yaml
     cmt Rolling update
     cmd kubectl rolling-update old-rc -f new.yaml
@@ -94,56 +100,56 @@ case $@ in
     ;;
   git)
     cmt Show logs in 1 line
-    cmd git log --pretty=oneline
+    cmd 'git log --pretty=oneline'
     cmt Rebase
-    cmd git rebase -i HEAD~5
+    cmd 'git rebase -i HEAD~5'
     ;;
   "fix wifi")
     cmt Fix wifi after suspend
-    cmd sudo systemctl restart network-manager.service
+    cmd 'sudo systemctl restart network-manager.service'
     cmt Or, one or more of these seems to fix it
-    cmd sudo service networking restart
-    cmd sudo nmcli r wifi off
-    cmd sudo nmcli r wifi on
-    cmd sudo service network-manager restart
-    cmd sudo modprobe iwl3945
-    cmd sudo modprobe iwl4965
+    cmd 'sudo service networking restart'
+    cmd 'sudo nmcli r wifi off'
+    cmd 'sudo nmcli r wifi on'
+    cmd 'sudo service network-manager restart'
+    cmd 'sudo modprobe iwl3945'
+    cmd 'sudo modprobe iwl4965'
     ;;
   screen)
     cmt List sessions
-    cmd screen -list
+    cmd 'screen -list'
     cmt New named session
-    cmd screen -R main
+    cmd 'screen -R main'
     cmt Attach to named session
-    cmd screen -r -x main
+    cmd 'screen -r -x main'
     ;;
   tmux)
     cmt List sessions
-    cmd tmux ls
+    cmd 'tmux ls'
     cmt New named session
-    cmd tmux new -s main
+    cmd 'tmux new -s main'
     cmt Attach to named session
-    cmd tmux a -t main
+    cmd 'tmux a -t main'
     cmt Attach again to named session with independent windows
-    cmd tmux new-session -t main
+    cmd 'tmux new-session -t main'
     cmt Rename session
-    cmd ctrl-a $
+    cmd 'ctrl-a $'
     cmt Kill independently linked session
-    cmd ctrl-a : kill-session
+    cmd 'ctrl-a : kill-session'
     cmt Split pane vertically
-    cmd "ctrl-a |"
+    cmd '"ctrl-a |"'
     cmt Split pane horizontally
-    cmd ctrl-a %
+    cmd 'ctrl-a %'
     cmt "Join pane from window <n>"
-    cmd ctrl-a j
+    cmd 'ctrl-a j'
     cmt Navigate panes
-    cmd ctrl-a ctrl-j
+    cmd 'ctrl-a ctrl-j'
     cmt Swap panes
-    cmd ctrl-a {/}
+    cmd 'ctrl-a {/}'
     cmt Split pane to own window
-    cmd ctrl-a !
+    cmd 'ctrl-a !'
     cmt Resize pane
-    cmd ctrl-a alt-up
+    cmd 'ctrl-a alt-up'
     cmt Swap window numbers
     cmd "ctrl-a : swap-window -s <x> -t <y>"
     ;;
