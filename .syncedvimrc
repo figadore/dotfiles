@@ -184,6 +184,9 @@
   nnoremap K k
   vnoremap K k
 
+  " ctrl-X works like ctrl-a (for tmux/screen compatibilty)
+  nmap <C-X> <C-a>
+
   "}}}
 
   "{{{ Custom functions and mappings
@@ -508,6 +511,12 @@
     Bundle "bkad/camelcasemotion"
     " go formatting, etc
     Bundle "fatih/vim-go"
+    " autocompletion, requires vim-nox package
+    Bundle "Shougo/neocomplete.vim"
+    " go  stuff
+    "Bundle "Valloric/YouCompleteMe"
+    "Plugin 'nsf/gocode', {'rtp': 'vim/'}
+    Plugin 'nsf/gocode', {'rtp': 'nvim/'}
   endfunction
   "}}}
 
@@ -575,8 +584,10 @@
   "noremap <F5> :python debugger.run()<CR> :TabooRename debugger<CR>
 
   " Customize renamed tab format
-  let g:taboo_tab_format=" [%N:%W] %f%m "
-  let g:taboo_renamed_tab_format=" [%N:%W] %l%m "
+  "let g:taboo_tab_format=" [%N:%W] %f%m "
+  "let g:taboo_renamed_tab_format=" [%N:%W] %l%m "
+  let g:taboo_tab_format=" %N)%f%m "
+  let g:taboo_renamed_tab_format=" %N)%l%m "
 
   " Syntastic, show errors list when detected
   let g:syntastic_auto_loc_list=1
@@ -620,7 +631,7 @@
   let g:indent_guides_enable_on_vim_startup = 1
   let g:indent_guides_default_mapping = 1 "leader-ig
   let g:indent_guides_auto_colors = 0
-  autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=9 ctermfg=10
+  autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=8 ctermfg=10
   autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=black ctermfg=10
 
   "}}}
@@ -695,8 +706,8 @@
 
   if version >= 703
     " Highlight column 81 and beyond
-    autocmd VimEnter,Colorscheme * :hi ColorColumn ctermbg=9
-    hi ColorColumn ctermbg=9
+    autocmd VimEnter,Colorscheme * :hi ColorColumn ctermbg=0
+    hi ColorColumn ctermbg=0
     "let &colorcolumn=join(range(81,999),",")
     "let &colorcolumn=join(range(81,100),",")
     let &colorcolumn="81,101"
