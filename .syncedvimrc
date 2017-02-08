@@ -491,7 +491,7 @@
     Bundle "tomtom/tlib_vim"
     Bundle "garbas/vim-snipmate"
     Bundle "honza/vim-snippets"
-    Bundle "shinymayhem/cypher-vim-syntax"
+    "Bundle "shinymayhem/cypher-vim-syntax"
     Bundle 'https://github.com/sukima/xmledit'
     " relative line numbers
     Bundle "jeffkreeftmeijer/vim-numbertoggle"
@@ -503,6 +503,10 @@
     Bundle "elzr/vim-json"
     " leader-w to move to next camelcase or underscore word
     Bundle "bkad/camelcasemotion"
+    Bundle "guns/vim-clojure-static"
+    Bundle "kien/rainbow_parentheses.vim"
+    " Clojure quasi-repl
+    Bundle "tpope/vim-fireplace"
   endfunction
   "}}}
 
@@ -546,6 +550,35 @@
   "}}}
 
   " Customize bundles {{{
+
+
+  " rainbow parentheses always on
+  au VimEnter * RainbowParenthesesToggle
+  au Syntax * RainbowParenthesesLoadRound
+  au Syntax * RainbowParenthesesLoadSquare
+  au Syntax * RainbowParenthesesLoadBraces
+
+  "" try custom rainbow parentheses colors
+  "let g:rbpt_colorpairs = [
+  "    \ ['brown',       'yellow'],
+  "    \ ['Darkblue',    'lightgreen'],
+  "    \ ['darkgray',    'yellow'],
+  "    \ ['darkgreen',   'red'],
+  "    \ ['darkcyan',    'magenta'],
+  "    \ ['darkred',     'lightblue'],
+  "    \ ['darkmagenta', 'lightgreen'],
+  "    \ ['brown',       'yellow'],
+  "    \ ['gray',        'red'],
+  "    \ ['black',       'magenta'],
+  "    \ ['darkmagenta', 'lightblue'],
+  "    \ ['Darkblue',    'lightgreen'],
+  "    \ ['darkgreen',   'yellow'],
+  "    \ ['darkcyan',    'red'],
+  "    \ ['darkred',     'magenta'],
+  "    \ ['red',         'lightblue'],
+  "    \ ]
+  ""let g:rbpt_max = 16
+  ""let g:rbpt_loadcmd_toggle = 0
 
   " xmledit
   let g:xmledit_enable_html = 1 "make it work on html files
