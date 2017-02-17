@@ -88,8 +88,8 @@
   set formatoptions+=ro
 
   " Set tab width
-  set tabstop=2
-  set shiftwidth=2
+  set tabstop=4
+  set shiftwidth=4
 
   " Use tabs instead of spaces
   set expandtab
@@ -725,7 +725,8 @@
     " Highlight column 81 and beyond
     autocmd VimEnter,Colorscheme * :hi ColorColumn ctermbg=9
     hi ColorColumn ctermbg=9
-    let &colorcolumn=join(range(81,999),",")
+    "let &colorcolumn=join(range(81,999),",")
+    let &colorcolumn=81
   endif
 
 
