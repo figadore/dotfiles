@@ -615,8 +615,9 @@
   let g:indent_guides_enable_on_vim_startup = 1
   let g:indent_guides_default_mapping = 1 "leader-ig
   let g:indent_guides_auto_colors = 0
-  autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=9 ctermfg=10
-  autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=black ctermfg=10
+  "autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=0 ctermfg=10
+  autocmd VimEnter,Colorscheme * :hi link IndentGuidesOdd CursorLine
+  autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=bg ctermfg=10
 
   "}}}
   "}}}
@@ -690,9 +691,12 @@
 
   if version >= 703
     " Highlight column 81 and beyond
-    autocmd VimEnter,Colorscheme * :hi ColorColumn ctermbg=9
-    hi ColorColumn ctermbg=9
-    let &colorcolumn=join(range(81,999),",")
+    "autocmd VimEnter,Colorscheme * :hi ColorColumn ctermbg=0
+    autocmd VimEnter,Colorscheme * :hi! link ColorColumn CursorLine
+    "hi ColorColumn ctermbg=0
+    hi! link ColorColumn CursorLine
+    "let &colorcolumn=join(range(81,999),",")
+    let &colorcolumn=81
   endif
 
 
