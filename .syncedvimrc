@@ -504,7 +504,8 @@
     " leader-w to move to next camelcase or underscore word
     Bundle "bkad/camelcasemotion"
     Bundle "guns/vim-clojure-static"
-    Bundle "kien/rainbow_parentheses.vim"
+    "Bundle "kien/rainbow_parentheses.vim"
+    Bundle "luochen1990/rainbow"
     " Clojure quasi-repl
     Bundle "tpope/vim-fireplace"
   endfunction
@@ -551,34 +552,16 @@
 
   " Customize bundles {{{
 
+  let g:rainbow_active = 1
+  "hue-contrasty order
+  let g:rainbow_conf = {
+        \ 'ctermfgs': ['1', '2', '4', '3', '5', '6', '7']
+        \}
 
-  " rainbow parentheses always on
-  au VimEnter * RainbowParenthesesToggle
-  au Syntax * RainbowParenthesesLoadRound
-  au Syntax * RainbowParenthesesLoadSquare
-  au Syntax * RainbowParenthesesLoadBraces
-
-  "" try custom rainbow parentheses colors
-  "let g:rbpt_colorpairs = [
-  "    \ ['brown',       'yellow'],
-  "    \ ['Darkblue',    'lightgreen'],
-  "    \ ['darkgray',    'yellow'],
-  "    \ ['darkgreen',   'red'],
-  "    \ ['darkcyan',    'magenta'],
-  "    \ ['darkred',     'lightblue'],
-  "    \ ['darkmagenta', 'lightgreen'],
-  "    \ ['brown',       'yellow'],
-  "    \ ['gray',        'red'],
-  "    \ ['black',       'magenta'],
-  "    \ ['darkmagenta', 'lightblue'],
-  "    \ ['Darkblue',    'lightgreen'],
-  "    \ ['darkgreen',   'yellow'],
-  "    \ ['darkcyan',    'red'],
-  "    \ ['darkred',     'magenta'],
-  "    \ ['red',         'lightblue'],
-  "    \ ]
-  ""let g:rbpt_max = 16
-  ""let g:rbpt_loadcmd_toggle = 0
+  "rainbow order
+  "let g:rainbow_conf = {
+  "      \ 'ctermfgs': ['1', '2', '4', '3', '5', '6', '7']
+  "      \}
 
   " xmledit
   let g:xmledit_enable_html = 1 "make it work on html files
@@ -761,3 +744,24 @@
 
   " End autocommand group
 :augroup END
+
+"colors
+"*cterm-colors*
+"
+"NR-16   NR-8    COLOR NAME
+"0       0       Black
+"1       4       DarkBlue
+"2       2       DarkGreen
+"3       6       DarkCyan
+"4       1       DarkRed
+"5       5       DarkMagenta
+"6       3       Brown, DarkYellow
+"7       7       LightGray, LightGrey, Gray, Grey
+"8       0*      DarkGray, DarkGrey
+"9       4*      Blue, LightBlue
+"10      2*      Green, LightGreen
+"11      6*      Cyan, LightCyan
+"12      1*      Red, LightRed
+"13      5*      Magenta, LightMagenta
+"14      3*      Yellow, LightYellow
+"15      7*      White
