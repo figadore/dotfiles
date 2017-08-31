@@ -598,7 +598,9 @@
 
 
   " Syntastic, show errors list when detected
-  let g:syntastic_auto_loc_list=1
+  "let g:syntastic_auto_loc_list=1
+  " Syntastic, show errors list, close when empty, don't open automatically
+  let g:syntastic_auto_loc_list=2
 
   " Snipmate
   let g:snips_author = "Reese Wilson"
@@ -635,15 +637,29 @@
   " enable eslint
   let g:syntastic_javascript_checkers = ['eslint']
 
+  " enable python pep8
+  "let g:syntastic_python_checkers = ['python', 'pyflakes']
+  let g:syntastic_python_checkers = ['python', 'pylint', 'pep8', 'flake8']
+
   " Indent guides configuration
   let g:indent_guides_enable_on_vim_startup = 1
   let g:indent_guides_default_mapping = 1 "leader-ig
   let g:indent_guides_auto_colors = 0
-  "autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=0 ctermfg=10
-  autocmd VimEnter,Colorscheme * :hi link IndentGuidesOdd CursorLine
-  autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=bg ctermfg=10
+  autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=0 ctermfg=10 guibg=#012d38
+  autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=8 ctermfg=10 guibg=#073642
+  "autocmd VimEnter,Colorscheme * :hi link IndentGuidesOdd CursorLine "FIXME broken in macvim
+  "autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=bg ctermfg=10 "FIXME broken in macvim
 
   "}}}
+  "}}}
+
+  "{{{ Misc
+
+  " Custom file type behavior {{{
+  autocmd FileType yaml setlocal sw=2 ts=2
+  autocmd FileType javascript setlocal sw=2 ts=2
+  "}}}
+
   "}}}
 
   "{{{ Appearance
@@ -725,9 +741,10 @@
   if version >= 703
     " Highlight column 81 and beyond
     "autocmd VimEnter,Colorscheme * :hi ColorColumn ctermbg=0
-    autocmd VimEnter,Colorscheme * :hi! link ColorColumn CursorLine
+    autocmd VimEnter,Colorscheme * :hi ColorColumn ctermbg=0 guibg=#073642 "solarized base02
+    "autocmd VimEnter,Colorscheme * :hi! link ColorColumn CursorLine
     "hi ColorColumn ctermbg=0
-    hi! link ColorColumn CursorLine
+    "hi! link ColorColumn CursorLine "FIXME broken in macvim
     "let &colorcolumn=join(range(81,999),",")
     let &colorcolumn=81
   endif
