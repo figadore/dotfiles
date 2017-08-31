@@ -27,6 +27,8 @@
 
   " Settings for taboo tab renaming, save tabs and globals in sessions on save
   set sessionoptions+=tabpages,globals
+  " Fix colors when restoring a session
+  set sessionoptions-=options
 
   " make tab autocompletion work like bash, with highlighting
   set wildmode=longest,list,full
@@ -508,6 +510,8 @@
     Bundle "luochen1990/rainbow"
     " Clojure quasi-repl
     Bundle "tpope/vim-fireplace"
+    " Dynamic window resizing
+    Bundle "roman/golden-ratio"
   endfunction
   "}}}
 
@@ -551,6 +555,10 @@
   "}}}
 
   " Customize bundles {{{
+
+  " disable auto golden ratio resizing
+  let g:golden_ratio_autocommand = 0
+  :map <leader>r :GoldenRatioResize<CR>
 
   let g:rainbow_active = 1
   "hue-contrasty order
@@ -651,6 +659,7 @@
   " Syntastic settings, show errors in statusline
   set statusline+=%#warningmsg#
   set statusline+=%{SyntasticStatuslineFlag()}
+  set statusline+=%{fugitive#statusline()}
   set statusline+=%*
   "}}}
 
@@ -669,18 +678,26 @@
   " Set colorscheme *after* solarized bundle sourced
   set bg=dark
   colorscheme solarized
-  if has('gui_running')
+  if has("gui_running")
+    " Mac Font
+    set guifont=Monaco:h10
     " Menu bar
-    set guioptions -=m
+    set guioptions-=m
     " Toolbar
-    set guioptions -=T
+    set guioptions-=T
     " Remove vertical and horizontal scrollbars
-    set guioptions -=LlRrb
+    set guioptions-=L
+    set guioptions-=l
+    set guioptions-=R
+    set guioptions-=r
+    set guioptions-=b
+    " Switch to text-style tab display
+    set guioptions-=e
     " Cursor colors
     highlight Cursor guifg=black guibg=white
     highlight iCursor guifg=white guibg=steelblue
     " Cursorline colors
-    hi CursorLine gui=underline guibg=gray10
+    hi CursorLine gui=underline
     ":hi CursorLine cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
     "setguicursor=n-v-c:block-Cursor
     "setguicursor+=i:ver100-iCursor
