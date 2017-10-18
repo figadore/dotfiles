@@ -39,6 +39,10 @@ pathadd $HOME/.local/bin
 PROMPT_COMMAND=""
 export PROMPT_COMMAND
 
+if [ -f ~/.git-completion.bash ]; then
+  . ~/.git-completion.bash
+fi
+
 # Terminal grep colors support
 #export GREP_OPTIONS="--color=always"; #deprecated
 alias grep='grep --color'
