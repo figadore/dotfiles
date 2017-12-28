@@ -587,6 +587,12 @@
     let g:vdebug_options = {}
   endif
   let g:vdebug_options["break_on_open"]=0
+  let g:vdebug_options["path_maps"] = {
+  \  "/usr/src/app": "/Users/r631269/Documents/repos/stack-build"
+  \}
+  let g:vdebug_options["port"] = 9001
+  "{'debug_file': '', 'debug_file_level': 0, 'watch_window_style': 'expanded', 'marker_default': '-', 'continuous_mode': 0, 'ide_key': '', 'break_on_open': 0, 'on_close': 'stop', 'path_maps': {}, 'marker_closed_tree': 'x', 'timeout': 20, 'port': 9000, 'marker_open_tree': '+', 'debug_window_level': 0, 'server': ''}
+
 
   " Taboo_rename vdebug tab
   noremap <F8> :TabooRename debugger<CR>

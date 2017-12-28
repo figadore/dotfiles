@@ -34,6 +34,7 @@ pathadd() {
 pathadd $HOME/bin
 pathadd $HOME/.rvm/bin
 pathadd $HOME/.local/bin
+pathadd $HOME/node_modules/.bin
 
 # Disable auto renaming terminal
 PROMPT_COMMAND=""

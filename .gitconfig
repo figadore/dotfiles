@@ -7,3 +7,6 @@
 	excludesfile = ~/.gitignore_global
 [color]
 	ui = true
+[credential]
+	helper = !aws codecommit credential-helper $@
+	UseHttpPath = true
