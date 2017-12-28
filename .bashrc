@@ -43,6 +43,9 @@ if [ -f ~/.git-completion.bash ]; then
   . ~/.git-completion.bash
 fi
 
+# for pylint/flake8 checkers, encoding has to be set here for some reason
+export LC_CTYPE=en_US.UTF-8
+
 # Terminal grep colors support
 #export GREP_OPTIONS="--color=always"; #deprecated
 alias grep='grep --color'

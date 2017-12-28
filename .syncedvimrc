@@ -476,6 +476,7 @@
     Bundle 'altercation/vim-colors-solarized'
     "Git plugin
     Bundle 'https://github.com/tpope/vim-fugitive'
+    Bundle 'https://github.com/tpope/vim-unimpaired'
     "...All your other bundles...
     "vdebug
     Bundle 'joonty/vdebug.git'
@@ -617,6 +618,9 @@
   let g:NERDTreeDirArrowExpandable="+"
   let g:NERDTreeDirArrowCollapsible="~"
 
+  " Shortcut to open nerdtree to current file location
+  :map <leader>N :NERDTreeFind<CR>
+
   " Ctrlp show hidden files
   "let g:ctrlp_show_hidden=1
   " Ignore files and/or directories
@@ -636,9 +640,15 @@
   let g:indent_guides_enable_on_vim_startup = 1
   let g:indent_guides_default_mapping = 1 "leader-ig
   let g:indent_guides_auto_colors = 0
-  "autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=0 ctermfg=10
-  autocmd VimEnter,Colorscheme * :hi link IndentGuidesOdd CursorLine
-  autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=bg ctermfg=10
+  " light bg
+  "autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=0 ctermfg=10 guibg=#f1fdd8
+  "autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=8 ctermfg=10 guibg=#f7f6d2
+  " dark bg
+  autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=0 ctermfg=10 guibg=#012d38
+  autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=8 ctermfg=10 guibg=#073642
+  "
+  "autocmd VimEnter,Colorscheme * :hi link IndentGuidesOdd CursorLine "FIXME broken in macvim
+  "autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=bg ctermfg=10 "FIXME broken in macvim
 
   "}}}
   "}}}
@@ -722,7 +732,11 @@
   if version >= 703
     " Highlight column 81 and beyond
     "autocmd VimEnter,Colorscheme * :hi ColorColumn ctermbg=0
-    autocmd VimEnter,Colorscheme * :hi! link ColorColumn CursorLine
+    "dark bg
+    autocmd VimEnter,Colorscheme * :hi ColorColumn ctermbg=0 guibg=#073642 "solarized base02
+    "light bg
+    "autocmd VimEnter,Colorscheme * :hi ColorColumn ctermbg=0 guibg=#f7f6d2
+    "autocmd VimEnter,Colorscheme * :hi! link ColorColumn CursorLine
     "hi ColorColumn ctermbg=0
     hi! link ColorColumn CursorLine
     "let &colorcolumn=join(range(81,999),",")
