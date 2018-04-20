@@ -618,6 +618,9 @@
   let g:NERDTreeDirArrowExpandable="+"
   let g:NERDTreeDirArrowCollapsible="~"
 
+  " ignore .pyc files
+  let NERDTreeIgnore = ['\~$', '\.pyc$']
+
   " Shortcut to open nerdtree to current file location
   :map <leader>N :NERDTreeFind<CR>
 
@@ -627,6 +630,8 @@
   let g:ctrlp_custom_ignore = {
     \ 'dir': '\v[\/](\.git|vendor|\.vim)$'
     \ }
+  " ctrlp search defaults to current dir up to closest .git dir
+  let g:ctrlp_working_path_mode = 'ra'
 
   " change json filetype from javascript for eslint
   au BufNewFile,BufRead *.json set filetype=json
@@ -651,6 +656,16 @@
   "autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=bg ctermfg=10 "FIXME broken in macvim
 
   "}}}
+  "}}}
+
+  "{{{ Misc
+
+  " Custom file type behavior {{{
+  autocmd FileType yaml setlocal sw=2 ts=2
+  autocmd FileType javascript setlocal sw=2 ts=2
+  autocmd FileType vim setlocal sw=2 ts=2 expandtab
+  "}}}
+
   "}}}
 
   "{{{ Appearance
@@ -742,6 +757,26 @@
     "let &colorcolumn=join(range(81,999),",")
     let &colorcolumn=81
   endif
+
+  " switch between dark and light themes (or fix missing column colors)
+  nmap <leader>l :call Light()<CR>
+  nmap <leader>d :call Dark()<CR>
+
+  function! Dark()
+      autocmd! VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=0 ctermfg=10 guibg=#012d38
+      autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=8 ctermfg=10 guibg=#073642
+      autocmd VimEnter,Colorscheme * :hi ColorColumn ctermbg=0 guibg=#073642 "solarized base02
+      se bg=dark
+  endfunction
+
+  function! Light()
+    autocmd! VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=0 ctermfg=10 guibg=#e5e5d7
+    "autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=8 ctermfg=10 guibg=#f7f6d2
+    autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=8 ctermfg=10 guibg=#ffffdf
+    autocmd VimEnter,Colorscheme * :hi ColorColumn ctermbg=0 guibg=#f7f6d2
+    se bg=light
+  endfunction
+
 
 
   " Show cursorline on window enter, hide on leave
