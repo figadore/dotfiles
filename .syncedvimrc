@@ -111,7 +111,8 @@
   vmap \ ,
 
   " Map jk to escape
-  :inoremap jk <Esc>
+  ":inoremap jk <Esc>
+  :inoremap jk jk
 
   " Shortcut to auto indent entire file, then go back to location
   nmap <leader>i gg=G``
@@ -588,7 +589,9 @@
   endif
   let g:vdebug_options["break_on_open"]=0
   let g:vdebug_options["path_maps"] = {
-  \  "/usr/src/app": "/Users/r631269/Documents/repos/stack-formation"
+  \  "/usr/src/stack-formation": "/Users/r631269/Documents/repos/stack-formation",
+  \  "/usr/src/stack-deploy": "/Users/r631269/Documents/repos/stack-deploy",
+  \  "/usr/src/stack-build": "/Users/r631269/Documents/repos/stack-build"
   \}
   let g:vdebug_options["port"] = 9001
   "{'debug_file': '', 'debug_file_level': 0, 'watch_window_style': 'expanded', 'marker_default': '-', 'continuous_mode': 0, 'ide_key': '', 'break_on_open': 0, 'on_close': 'stop', 'path_maps': {}, 'marker_closed_tree': 'x', 'timeout': 20, 'port': 9000, 'marker_open_tree': '+', 'debug_window_level': 0, 'server': ''}
@@ -679,15 +682,6 @@
   autocmd FileType yaml setlocal sw=2 ts=2
   autocmd FileType javascript setlocal sw=2 ts=2
   autocmd FileType vim setlocal sw=2 ts=2 expandtab
-  "}}}
-
-  "}}}
-
-  "{{{ Misc
-
-  " Custom file type behavior {{{
-  autocmd FileType yaml setlocal sw=2 ts=2
-  autocmd FileType javascript setlocal sw=2 ts=2
   "}}}
 
   "}}}
