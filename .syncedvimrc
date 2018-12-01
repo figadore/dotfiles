@@ -514,6 +514,8 @@
     Bundle "tpope/vim-fireplace"
     " Dynamic window resizing
     Bundle "roman/golden-ratio"
+    Plugin 'google/yapf', { 'rtp': 'plugins/vim' }
+    Plugin 'fatih/vim-go'
   endfunction
   "}}}
 
@@ -659,6 +661,10 @@
   "let g:syntastic_python_checkers = ['python', 'pyflakes']
   let g:syntastic_python_checkers = ['python', 'pylint', 'pep8', 'flake8']
 
+  " Set go linters (doesn't seem to work, and megacheck takes a long time
+  " anyway, would need to find how to increase deadline timeout)
+  let g:go_meta_linter_enabled = ['vet', 'golint', 'errcheck', 'megacheck']
+
   " Indent guides configuration
   let g:indent_guides_enable_on_vim_startup = 1
   let g:indent_guides_default_mapping = 1 "leader-ig
@@ -674,16 +680,6 @@
   "autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=bg ctermfg=10 "FIXME broken in macvim
 
   "}}}
-  "}}}
-
-  "{{{ Misc
-
-  " Custom file type behavior {{{
-  autocmd FileType yaml setlocal sw=2 ts=2
-  autocmd FileType javascript setlocal sw=2 ts=2
-  autocmd FileType vim setlocal sw=2 ts=2 expandtab
-  "}}}
-
   "}}}
 
   "{{{ Appearance
@@ -810,6 +806,17 @@
   "highlight FoldColumn ctermbg=black ctermfg=white
   :highlight FoldColumn guibg=Black guifg=White
   :highlight FoldColumn ctermbg=black ctermfg=white
+
+  "}}}
+
+  "{{{ Misc
+
+  " Custom file type behavior {{{
+  autocmd FileType yaml setlocal sw=2 ts=2
+  autocmd FileType javascript setlocal sw=2 ts=2
+  autocmd FileType vim setlocal sw=2 ts=2 expandtab
+  autocmd FileType go setlocal sw=4 ts=4 noexpandtab listchars=trail:¯,nbsp:¯,tab:\ \ 
+  "}}}
 
   "}}}
 

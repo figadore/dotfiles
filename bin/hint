@@ -50,6 +50,7 @@ case $@ in
     ;;
   docker)
     cmt Remove all exited containers
+<<<<<<< HEAD
     cmd 'docker rm -v $(docker ps -q -f status=exited -f status=created)'
     cmt Remove all images without tags
     cmd 'docker rmi $(docker images -q -f "dangling=true")'
@@ -57,6 +58,15 @@ case $@ in
     cmd 'docker volume ls -qf \"dangling=true\" | xargs docker volume rm'
     cmt Remove all excess networks
     cmd 'docker network rm $(docker network ls -q)'
+=======
+    cmd 'docker container prune'
+    cmt Remove all images without tags
+    cmd 'docker image prune'
+    cmt Remove all dangling volumes
+    cmd 'docker volume prune'
+    cmt Remove all excess networks
+    cmd 'docker network prune'
+>>>>>>> origin/master
     cmt Create dev network
     cmd 'docker network create --driver bridge dev'
     ;;
