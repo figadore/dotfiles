@@ -7,3 +7,19 @@
 	excludesfile = ~/.gitignore_global
 [color]
 	ui = true
+[credential]
+	helper = !aws --profile tools-dev codecommit credential-helper $@
+	UseHttpPath = true
+[alias]
+	aa = "add -u ."
+	a = "add"
+	d = diff
+	c = commit
+	ca = "commit --amend"
+	co = checkout
+	cm = "commit -m"
+	p = "push"
+	s = "status"
+	branch-clean = "! git branch -l --merged | xargs git branch -d"
+[url "git@github.com:"]
+	insteadOf = https://github.com/
