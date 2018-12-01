@@ -8,5 +8,5 @@
 [color]
 	ui = true
 [credential]
-	helper = !aws codecommit credential-helper $@
+	helper = !aws --profile tools-dev codecommit credential-helper $@
 	UseHttpPath = true

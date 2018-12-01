@@ -34,6 +34,7 @@ pathadd() {
 pathadd $HOME/bin
 pathadd $HOME/.rvm/bin
 pathadd $HOME/.local/bin
+pathadd /usr/local/sbin
 pathadd $HOME/node_modules/.bin
 
 # Disable auto renaming terminal
@@ -51,5 +52,21 @@ export LC_CTYPE=en_US.UTF-8
 #export GREP_OPTIONS="--color=always"; #deprecated
 alias grep='grep --color'
 
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/r631269/google-cloud-sdk/path.bash.inc' ]; then . '/Users/r631269/google-cloud-sdk/path.bash.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/r631269/google-cloud-sdk/completion.bash.inc' ]; then . '/Users/r631269/google-cloud-sdk/completion.bash.inc'; fi
+
 # set up pyenv
 eval "$(pyenv init -)"
+
+# Shortcuts for typing
+export ART=artifactory.healthsparq.com
+export REG=docker-registry.healthsparq.com
+export DEV=445930290302
+export UAT=304408629837
+export PRD=629290951501
+export TOOLSPRD=774580802320
+export TOOLSDEV=551078432832
+export MGMT2=803571735847
