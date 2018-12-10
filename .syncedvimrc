@@ -20,6 +20,8 @@
 
   " Set ignore case in search
   set ic
+  " Don't ignore case in search when caps specified
+  set smartcase
   " Incremental search (move tmp cursor as you type)
   set incsearch
   " Highlight search
