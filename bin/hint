@@ -117,6 +117,8 @@ case $@ in
     cmd 'git remote prune origin'
     cmt Assume unchanged
     cmd 'git update-index --assume-unchanged <file>'
+    cmt "Delete all remote branches that are up to date with master (e.g. merged PRs)"
+    cmd git branch --remote --merged origin/master | grep -v 'master' | cut -b 10- | xargs git push --delete origin
     ;;
   "fix wifi")
     cmt Fix wifi after suspend
