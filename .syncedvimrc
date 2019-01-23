@@ -569,7 +569,8 @@
   let g:rainbow_active = 1
   "hue-contrasty order
   let g:rainbow_conf = {
-        \ 'ctermfgs': ['1', '2', '4', '3', '5', '6', '7']
+        \ 'ctermfgs': ['1', '2', '4', '3', '5', '6', '7'],
+        \ 'guifgs': ['red', 'orange', 'yellow', 'green', 'blue', 'violet', 'white']
         \}
 
   "rainbow order
