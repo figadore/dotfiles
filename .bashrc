@@ -41,6 +41,29 @@ pathadd $HOME/node_modules/.bin
 PROMPT_COMMAND=""
 export PROMPT_COMMAND
 
+git_branch() {
+    # display [@<git-branch>] if in a git repo
+    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/[@\1]/'
+}
+parse_git_status() {
+    # display '*' if files changed, '+' if files uncommitted, '-' if not a git repo
+    if [[ $(git status 2> /dev/null | tail -n1) == "nothing to commit, working tree clean" ]]; then
+        echo -n ""
+    elif [[ $(git status 2> /dev/null | tail -n1) == 'nothing added to commit but untracked files present (use "git add" to track)' ]]; then
+        echo -n "+"
+    elif [[ $(git status 2>&1 | tail -n1) == "fatal: not a git repository (or any of the parent directories): .git" ]]; then
+        echo -n "-"
+    else
+        echo -n "*"
+    fi
+
+}
+
+# original
+#export PS1="\h:\W \u\$ "
+# Display the following, with colors- `<user>@<host> : <dir> [@<branch>]<git-status> \n└─ $`
+export PS1='\[\033[0;32m\]\[\033[0m\033[0;32m\]\u@\h\[\033[0;36m\] : \w\[\033[0;32m\] $(git_branch)$(parse_git_status)\n\[\033[0;32m\]└─\[\033[0m\033[0;32m\] \$\[\033[0m\033[0;32m\]\[\033[0m\] '
+
 if [ -f ~/.git-completion.bash ]; then
   . ~/.git-completion.bash
 fi
