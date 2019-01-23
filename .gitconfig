@@ -23,3 +23,5 @@
 	branch-clean = "! git branch -l --merged | xargs git branch -d"
 [url "git@github.com:"]
 	insteadOf = https://github.com/
+[url "git:"]
+	insteadOf = https://rawilson@git.healthsparq.net/scm/
