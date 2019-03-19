@@ -27,11 +27,17 @@ export CLICOLOR=1
 # Check if directory exists, and add to path (if it isn't already  in the path)
 pathadd() {
   if [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then
-    PATH="${PATH:+"$PATH:"}$1"
+    if [ -n "$2" ]; then
+      # Add to front
+      PATH="${1}${PATH:+":$PATH"}"
+    else
+      # Add to end
+      PATH="${PATH:+"$PATH:"}$1"
+    fi
   fi
 }
 
-pathadd $HOME/bin
+pathadd $HOME/bin front=true
 pathadd $HOME/.rvm/bin
 pathadd $HOME/.local/bin
 pathadd /usr/local/sbin
