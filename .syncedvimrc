@@ -474,7 +474,9 @@
     Bundle 'gmarik/vundle'
     "Add your bundles here
     "uber awesome syntax and errors highlighter
-    Bundle 'Syntastic'
+    "Bundle 'Syntastic' "old repo?
+    Bundle 'vim-syntastic/syntastic'
+    Bundle 'w0rp/ale'
     Bundle 'altercation/vim-colors-solarized'
     "Git plugin
     Bundle 'https://github.com/tpope/vim-fugitive'
@@ -654,6 +656,8 @@
   " anyway, would need to find how to increase deadline timeout)
   let g:go_meta_linter_enabled = ['vet', 'golint', 'errcheck', 'megacheck']
 
+  let g:syntastic_go_checkers = ['golangci-lint']
+
   " Indent guides configuration
   let g:indent_guides_enable_on_vim_startup = 1
   let g:indent_guides_default_mapping = 1 "leader-ig
@@ -804,6 +808,7 @@
   autocmd FileType javascript setlocal sw=2 ts=2
   autocmd FileType vim setlocal sw=2 ts=2 expandtab
   autocmd FileType go setlocal sw=4 ts=4 noexpandtab listchars=trail:¯,nbsp:¯,tab:\ \ 
+  autocmd FileType go let b:ale_linters = ['golangci-lint']
   "}}}
 
   "}}}
