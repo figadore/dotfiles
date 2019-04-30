@@ -41,6 +41,12 @@ Thumbs.db
 *.swo
 *.swp
 
+# terraform secrets #
+######################
+*.tfvars
+*.tfstate*
+*.terraform
+
 # compiled/external #
 ######################
 vendor/
