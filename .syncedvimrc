@@ -476,7 +476,7 @@
     "uber awesome syntax and errors highlighter
     "Bundle 'Syntastic' "old repo?
     Bundle 'vim-syntastic/syntastic'
-    Bundle 'w0rp/ale'
+    Bundle 'dense-analysis/ale'
     Bundle 'altercation/vim-colors-solarized'
     "Git plugin
     Bundle 'https://github.com/tpope/vim-fugitive'
@@ -601,9 +601,11 @@
   " Customize renamed tab format
   let g:taboo_renamed_tab_format=" [%N]%f%m "
 
-
   " Syntastic, show errors list when detected
-  let g:syntastic_auto_loc_list=1
+  "let g:syntastic_auto_loc_list=1
+  " Syntastic, show errors list, close when empty, don't open automatically
+  let g:syntastic_auto_loc_list=2
+  "let g:syntastic_sh_shellcheck_args="-e SC2034"
 
   " Snipmate
   let g:snips_author = "Reese Wilson"
@@ -820,6 +822,17 @@
     filetype plugin indent on
   else
   endif
+
+  " These have to go after the filetype autocommands
+  " ALE checker options
+  let g:ale_go_go111module="on"
+  let g:ale_go_golangci_lint_package=1
+  let g:ale_go_golangci_lint_options=""
+
+  let g:ale_sh_shellcheck_exclusions = 'SC2034'
+  let g:ale_sh_shellcheck_options="-e SC2034"
+  "let g:sonyntastic_sh_shellcheck_args="-e SC2034"
+
 
   " Enable syntax highlighting. this should go near the end of vimrc
   syntax on
