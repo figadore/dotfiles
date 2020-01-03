@@ -98,6 +98,9 @@ export EDITOR=vim
 # Set vi style bindings in shell
 bindkey -v
 bindkey '^R' history-incremental-search-backward
+# ctrl j and k to go up and down in history
+bindkey -M viins '^J' history-incremental-search-forward
+bindkey -M viins '^K' history-incremental-search-backward
 
 # Use colors
 export CLICOLOR=1
