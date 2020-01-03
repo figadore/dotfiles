@@ -1,6 +1,7 @@
 [user]
-	email = Reese.Wilson@healthsparq.com
+	email = 3253971+figadore@users.noreply.github.com
 	name = Reese Wilson
+	signingkey = 7EB37E1CD31C01CC
 [push]
 	default = current
 [core]
@@ -25,3 +26,12 @@
 	insteadOf = https://github.com/
 [url "git:"]
 	insteadOf = https://rawilson@git.healthsparq.net/scm/
+[commit]
+	gpgsign = true
+[gpg]
+	program = /usr/local/bin/gpg
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

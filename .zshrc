@@ -209,3 +209,13 @@ export ANALYTICS=880065222602
 
 # Enable autojump
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
+# Disable less as a git pager
+export PAGER=
+
+# don't share history between tmux sessions
+setopt nosharehistory
+setopt noincappendhistory
+
+# don't share history between zsh sessions
+unsetopt share_history
+setopt no_share_history
