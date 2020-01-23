@@ -44,7 +44,7 @@
 
   " Save current view when leaving, load when entering buffer
   autocmd BufWinLeave *.* if bufname("%")!=""|mkview|endif
-  autocmd BufWinEnter *.* silent loadview
+  autocmd BufWinEnter *.* silent! loadview
 
   " Hack to allow "crontab -e" on mac
   au BufEnter /private/tmp/crontab.* setl backupcopy=yes
@@ -127,25 +127,25 @@
   " Close current tab
   nmap <leader>q :tabclose<CR>
   " Alt-q, close tab
-  nmap œ :tabclose<CR>
+  nmap Å :tabclose<CR>
   "nmap q :tabclose<CR>
   " Alt-j, navigate to last tab
-  map ∆ :tabl<CR>
+  map â :tabl<CR>
   "map j :tabl<CR>
   " Alt-k, navigate to first tab
-  map ˚ :tabfir<CR>
+  map Ë :tabfir<CR>
   "map k :tabfir<CR>
   " Alt-h, navigate to previous tab
-  map ˙ :tabp<CR>
+  map Ë :tabp<CR>
   "map h :tabp<CR>
   " Alt-l, navigate to next tab
-  map ¬ :tabn<CR>
+  map Â¬ :tabn<CR>
   "map l :tabn<CR>
   " Alt-c, create new tab
-  map ç :tabnew<CR>
+  map Ã§ :tabnew<CR>
   "map c :tabnew<CR>
   " Alt-r, rename tab
-  map ® :TabooRename 
+  map Â® :TabooRename 
   "map r :TabooRename 
 
   " Alias :W as :w, so write command works with caps or not
@@ -172,7 +172,7 @@
   nmap <leader>s :w<CR>
 
   " Alias alt-w as :w
-  nmap ∑ :w<CR>
+  nmap â :w<CR>
 
   " Allow jumping between quickfix errors
   nmap ]l :lnext<CR>
@@ -714,7 +714,7 @@
   set listchars=tab:\|\ 
 
   " show trailing whitespace chars
-  set listchars+=trail:�,nbsp:�
+  set listchars+=trail:¯,nbsp:¯
   " Show symbol if line wraps
   "set listchars+=extends:#
 
@@ -822,7 +822,7 @@
   autocmd FileType yaml setlocal sw=2 ts=2
   autocmd FileType javascript setlocal sw=2 ts=2
   autocmd FileType vim setlocal sw=2 ts=2 expandtab
-  autocmd FileType go setlocal sw=4 ts=4 noexpandtab listchars=trail:�,nbsp:�,tab:\ \ 
+  autocmd FileType go setlocal sw=4 ts=4 noexpandtab listchars=trail:¯,nbsp:¯,tab:\ \ 
   autocmd FileType go let b:ale_linters = ['golangci-lint']
   "}}}
 
