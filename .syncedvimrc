@@ -127,25 +127,32 @@
   " Close current tab
   nmap <leader>q :tabclose<CR>
   " Alt-q, close tab
-  nmap Å :tabclose<CR>
+  nmap œ :tabclose<CR>
+  "nmap Å :tabclose<CR>
   "nmap q :tabclose<CR>
   " Alt-j, navigate to last tab
-  map â :tabl<CR>
+  map ∆ :tabl<CR>
+  "map â :tabl<CR>
   "map j :tabl<CR>
   " Alt-k, navigate to first tab
-  map Ë :tabfir<CR>
+  map ˚ :tabfir<CR>
+  "map Ë :tabfir<CR>
   "map k :tabfir<CR>
   " Alt-h, navigate to previous tab
-  map Ë :tabp<CR>
+  map ˙ :tabp<CR>
+  "map Ë :tabp<CR>
   "map h :tabp<CR>
   " Alt-l, navigate to next tab
-  map Â¬ :tabn<CR>
+  map ¬ :tabn<CR>
+  "map Â¬ :tabn<CR>
   "map l :tabn<CR>
   " Alt-c, create new tab
-  map Ã§ :tabnew<CR>
+  map ç :tabnew<CR>
+  "map Ã§ :tabnew<CR>
   "map c :tabnew<CR>
   " Alt-r, rename tab
-  map Â® :TabooRename 
+  map ® :TabooRename 
+  "map Â® :TabooRename 
   "map r :TabooRename 
 
   " Alias :W as :w, so write command works with caps or not
