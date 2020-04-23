@@ -256,6 +256,8 @@
       if (&rnu)
         let b:rnu=1
       endif
+      ALEDisable
+      SyntasticReset
       setlocal nornu
       setlocal nolist
       setlocal foldcolumn=0
@@ -269,6 +271,7 @@
       if b:rnu
         setlocal rnu
       endif
+      ALEEnable
       setlocal nu
       setlocal list
       "setlocal foldcolumn=defaultfdc

@@ -24,6 +24,9 @@ export EDITOR=vim
 # Use colors
 export CLICOLOR=1
 
+# allow current tty to receive gpg password
+export GPG_TTY=$(tty)
+
 # Check if directory exists, and add to path (if it isn't already  in the path)
 pathadd() {
   if [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then

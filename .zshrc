@@ -12,7 +12,8 @@ export ZSH="/Users/r631269/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="powerlevel9k/powerlevel9k"
+#ZSH_THEME="powerlevel9k/powerlevel9k"
+ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -104,6 +105,9 @@ bindkey -M viins '^K' history-incremental-search-backward
 
 # Use colors
 export CLICOLOR=1
+
+# allow current tty to receive gpg password
+export GPG_TTY=$(tty)
 
 # Check if directory exists, and add to path (if it isn't already  in the path)
 pathadd() {
@@ -222,3 +226,6 @@ setopt noincappendhistory
 # don't share history between zsh sessions
 unsetopt share_history
 setopt no_share_history
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
