@@ -6,6 +6,7 @@
 	default = current
 [core]
 	excludesfile = ~/.gitignore_global
+	hooksPath = /Users/r631269/.git-hooks-global
 [color]
 	ui = true
 [credential]
