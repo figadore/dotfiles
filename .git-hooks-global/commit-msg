@@ -1,0 +1,3 @@
+#!/bin/bash
+exec < /dev/tty
+~/.git-hooks-global/validate-msg.py $1
