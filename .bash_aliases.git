@@ -1,0 +1,12 @@
+# Git aliases
+alias gaa="git add -u ."
+alias ga="git add "
+alias gf="git fetch"
+alias gmm="git merge origin/master"
+alias gd="git diff"
+alias gc="git commit"
+alias gca="git commit --amend"
+alias gco="git checkout"
+alias gcm="git commit -m"
+alias gp="git push"
+alias gs="git status"

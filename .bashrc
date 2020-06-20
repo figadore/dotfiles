@@ -1,8 +1,11 @@
 # .bashrc
 
 # Use custom aliases, if file exists
-if [ -f ~/.bash_aliases ]; then 
+if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
+fi
+if [ -f ~/.bash_aliases.git ]; then
+    . ~/.bash_aliases.git
 fi
 
 # For rvm
