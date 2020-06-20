@@ -69,7 +69,7 @@ parse_git_status() {
 # original
 #export PS1="\h:\W \u\$ "
 # Display the following, with colors- `<user>@<host> : <dir> [@<branch>]<git-status> \n└─ $`
-export PS1='\[\033[0;32m\]\[\033[0m\033[0;32m\]\u@\h\[\033[0;36m\] : \w\[\033[0;32m\] $(git_branch)$(parse_git_status)\n\[\033[0;32m\]└─\[\033[0m\033[0;32m\] \$\[\033[0m\033[0;32m\]\[\033[0m\] '
+export PS1='\[\033[0;32m\]\[\033[0m\033[0;32m\]\u@\h\[\033[0;36m\] : \w\[\033[0;32m\] $(git_branch)$(parse_git_status):$(~/temps)\n\[\033[0;32m\]└─\[\033[0m\033[0;32m\] \$\[\033[0m\033[0;32m\]\[\033[0m\] '
 
 if [ -f ~/.git-completion.bash ]; then
   . ~/.git-completion.bash
