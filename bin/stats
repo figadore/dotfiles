@@ -1,6 +1,6 @@
 #!/bin/bash
 cpu=$(iostat -c  | head -4 | tail -1 | awk '{print $6}')
-temps=$(temps)
+temps=$(/home/pi/bin/temps)
 swap=$(free -h | tail -1 | awk '{print $3"/"$4}')
 mem=$(free -h | tail -2 | head -1 | awk '{print $3"/"$4}')
 echo -e "$(date +"%F %T")\tidle:$cpu\ttemps:$temps\tmem:$mem\tswap:$swap" >> /home/pi/stats.txt
