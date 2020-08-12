@@ -49,6 +49,8 @@ case $@ in
     cmd grep -rI "text" ./
     ;;
   docker)
+    cmt List docker images by size
+    cmd 'docker images --format '{{.Size}}\t{{.Repository}}' | sort -h'
     cmt Remove all exited containers
     cmd 'docker container prune'
     cmt Remove all images without tags
