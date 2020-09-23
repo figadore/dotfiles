@@ -1,3 +1,4 @@
 #!/bin/bash
+# from http://addamhardy.com/2013/06/05/good-commit-messages-and-enforcing-them-with-git-hooks.html
 exec < /dev/tty
 ~/.git-hooks-global/validate-msg.py $1
