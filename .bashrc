@@ -106,3 +106,5 @@ export TOOLSPRD=774580802320
 export TOOLSDEV=551078432832
 export MGMT2=803571735847
 export ANALYTICS=880065222602
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash

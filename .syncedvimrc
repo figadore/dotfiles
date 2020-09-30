@@ -846,8 +846,11 @@
   else
   endif
 
+  let g:pymode_python = 'python3'
+
   " These have to go after the filetype autocommands
   " ALE checker options
+  let g:ale_completion_enabled = 1
   let g:ale_go_go111module="on"
   let g:ale_go_golangci_lint_package=1
   let g:ale_go_golangci_lint_options=""
