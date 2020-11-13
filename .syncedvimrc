@@ -674,7 +674,9 @@
 
   " enable python pep8
   "let g:syntastic_python_checkers = ['python', 'pyflakes']
-  let g:syntastic_python_checkers = ['python', 'pylint', 'flake8']
+  "let g:syntastic_python_checkers = ['python', 'pylint', 'flake8']
+  " disable python syntastic in favor of ALE
+  let g:syntastic_python_checkers = []
 
   " Set go linters (doesn't seem to work, and megacheck takes a long time
   " anyway, would need to find how to increase deadline timeout)

@@ -112,12 +112,14 @@ bindkey '^R' history-incremental-search-backward
 # ctrl j and k to go up and down in history
 bindkey -M viins '^J' history-incremental-search-forward
 bindkey -M viins '^K' history-incremental-search-backward
+# open command in editor with ctrl-v
+bindkey -M vicmd "^V" edit-command-line
 
 # Use colors
 export CLICOLOR=1
 
 # allow current tty to receive gpg password
-export GPG_TTY=$(tty)
+export GPG_TTY=$TTY
 
 # Check if directory exists, and add to path (if it isn't already  in the path)
 pathadd() {
@@ -175,12 +177,6 @@ export LC_CTYPE=en_US.UTF-8
 # Terminal grep colors support
 #export GREP_OPTIONS="--color=always"; #deprecated
 alias grep='grep --color'
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/r631269/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/r631269/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/r631269/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/r631269/google-cloud-sdk/completion.zsh.inc'; fi
 
 # set up pyenv
 #eval "$(pyenv init -)"
@@ -243,3 +239,9 @@ source ~/powerlevel10k/powerlevel10k.zsh-theme
 POWERLEVEL9K_SHORTEN_STRATEGY='truncate_with_folder_marker'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/r631269/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/r631269/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/r631269/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/r631269/google-cloud-sdk/completion.zsh.inc'; fi
