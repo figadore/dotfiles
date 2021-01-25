@@ -1,5 +1,6 @@
 # Compiled source #
 ###################
+*.pyc
 *.class
 *.dll
 *.exe
@@ -39,6 +40,12 @@ Thumbs.db
 ######################
 *.swo
 *.swp
+
+# terraform secrets #
+######################
+*.tfvars
+*.tfstate*
+*.terraform
 
 # compiled/external #
 ######################

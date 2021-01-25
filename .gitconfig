@@ -1,5 +1,5 @@
 [user]
-	email = reese@shinymayhem.com
+	email = 3253971+figadore@users.noreply.github.com
 	name = Reese Wilson
 [push]
 	default = current
@@ -7,3 +7,28 @@
 	excludesfile = ~/.gitignore_global
 [color]
 	ui = true
+[credential]
+	helper = !aws --profile tools-dev codecommit credential-helper $@
+	UseHttpPath = true
+[alias]
+	aa = "add -u ."
+	a = "add"
+	d = diff
+	c = commit
+	ca = "commit --amend"
+	co = checkout
+	cm = "commit -m"
+	p = "push"
+	s = "status"
+	branch-clean = "! git branch -l --merged | xargs git branch -d"
+[url "git@github.com:"]
+	insteadOf = https://github.com/
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[oh-my-zsh]
+	hide-status = 1
+	hide-status = 1
+	hide-dirty = 1

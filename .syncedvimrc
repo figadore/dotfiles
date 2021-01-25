@@ -20,6 +20,8 @@
 
   " Set ignore case in search
   set ic
+  " Don't ignore case in search when caps specified
+  set smartcase
   " Incremental search (move tmp cursor as you type)
   set incsearch
   " Highlight search
@@ -27,6 +29,8 @@
 
   " Settings for taboo tab renaming, save tabs and globals in sessions on save
   set sessionoptions+=tabpages,globals
+  " Fix colors when restoring a session
+  set sessionoptions-=options
 
   " make tab autocompletion work like bash, with highlighting
   set wildmode=longest,list,full
@@ -244,6 +248,8 @@
       if (&rnu)
         let b:rnu=1
       endif
+      ALEDisable
+      SyntasticReset
       setlocal nornu
       setlocal nolist
       setlocal foldcolumn=0
@@ -257,6 +263,7 @@
       if b:rnu
         setlocal rnu
       endif
+      ALEEnable
       setlocal nu
       setlocal list
       "setlocal foldcolumn=defaultfdc
@@ -470,10 +477,13 @@
     Bundle 'gmarik/vundle'
     "Add your bundles here
     "uber awesome syntax and errors highlighter
-    Bundle 'Syntastic'
+    "Bundle 'Syntastic' "old repo?
+    Bundle 'vim-syntastic/syntastic'
+    Bundle 'dense-analysis/ale'
     Bundle 'altercation/vim-colors-solarized'
     "Git plugin
     Bundle 'https://github.com/tpope/vim-fugitive'
+    Bundle 'https://github.com/tpope/vim-unimpaired'
     "...All your other bundles...
     "vdebug
     Bundle 'joonty/vdebug.git'
@@ -503,6 +513,12 @@
     Bundle "elzr/vim-json"
     " leader-w to move to next camelcase or underscore word
     Bundle "bkad/camelcasemotion"
+    "Bundle "kien/rainbow_parentheses.vim"
+    Bundle "luochen1990/rainbow"
+    " Dynamic window resizing
+    Bundle "roman/golden-ratio"
+    Plugin 'google/yapf', { 'rtp': 'plugins/vim' }
+    Plugin 'fatih/vim-go'
   endfunction
   "}}}
 
@@ -547,6 +563,22 @@
 
   " Customize bundles {{{
 
+  " disable auto golden ratio resizing
+  let g:golden_ratio_autocommand = 0
+  :map <leader>r :GoldenRatioResize<CR>
+
+  let g:rainbow_active = 1
+  "hue-contrasty order
+  let g:rainbow_conf = {
+        \ 'ctermfgs': ['1', '2', '4', '3', '5', '6', '7'],
+        \ 'guifgs': ['red', 'orange', 'yellow', 'green', 'blue', 'violet', 'white']
+        \}
+
+  "rainbow order
+  "let g:rainbow_conf = {
+  "      \ 'ctermfgs': ['1', '2', '4', '3', '5', '6', '7']
+  "      \}
+
   " xmledit
   let g:xmledit_enable_html = 1 "make it work on html files
   " Override xmledit html callback, don't add extra attributes
@@ -572,9 +604,11 @@
   " Customize renamed tab format
   let g:taboo_renamed_tab_format=" [%N]%f%m "
 
-
   " Syntastic, show errors list when detected
-  let g:syntastic_auto_loc_list=1
+  "let g:syntastic_auto_loc_list=1
+  " Syntastic, show errors list, close when empty, don't open automatically
+  let g:syntastic_auto_loc_list=2
+  "let g:syntastic_sh_shellcheck_args="-e SC2034"
 
   " Snipmate
   let g:snips_author = "Reese Wilson"
@@ -596,12 +630,20 @@
   let g:NERDTreeDirArrowExpandable="+"
   let g:NERDTreeDirArrowCollapsible="~"
 
+  " ignore .pyc files
+  let NERDTreeIgnore = ['\~$', '\.pyc$']
+
+  " Shortcut to open nerdtree to current file location
+  :map <leader>N :NERDTreeFind<CR>
+
   " Ctrlp show hidden files
   "let g:ctrlp_show_hidden=1
   " Ignore files and/or directories
   let g:ctrlp_custom_ignore = {
     \ 'dir': '\v[\/](\.git|vendor|\.vim)$'
     \ }
+  " ctrlp search defaults to current dir up to closest .git dir
+  let g:ctrlp_working_path_mode = 'ra'
 
   " change json filetype from javascript for eslint
   au BufNewFile,BufRead *.json set filetype=json
@@ -611,12 +653,29 @@
   " enable eslint
   let g:syntastic_javascript_checkers = ['eslint']
 
+  " enable python pep8
+  "let g:syntastic_python_checkers = ['python', 'pyflakes']
+  let g:syntastic_python_checkers = ['python', 'pylint', 'pep8', 'flake8']
+
+  " Set go linters (doesn't seem to work, and megacheck takes a long time
+  " anyway, would need to find how to increase deadline timeout)
+  let g:go_meta_linter_enabled = ['vet', 'golint', 'errcheck', 'megacheck']
+
+  let g:syntastic_go_checkers = ['golangci-lint']
+
   " Indent guides configuration
   let g:indent_guides_enable_on_vim_startup = 1
   let g:indent_guides_default_mapping = 1 "leader-ig
   let g:indent_guides_auto_colors = 0
-  autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=9 ctermfg=10
-  autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=black ctermfg=10
+  " light bg
+  "autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=0 ctermfg=10 guibg=#f1fdd8
+  "autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=8 ctermfg=10 guibg=#f7f6d2
+  " dark bg
+  autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=0 ctermfg=10 guibg=#012d38
+  autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=8 ctermfg=10 guibg=#073642
+  "
+  "autocmd VimEnter,Colorscheme * :hi link IndentGuidesOdd CursorLine "FIXME broken in macvim
+  "autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=bg ctermfg=10 "FIXME broken in macvim
 
   "}}}
   "}}}
@@ -634,6 +693,7 @@
   " Syntastic settings, show errors in statusline
   set statusline+=%#warningmsg#
   set statusline+=%{SyntasticStatuslineFlag()}
+  set statusline+=%{fugitive#statusline()}
   set statusline+=%*
   "}}}
 
@@ -652,18 +712,26 @@
   " Set colorscheme *after* solarized bundle sourced
   set bg=dark
   colorscheme solarized
-  if has('gui_running')
+  if has("gui_running")
+    " Mac Font
+    set guifont=Monaco:h10
     " Menu bar
-    set guioptions -=m
+    set guioptions-=m
     " Toolbar
-    set guioptions -=T
+    set guioptions-=T
     " Remove vertical and horizontal scrollbars
-    set guioptions -=LlRrb
+    set guioptions-=L
+    set guioptions-=l
+    set guioptions-=R
+    set guioptions-=r
+    set guioptions-=b
+    " Switch to text-style tab display
+    set guioptions-=e
     " Cursor colors
     highlight Cursor guifg=black guibg=white
     highlight iCursor guifg=white guibg=steelblue
     " Cursorline colors
-    hi CursorLine gui=underline guibg=gray10
+    hi CursorLine gui=underline
     ":hi CursorLine cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
     "setguicursor=n-v-c:block-Cursor
     "setguicursor+=i:ver100-iCursor
@@ -690,10 +758,37 @@
 
   if version >= 703
     " Highlight column 81 and beyond
-    autocmd VimEnter,Colorscheme * :hi ColorColumn ctermbg=9
-    hi ColorColumn ctermbg=9
-    let &colorcolumn=join(range(81,999),",")
+    "autocmd VimEnter,Colorscheme * :hi ColorColumn ctermbg=0
+    "dark bg
+    autocmd VimEnter,Colorscheme * :hi ColorColumn ctermbg=0 guibg=#073642 "solarized base02
+    "light bg
+    "autocmd VimEnter,Colorscheme * :hi ColorColumn ctermbg=0 guibg=#f7f6d2
+    "autocmd VimEnter,Colorscheme * :hi! link ColorColumn CursorLine
+    "hi ColorColumn ctermbg=0
+    hi! link ColorColumn CursorLine
+    "let &colorcolumn=join(range(81,999),",")
+    let &colorcolumn=81
   endif
+
+  " switch between dark and light themes (or fix missing column colors)
+  nmap <leader>l :call Light()<CR>
+  nmap <leader>d :call Dark()<CR>
+
+  function! Dark()
+      autocmd! VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=0 ctermfg=10 guibg=#012d38
+      autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=8 ctermfg=10 guibg=#073642
+      autocmd VimEnter,Colorscheme * :hi ColorColumn ctermbg=0 guibg=#073642 "solarized base02
+      se bg=dark
+  endfunction
+
+  function! Light()
+    autocmd! VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=0 ctermfg=10 guibg=#e5e5d7
+    "autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=8 ctermfg=10 guibg=#f7f6d2
+    autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=8 ctermfg=10 guibg=#ffffdf
+    autocmd VimEnter,Colorscheme * :hi ColorColumn ctermbg=0 guibg=#f7f6d2
+    se bg=light
+  endfunction
+
 
 
   " Show cursorline on window enter, hide on leave
@@ -711,6 +806,18 @@
 
   "}}}
 
+  "{{{ Misc
+
+  " Custom file type behavior {{{
+  autocmd FileType yaml setlocal sw=2 ts=2
+  autocmd FileType javascript setlocal sw=2 ts=2
+  autocmd FileType vim setlocal sw=2 ts=2 expandtab
+  autocmd FileType go setlocal sw=4 ts=4 noexpandtab listchars=trail:¯,nbsp:¯,tab:\ \ 
+  autocmd FileType go let b:ale_linters = ['golangci-lint']
+  "}}}
+
+  "}}}
+
   "{{{ Conclusion
   " Save these lines until the end to help with plugin filetype detection
   " Enable filetype based indenting
@@ -718,6 +825,17 @@
     filetype plugin indent on
   else
   endif
+
+  " These have to go after the filetype autocommands
+  " ALE checker options
+  let g:ale_go_go111module="on"
+  let g:ale_go_golangci_lint_package=1
+  let g:ale_go_golangci_lint_options=""
+
+  let g:ale_sh_shellcheck_exclusions = 'SC2034'
+  let g:ale_sh_shellcheck_options="-e SC2034"
+  "let g:sonyntastic_sh_shellcheck_args="-e SC2034"
+
 
   " Enable syntax highlighting. this should go near the end of vimrc
   syntax on

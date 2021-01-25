@@ -1,0 +1,173 @@
+#!/bin/bash
+
+comment='\033[0;38m'
+command='\033[0;34m'
+red='\033[0;31m'
+nc='\033[0m'
+cmt ()
+{
+  #echo -e "\n${comment}___________${nc}"
+  echo -e ""
+  echo -e "${comment}$@${nc}"
+}
+
+error ()
+{
+  echo -e "${red}$@${nc}"
+}
+
+cmd ()
+{
+  echo -e "${command}$@${nc}"
+}
+
+case $@ in
+  "")
+    cmt Usage
+    cmd hint aws
+    cmd hint bash
+    cmd hint docker
+    cmd hint duplicity
+    cmd hint fix shell
+    cmd hint fix wifi
+    cmd hint git
+    cmd hint "kubernetes (kube)"
+    cmd hint screen
+    cmd hint tmux
+    cmd hint xmodmap
+    ;;
+  aws)
+    cmt Rename IAM user
+    cmd 'docker run -it --rm -v ~/.aws:/root/.aws blendle/aws-cli iam update-user --user-name old-user --new-user-name new-user'
+    ;;
+  bash)
+    cmt Replace all instances in previous command
+    cmd '!!:gs/sduo/sudo'
+    cmt Find file by name
+    cmd "find ./ -name 'filename'"
+    cmt Find file containing text
+    cmd grep -rI "text" ./
+    ;;
+  docker)
+    cmt List docker images by size
+    cmd 'docker images --format '{{.Size}}\t{{.Repository}}' | sort -h'
+    cmt Remove all exited containers
+    cmd 'docker container prune'
+    cmt Remove all images without tags
+    cmd 'docker image prune'
+    cmt Remove all dangling volumes
+    cmd 'docker volume prune'
+    cmt Remove all excess networks
+    cmd 'docker network prune'
+    cmt Create dev network
+    cmd 'docker network create --driver bridge dev'
+    ;;
+  duplicity)
+    cmt Restore a file
+    cmd 'PASSPHRASE=whatever duplicity --encrypt-key 47E4BB4F --file-to-restore ref.txt scp://reese@home.shinymayhem.com/gazelle-backup/home ~/ref.txt.restored'
+    ;;
+  kube|kubernetes)
+    cmt Get kube service urls
+    cmd kubectl cluster-info
+    cmt View kube service basic auth credentials
+    cmd kubectl config view
+    cmt "Switch context (aws_tzsecg | aws_tzsecg_kube | upbeat-cargo_kube)"
+    cmd kubectl config use-context upbeat-cargo_kube
+    cmd kctx aws_tzsecg
+    cmt Get pods
+    cmd "kubectl get po [-w]"
+    cmd "kpo[w]"
+    cmt "Describe pod|svc|rc|deployment"
+    cmd "kubectl describe po <podname>"
+    cmd "kdpo <podname>"
+    cmt Delete pod
+    cmd "kubectl delete po <podname>"
+    cmd "kxpo <podname>"
+    cmt Create new
+    cmd kubectl create -f new.yaml
+    cmt Replace existing
+    cmd kubectl replace -f updated.yaml
+    cmd kc new.yaml
+    cmt Rolling update
+    cmd kubectl rolling-update old-rc -f new.yaml
+    cmd kroll old-rc -f new.yaml
+    cmt Edit deployment
+    cmd "kubectl edit deployment <deployment-name>"
+    cmt Logs
+    cmd "kubectl logs <podname> [-f]"
+    cmd "klog <podname> [-f]"
+    cmt Bash
+    cmd "kubectl exec -i --tty <podname> bash"
+    cmd "kbash <podname> bash"
+    ;;
+  git)
+    cmt Show logs in 1 line
+    cmd 'git log --pretty=oneline'
+    cmt Rebase
+    cmd 'git rebase -i <commit>'
+    cmt Remove local branches no longer on remote
+    cmd 'git remote prune origin'
+    cmt Assume unchanged
+    cmd 'git update-index --assume-unchanged <file>'
+    cmt "Delete all remote branches that are up to date with master (e.g. merged PRs)"
+    cmd 'git branch --remote --merged origin/master | grep -v 'master' | cut -b 10- | xargs git push --delete origin'
+    ;;
+  "fix wifi")
+    cmt Fix wifi after suspend
+    cmd 'sudo systemctl restart network-manager.service'
+    cmt Or, one or more of these seems to fix it
+    cmd 'sudo service networking restart'
+    cmd 'sudo nmcli r wifi off'
+    cmd 'sudo nmcli r wifi on'
+    cmd 'sudo service network-manager restart'
+    cmd 'sudo modprobe iwl3945'
+    cmd 'sudo modprobe iwl4965'
+    ;;
+  screen)
+    cmt List sessions
+    cmd 'screen -list'
+    cmt New named session
+    cmd 'screen -R main'
+    cmt Attach to named session
+    cmd 'screen -r -x main'
+    ;;
+  tmux)
+    cmt List sessions
+    cmd 'tmux ls'
+    cmt New named session
+    cmd 'tmux new -s main'
+    cmt Attach to named session
+    cmd 'tmux a -t main'
+    cmt Attach again to named session with independent windows
+    cmd 'tmux new-session -t main'
+    cmt Rename session
+    cmd 'ctrl-a $'
+    cmt Kill independently linked session
+    cmd 'ctrl-a : kill-session'
+    cmt Split pane vertically
+    cmd '"ctrl-a |"'
+    cmt Split pane horizontally
+    cmd 'ctrl-a %'
+    cmt "Join pane from window <n>"
+    cmd 'ctrl-a j'
+    cmt Navigate panes
+    cmd 'ctrl-a ctrl-j'
+    cmt Swap panes
+    cmd 'ctrl-a {/}'
+    cmt Split pane to own window
+    cmd 'ctrl-a !'
+    cmt Resize pane
+    cmd 'ctrl-a alt-up'
+    cmt Swap window numbers
+    cmd "ctrl-a : swap-window -s <x> -t <y>"
+    ;;
+  xmodmap)
+    cmt Replace kp enter key with decimal char
+    cmd 'xmodmap -e "keycode 104 = KP_Decimal"'
+    ;;
+  *)
+    error not found
+    exit 1
+esac
+echo -e "\n"
+
