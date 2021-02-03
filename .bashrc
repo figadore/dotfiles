@@ -108,3 +108,6 @@ export MGMT2=803571735847
 export ANALYTICS=880065222602
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+export GOPATH=$HOME/go
+pathadd $GOPATH/bin

@@ -528,8 +528,8 @@
     Bundle "tpope/vim-fireplace"
     " Dynamic window resizing
     Bundle "roman/golden-ratio"
-    Plugin 'google/yapf', { 'rtp': 'plugins/vim' }
-    Plugin 'fatih/vim-go'
+    Bundle 'google/yapf', { 'rtp': 'plugins/vim' }
+    Bundle 'fatih/vim-go'
   endfunction
   "}}}
 
