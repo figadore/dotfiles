@@ -835,7 +835,7 @@
   autocmd FileType javascript setlocal sw=2 ts=2
   autocmd FileType vim setlocal sw=2 ts=2 expandtab
   autocmd FileType go setlocal sw=4 ts=4 noexpandtab listchars=trail:¯,nbsp:¯,tab:\ \ 
-  autocmd FileType go let b:ale_linters = ['golangci-lint']
+  autocmd FileType go let b:ale_linters = ['gofmt', 'go vet', 'golangci-lint']
   "}}}
 
   "}}}
@@ -856,6 +856,11 @@
   let g:ale_go_go111module="on"
   let g:ale_go_golangci_lint_package=1
   let g:ale_go_golangci_lint_options=""
+
+  let g:go_fmt_command="gopls"
+  let g:go_gopls_gofumpt=1
+  let g:ale_go_fmt_command="gopls"
+  let g:ale_go_gopls_gofumpt=1
 
   let g:ale_sh_shellcheck_exclusions = 'SC2034'
   let g:ale_sh_shellcheck_options="-e SC2034"

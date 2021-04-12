@@ -92,6 +92,8 @@ fi
 if [ -f ~/.profile ]; then
   source ~/.profile
 fi
+# For rbenv
+eval "$(rbenv init -)"
 
 # Increase scrollback
 HISTSIZE=10000
