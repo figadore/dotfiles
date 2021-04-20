@@ -1,0 +1,5 @@
+"xte 'keydown Alt_L' 'keydown Left' 'keyup Left' 'keyup Alt_L'"
+     b:6
+
+"xte 'keydown Alt_L' 'keydown Right' 'keyup Right' 'keyup Alt_L'"
+     b:7
