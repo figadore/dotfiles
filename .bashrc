@@ -1,24 +1,86 @@
 # .bashrc
 
+# Use custom aliases, if file exists
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
+if [ -f ~/.bash_aliases.git ]; then
+    . ~/.bash_aliases.git
+fi
+
+# For rvm
+if [ -f ~/.profile ]; then
+  source ~/.profile
+fi
+
+# Increase scrollback
 HISTSIZE=10000
 HISTFILESIZE=20000
 
 # User specific aliases and functions
-#don't add commands that start with a space to the bash history
+# Don't add commands that start with a space to the bash history
 export HISTCONTROL=ignoreboth
 
-#set vim as default editor
+# Set vim as default editor
 export EDITOR=vim
 
-
+# Use colors
 export CLICOLOR=1
 
-PATH=$PATH:$HOME/bin
+# allow current tty to receive gpg password
+export GPG_TTY=$(tty)
 
-export PATH
+# Check if directory exists, and add to path (if it isn't already  in the path)
+pathadd() {
+  if [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then
+    if [ -n "$2" ]; then
+      # Add to front
+      PATH="${1}${PATH:+":$PATH"}"
+    else
+      # Add to end
+      PATH="${PATH:+"$PATH:"}$1"
+    fi
+  fi
+}
 
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+pathadd $HOME/bin front=true
+pathadd $HOME/.rvm/bin
+pathadd $HOME/.local/bin
 
-#disable renaming terminal
+# Disable auto renaming terminal
 PROMPT_COMMAND=""
 export PROMPT_COMMAND
+
+git_branch() {
+    # display [@<git-branch>] if in a git repo
+    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/[@\1]/'
+}
+parse_git_status() {
+    # display '*' if files changed, '+' if files uncommitted, '-' if not a git repo
+    if [[ $(git status 2> /dev/null | tail -n1) == "nothing to commit, working tree clean" ]]; then
+        echo -n ""
+    elif [[ $(git status 2> /dev/null | tail -n1) == 'nothing added to commit but untracked files present (use "git add" to track)' ]]; then
+        echo -n "+"
+    elif [[ $(git status 2>&1 | tail -n1) == "fatal: not a git repository (or any of the parent directories): .git" ]]; then
+        echo -n "-"
+    else
+        echo -n "*"
+    fi
+
+}
+
+# original
+#export PS1="\h:\W \u\$ "
+# Display the following, with colors- `<user>@<host> : <dir> [@<branch>]<git-status> \n└─ $`
+export PS1='\[\033[0;32m\]\[\033[0m\033[0;32m\]\u@\h\[\033[0;36m\] : \w\[\033[0;32m\] $(git_branch)$(parse_git_status)\n\[\033[0;32m\]└─\[\033[0m\033[0;32m\] \$\[\033[0m\033[0;32m\]\[\033[0m\] '
+
+if [ -f ~/.git-completion.bash ]; then
+  . ~/.git-completion.bash
+fi
+
+# for pylint/flake8 checkers, encoding has to be set here for some reason
+export LC_CTYPE=en_US.UTF-8
+
+# Terminal grep colors support
+#export GREP_OPTIONS="--color=always"; #deprecated
+alias grep='grep --color'
