@@ -137,6 +137,10 @@ pathadd $HOME/.rvm/bin
 pathadd $HOME/.local/bin
 pathadd /usr/local/sbin
 pathadd $HOME/node_modules/.bin
+pathadd /usr/local/go/bin
+export GOPATH=$HOME/go
+pathadd $GOPATH/bin
+pathadd $HOME/.npm/bin
 
 # Disable auto renaming terminal
 PROMPT_COMMAND=""
