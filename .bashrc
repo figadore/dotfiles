@@ -84,3 +84,5 @@ export LC_CTYPE=en_US.UTF-8
 # Terminal grep colors support
 #export GREP_OPTIONS="--color=always"; #deprecated
 alias grep='grep --color'
+
+complete -C /usr/bin/terraform terraform

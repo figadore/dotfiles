@@ -1,5 +1,27 @@
-"xte 'keydown Alt_L' 'keydown Left' 'keyup Left' 'keyup Alt_L'"
-     b:6
+# Use chrome's swipe gestures extension
+# Remap mouse button 6 and 7 to browser back and forward (kind of broken because touchpad also sends these and scrolls through all history instantly/accidentally)
+#"xte 'keydown Alt_L' 'keydown Left' 'keyup Left' 'keyup Alt_L'"
+#     b:6
+#
+#"xte 'keydown Alt_L' 'keydown Right' 'keyup Right' 'keyup Alt_L'"
+#     b:7
 
-"xte 'keydown Alt_L' 'keydown Right' 'keyup Right' 'keyup Alt_L'"
-     b:7
+## Remap page up and page down to right and left arrows because of tiny keys
+#"xte 'key Left'"
+#    m:0x0 + c:112
+#    Prior
+#
+#"xte 'key Right'"
+#    m:0x0 + c:117
+#    Next
+#
+#
+## Remap shift pg up/down to pg up/down so there is still a way to access them
+#"xte 'key Prior'"
+#    m:0x1 + c:112
+#    Shift + Prior
+#
+#
+#"xte 'key Next'"
+#    m:0x1 + c:117
+#    Shift + Next
