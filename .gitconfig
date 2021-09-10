@@ -1,6 +1,7 @@
 [user]
 	email = 3253971+figadore@users.noreply.github.com
 	name = Reese Wilson
+	signingkey = e4839b74088b1dc6b4711b906950332147457958
 [push]
 	default = current
 [core]
@@ -32,3 +33,5 @@
 	hide-status = 1
 	hide-status = 1
 	hide-dirty = 1
+[pull]
+	ff = only

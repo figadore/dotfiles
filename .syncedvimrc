@@ -145,7 +145,8 @@
   "map c :tabnew<CR>
   " Alt-r, rename tab
   "map ò :TabooRename 
-  map r :TabooRename 
+  "map r :TabooRename 
+  map ò :TabooRename 
 
   " test which mapping works
   map <m+t> :echo 1

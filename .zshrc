@@ -119,6 +119,8 @@ export CLICOLOR=1
 # allow current tty to receive gpg password
 export GPG_TTY=$(tty)
 
+export GEM_HOME="$HOME/gems"
+
 # Check if directory exists, and add to path (if it isn't already  in the path)
 pathadd() {
   if [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then
@@ -141,6 +143,8 @@ pathadd /usr/local/go/bin
 export GOPATH=$HOME/go
 pathadd $GOPATH/bin
 pathadd $HOME/.npm/bin
+pathadd $GEM_HOME/bin
+pathadd $HOME/src/adr
 
 # Disable auto renaming terminal
 PROMPT_COMMAND=""

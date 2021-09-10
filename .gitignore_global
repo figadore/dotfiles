@@ -46,6 +46,7 @@ Thumbs.db
 *.tfvars
 *.tfstate*
 *.terraform
+.terraform.lock.hcl
 
 # compiled/external #
 ######################

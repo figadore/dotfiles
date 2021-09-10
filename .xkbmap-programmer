@@ -1189,8 +1189,8 @@ xkb_symbols "pc_us_us_2_inet(evdev)_capslock(ctrl_modifier)" {
     key <AE05> {         [          dollar,               5 ] };
     key <AE06> {         [            less,               6 ] };
     key <AE07> {         [      numbersign,               7 ] };
-    key <AE08> {         [      braceright,               8 ] };
-    key <AE09> {         [    bracketright,               9 ] };
+    key <AE08> {         [    bracketright,               8 ] };
+    key <AE09> {         [      braceright,               9 ] };
     key <AE10> {         [         greater,               0 ] };
     key <AE11> {         [           minus,      underscore ] };
     key <AE12> {         [           equal,            plus ] };
