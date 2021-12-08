@@ -7,9 +7,9 @@
 	excludesfile = ~/.gitignore_global
 [color]
 	ui = true
-[credential]
-	helper = !aws --profile tools-dev codecommit credential-helper $@
-	UseHttpPath = true
+#[credential]
+#	helper = !aws --profile tools-dev codecommit credential-helper $@
+#	UseHttpPath = true
 [alias]
 	aa = "add -u ."
 	a = "add"
