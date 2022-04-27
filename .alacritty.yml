@@ -11,6 +11,7 @@ font:
   bold_italic:
     family: MesloLGS NF
     style: Bold Italic
+  size: 9
 
 # Colors (Solarized Dark)
 colors:
