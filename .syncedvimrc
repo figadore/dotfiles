@@ -738,6 +738,8 @@
   set bg=dark
   colorscheme solarized
   if has("gui_running")
+    " Mac Font
+    "set guifont=Monaco:h10
     " Powerline Font
     set guifont=MesloLGS\ NF\ Regular\ 8
     " Other
