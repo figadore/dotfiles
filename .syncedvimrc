@@ -731,7 +731,11 @@
   colorscheme solarized
   if has("gui_running")
     " Mac Font
-    set guifont=Monaco:h10
+    "set guifont=Monaco:h10
+    " Powerline Font
+    set guifont=MesloLGS\ NF\ Regular\ 8
+    " Other
+    set guifont=SourceCodePro\ 8
     " Menu bar
     set guioptions-=m
     " Toolbar
@@ -806,7 +810,24 @@
     se bg=light
   endfunction
 
+  function! FontSizePlus ()
+    let l:gf_size_whole = matchstr(&guifont, '\( \)\@<=\d\+$')
+    let l:gf_size_whole = l:gf_size_whole + 1
+    let l:new_font_size = ' '.l:gf_size_whole
+    let &guifont = substitute(&guifont, ' \d\+$', l:new_font_size, '')
+  endfunction
 
+  function! FontSizeMinus ()
+    let l:gf_size_whole = matchstr(&guifont, '\( \)\@<=\d\+$')
+    let l:gf_size_whole = l:gf_size_whole - 1
+    let l:new_font_size = ' '.l:gf_size_whole
+    let &guifont = substitute(&guifont, ' \d\+$', l:new_font_size, '')
+  endfunction
+
+  if has("gui_running")
+      nmap <C-_> :call FontSizeMinus()<CR>
+      nmap <C-=> :call FontSizePlus()<CR>
+  endif
 
   " Show cursorline on window enter, hide on leave
   " Do this after solarized theme loaded
