@@ -1,0 +1,432 @@
+{
+    "mapping": {
+        "1,2,1": [
+            "bracketleft",
+            "keyboard"
+        ],
+        "1,3,1": [
+            "parenleft",
+            "keyboard"
+        ],
+        "1,4,1": [
+            "parenright",
+            "keyboard"
+        ],
+        "1,5,1": [
+            "Shift_L + bracketleft\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,6,1": [
+            "Shift_L + 4\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,7,1": [
+            "SHIFT_L + comma\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,9,1": [
+            "bracketright",
+            "keyboard"
+        ],
+        "1,10,1": [
+            "Shift_L + bracketright\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,11,1": [
+            "Shift_L + period\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,26,1": [
+            "Shift_L + 1\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,54,1+1,27,1": [
+            "Shift_L + 2\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,42,1+1,27,1": [
+            "Shift_L + 2\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,8,1": [
+            "Shift_L + 3\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,54,1+1,52,1": [
+            "Shift_L + 5\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,42,1+1,52,1": [
+            "Shift_L + 5\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,42,1+1,51,1": [
+            "Shift_L + 6\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,54,1+1,51,1": [
+            "Shift_L + 6\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,42,1+1,26,1": [
+            "Shift_L + 7\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,54,1+1,26,1": [
+            "Shift_L + 7\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,27,1": [
+            "Shift_L + 8\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,42,1+1,11,1": [
+            "k(Shift_L).h(0)\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,42,1+1,2,1": [
+            "k(Shift_L).h(1)\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,42,1+1,3,1": [
+            "k(Shift_L).h(2)\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,42,1+1,4,1": [
+            "k(Shift_L).h(3)\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,42,1+1,5,1": [
+            "k(Shift_L).h(4)\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,42,1+1,6,1": [
+            "k(Shift_L).h(5)\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,42,1+1,7,1": [
+            "k(Shift_L).h(6)\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,42,1+1,8,1": [
+            "k(Shift_L).h(7)\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,42,1+1,9,1": [
+            "k(Shift_L).h(8)\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,42,1+1,10,1": [
+            "k(Shift_L).h(9)\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,54,1+1,11,1": [
+            "k(Shift_R).h(0)\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,54,1+1,2,1": [
+            "k(Shift_R).h(1)\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,54,1+1,3,1": [
+            "k(Shift_R).h(2)\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,54,1+1,4,1": [
+            "k(Shift_R).h(3)\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,54,1+1,5,1": [
+            "k(Shift_R).h(4)\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,54,1+1,6,1": [
+            "k(Shift_R).h(5)\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,54,1+1,7,1": [
+            "k(Shift_R).h(6)\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,54,1+1,8,1": [
+            "k(Shift_R).h(7)\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,54,1+1,9,1": [
+            "k(Shift_R).h(8)\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,54,1+1,10,1": [
+            "k(Shift_R).h(9)\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,42,1+1,30,1": [
+            "Shift_L + a\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,42,1+1,48,1": [
+            "Shift_L + b\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,42,1+1,46,1": [
+            "Shift_L + c\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,42,1+1,32,1": [
+            "Shift_L + d\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,42,1+1,18,1": [
+            "Shift_L + e\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,42,1+1,33,1": [
+            "Shift_L + f\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,42,1+1,34,1": [
+            "Shift_L + g\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,42,1+1,35,1": [
+            "Shift_L + h\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,42,1+1,23,1": [
+            "Shift_L + i\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,42,1+1,36,1": [
+            "Shift_L + j\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,42,1+1,37,1": [
+            "Shift_L + k\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,42,1+1,38,1": [
+            "Shift_L + l\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,42,1+1,50,1": [
+            "Shift_L + m\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,42,1+1,49,1": [
+            "Shift_L + n\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,42,1+1,24,1": [
+            "Shift_L + o\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,42,1+1,25,1": [
+            "Shift_L + p\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,42,1+1,16,1": [
+            "Shift_L + q\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,42,1+1,19,1": [
+            "Shift_L + r\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,42,1+1,31,1": [
+            "Shift_L + s\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,42,1+1,20,1": [
+            "Shift_L + t\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,42,1+1,22,1": [
+            "Shift_L + u\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,42,1+1,47,1": [
+            "Shift_L + v\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,42,1+1,17,1": [
+            "Shift_L + w\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,42,1+1,45,1": [
+            "Shift_L + x\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,42,1+1,21,1": [
+            "Shift_L + y\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,42,1+1,44,1": [
+            "Shift_L + z\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,54,1+1,30,1": [
+            "Shift_R + a\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,54,1+1,48,1": [
+            "Shift_R + b\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,54,1+1,46,1": [
+            "Shift_R + c\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,54,1+1,32,1": [
+            "Shift_R + d\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,54,1+1,18,1": [
+            "Shift_R + e\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,54,1+1,33,1": [
+            "Shift_R + f\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,54,1+1,34,1": [
+            "Shift_R + g\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,54,1+1,35,1": [
+            "Shift_R + h\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,54,1+1,23,1": [
+            "Shift_R + i\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,54,1+1,36,1": [
+            "Shift_R + j\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,54,1+1,37,1": [
+            "Shift_R + k\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,54,1+1,38,1": [
+            "Shift_R + l\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,54,1+1,50,1": [
+            "Shift_R + m\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,54,1+1,49,1": [
+            "Shift_R + n\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,54,1+1,24,1": [
+            "Shift_R + o\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,54,1+1,25,1": [
+            "Shift_R + p\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,54,1+1,19,1": [
+            "Shift_R + r\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,54,1+1,31,1": [
+            "Shift_R + s\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,54,1+1,20,1": [
+            "Shift_R + t\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,54,1+1,22,1": [
+            "Shift_R + u\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,54,1+1,47,1": [
+            "Shift_R + v\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,54,1+1,17,1": [
+            "Shift_R + w\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,54,1+1,45,1": [
+            "Shift_R + x\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,54,1+1,21,1": [
+            "Shift_R + y\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,54,1+1,44,1": [
+            "Shift_R + z\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,54,1+1,16,1": [
+            "Shift_R + q\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,104,1": [
+            "Left",
+            "keyboard"
+        ],
+        "1,109,1": [
+            "Right",
+            "keyboard"
+        ],
+        "1,54,1+1,43,1": [
+            "Shift_R + backslash\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,42,1+1,43,1": [
+            "Shift_L + backslash\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,42,1+1,39,1": [
+            "Shift_L + semicolon\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,42,1+1,12,1": [
+            "Shift_L + minus\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,54,1+1,12,1": [
+            "Shift_R + minus\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,54,1+1,39,1": [
+            "Shift_R + semicolon\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,42,1+1,13,1": [
+            "Shift_L + equal\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,54,1+1,13,1": [
+            "Shift_R + equal\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,42,1": [
+            "?\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,42,1+1,53,1": [
+            "Shift_L + slash\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,54,1+1,53,1": [
+            "Shift_R + slash\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,42,1+1,40,1": [
+            "Shift_L + apostrophe\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ],
+        "1,54,1+1,40,1": [
+            "Shift_R + apostrophe\n# Broken mapping:\n# No target can handle all specified keycodes",
+            "keyboard"
+        ]
+    }
+}
