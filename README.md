@@ -18,3 +18,47 @@ Add the following to /etc/fstab
 //192.168.0.10/home /home/reese/cloyster-home cifs credentials=/home/reese/.smbcredentials,iocharset=utf8,sec=ntlmssp 0 0
 //192.168.0.10/shared /home/reese/cloyster-shared cifs credentials=/home/reese/.smbcredentials,iocharset=utf8,sec=ntlmssp 0 0
 ```
+
+## USB Storage
+Add the following lines to /etc/modprobe.d/blacklist.conf
+```
+# For vivantehealth security policies, disable external usb storage
+blacklist usb_storage
+```
+
+Create /usr/local/bin/disablestorage
+```
+#!/bin/bash
+modprobe -r uas
+modprobe -r usb_storage
+# something for sd card reader
+```
+
+Create /lib/systemd/system/disable-usb.service
+```
+[Unit]
+#After=network.service
+Description=Runs /usr/local/bin/disablestorage
+
+[Service]
+ExecStart=/usr/local/bin/disablestorage
+
+[Install]
+WantedBy=default.target
+```
+
+Symlink to /etc/systemd/system
+```
+cd /etc/systemd/system
+sudo ln -s /lib/systemd/system/disable-usb.service
+```
+
+Start it
+```
+systemctl start disable-usb
+systemctl enable disable-usb
+reboot
+```
+
+## SD Card reader
+TODO
