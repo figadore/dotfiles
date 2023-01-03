@@ -13,3 +13,6 @@
 "map ã :tabnew<CR>
 "" Alt-r, rename tab
 "map ò :TabooRename 
+" show trailing whitespace chars
+set listchars+=trail:¯,nbsp:¯
+autocmd FileType go setlocal sw=4 ts=4 noexpandtab listchars=trail:¯,nbsp:¯,tab:\ \ 

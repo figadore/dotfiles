@@ -1,6 +1,5 @@
 " Environment {
 
-echom "Parsing bundles vimrc"
 " Basics {
 set nocompatible        " Must be first line
 set background=dark     " Assume a dark background
@@ -108,7 +107,6 @@ if !exists("g:override_spf13_bundles")
 
   " General {
   if count(g:spf13_bundle_groups, 'general')
-    echom "Evaluating general plugins"
     " file navigator
     Plugin 'preservim/nerdtree'
     " solarized colors
