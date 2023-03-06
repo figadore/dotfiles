@@ -221,7 +221,7 @@
   nnoremap <leader>p :call PasteToggle()<CR>
   "add paste shortcuts below to .vimrc, depending on environment
   "nnoremap <c-p> :call PasteXclip()<CR>
-  "nnoremap <c-P> :call PasteSystem()<CR>
+  nnoremap <leader>P :call PasteSystem()<CR>
 
   " Fold columns
   let defaultfdc=2
@@ -397,8 +397,8 @@
   endfunction
 
   " Leader-t runs phpunit on specified group
-  command! -nargs=1 Phpunit call s:PhpUnit(<q-args>)
-  map <leader>t :Phpunit
+  "command! -nargs=1 Phpunit call s:PhpUnit(<q-args>)
+  "map <leader>t :Phpunit
 
   "}}}
 
@@ -517,8 +517,10 @@
     Bundle "luochen1990/rainbow"
     " Dynamic window resizing
     Bundle "roman/golden-ratio"
-    Bundle 'google/yapf', { 'rtp': 'plugins/vim' }
-    Bundle 'fatih/vim-go'
+    "Plugin 'google/yapf', { 'rtp': 'plugins/vim' }
+    Plugin 'fatih/vim-go'
+    Bundle 'ycm-core/YouCompleteMe'
+    Plugin 'hashivim/vim-terraform'
   endfunction
   "}}}
 
@@ -562,6 +564,12 @@
   "}}}
 
   " Customize bundles {{{
+
+  let g:terraform_align=1
+  let g:terraform_fmt_on_save=1
+  " These are set in vim-terraform's ftdetect, not sure why it isn't working
+  autocmd BufRead,BufNewFile *.tf,*.tfvars,.terraformrc,terraform.rc set filetype=terraform
+  autocmd BufRead,BufNewFile *.tfstate,*.tfstate.backup set filetype=json
 
   " disable auto golden ratio resizing
   let g:golden_ratio_autocommand = 0
@@ -657,11 +665,20 @@
   "let g:syntastic_python_checkers = ['python', 'pyflakes']
   let g:syntastic_python_checkers = ['python', 'pylint', 'pep8', 'flake8']
 
+  " Open omnifunc whenever '.' is pressed in go
+  "au filetype go inoremap <buffer> . .<C-x><C-o>
+
+  map <leader>t <Plug>(go-def-type-tab)
+  "let g:go_def_reuse_buffer = 1
+
   " Set go linters (doesn't seem to work, and megacheck takes a long time
   " anyway, would need to find how to increase deadline timeout)
   let g:go_meta_linter_enabled = ['vet', 'golint', 'errcheck', 'megacheck']
 
   let g:syntastic_go_checkers = ['golangci-lint']
+
+  " help go_def work with local packages/modules in subdirectories
+  "let g:go_def_mode="godef"
 
   " Indent guides configuration
   let g:indent_guides_enable_on_vim_startup = 1
@@ -714,7 +731,11 @@
   colorscheme solarized
   if has("gui_running")
     " Mac Font
-    set guifont=Monaco:h10
+    "set guifont=Monaco:h10
+    " Powerline Font
+    set guifont=MesloLGS\ NF\ Regular\ 8
+    " Other
+    set guifont=SourceCodePro\ 8
     " Menu bar
     set guioptions-=m
     " Toolbar
@@ -789,7 +810,24 @@
     se bg=light
   endfunction
 
+  function! FontSizePlus ()
+    let l:gf_size_whole = matchstr(&guifont, '\( \)\@<=\d\+$')
+    let l:gf_size_whole = l:gf_size_whole + 1
+    let l:new_font_size = ' '.l:gf_size_whole
+    let &guifont = substitute(&guifont, ' \d\+$', l:new_font_size, '')
+  endfunction
 
+  function! FontSizeMinus ()
+    let l:gf_size_whole = matchstr(&guifont, '\( \)\@<=\d\+$')
+    let l:gf_size_whole = l:gf_size_whole - 1
+    let l:new_font_size = ' '.l:gf_size_whole
+    let &guifont = substitute(&guifont, ' \d\+$', l:new_font_size, '')
+  endfunction
+
+  if has("gui_running")
+      nmap <C-_> :call FontSizeMinus()<CR>
+      nmap <C-=> :call FontSizePlus()<CR>
+  endif
 
   " Show cursorline on window enter, hide on leave
   " Do this after solarized theme loaded
