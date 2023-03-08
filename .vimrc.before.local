@@ -22,7 +22,7 @@
 " spf13 options {
 
     " Prevent automatically changing to open file directory
-    "   let g:spf13_no_autochdir = 1
+       let g:spf13_no_autochdir = 1
 
     " Disable views
     "   let g:spf13_no_views = 1
