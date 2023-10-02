@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # don't share history between tmux sessions
 setopt nosharehistory
 
@@ -125,9 +132,12 @@ pathadd() {
   fi
 }
 
+export GOPATH=$HOME/go
+
 pathadd $HOME/bin front=true
 pathadd $HOME/.rvm/bin
 pathadd $HOME/.local/bin
+pathadd $HOME/go/bin
 pathadd /usr/local/sbin
 pathadd $HOME/node_modules/.bin
 
@@ -176,7 +186,7 @@ if [ -f '/Users/r631269/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/r631269
 if [ -f '/Users/r631269/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/r631269/google-cloud-sdk/completion.zsh.inc'; fi
 
 # set up pyenv
-eval "$(pyenv init -)"
+#eval "$(pyenv init -)"
 
 # Shortcuts for typing
 export ART=artifactory.healthsparq.com

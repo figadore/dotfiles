@@ -3,7 +3,7 @@
   " Erase all autocommands so far in this group
   :autocmd!
 
-  "{{{ Vim default behavior
+  "{{{ Early setup
 
   " Vim settings instead of vi settings. make sure this is near the top of vimrc
   set nocompatible
@@ -11,9 +11,84 @@
   " Something about security and scripts running automatically
   set modelines=0
 
+  " Identify OS {{{
+  silent function! OSX()
+      return has('macunix')
+  endfunction
+  silent function! LINUX()
+      return has('unix') && !has('macunix') && !has('win32unix')
+  endfunction
+  silent function! WINDOWS()
+      return  (has('win32') || has('win64'))
+  endfunction
+  " }}}
+  if !WINDOWS()
+      set shell=/bin/sh
+  endif
+
+  " Windows Compatible {{{
+  " On Windows, also use '.vim' instead of 'vimfiles'; this makes synchronization across (heterogeneous) systems easier.
+  if WINDOWS()
+    set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$HOME/.vim/after
+  endif
+  " }}}
+
+  " Arrow Key Fix (is this even applicable?) {{{
+  " https://github.com/spf13/spf13-vim/issues/780
+  if &term[:4] == "xterm" || &term[:5] == 'screen' || &term[:3] == 'rxvt'
+    inoremap <silent> <C-[>OC <RIGHT>
+  endif
+  " }}}
+
+  scriptencoding utf-8
+
+  " Use before config if available {
+  if filereadable(expand("~/.vimrc.before"))
+    source ~/.vimrc.before
+  endif
+  if filereadable(expand("~/.vimrc.before.local"))
+    source ~/.vimrc.before.local
+  endif
+  " }
+
+  if has('clipboard')
+    if has('unnamedplus')  " When possible use + register for copy-paste
+      set clipboard=unnamed,unnamedplus
+    else         " On mac and Windows, use * register for copy-paste
+      set clipboard=unnamed
+    endif
+  endif
+
+  " Most prefer to automatically switch to the current file directory when
+  " a new buffer is opened; to prevent this behavior, add the following to
+  " your .vimrc.before.local file:
+  "   let g:spf13_no_autochdir = 1
+  if !exists('g:spf13_no_autochdir')
+    autocmd BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | lcd %:p:h | endif
+    " Always switch to the current file directory
+  endif
+
+  set shortmess+=filmnrxoOtT          " Abbrev. of messages (avoids 'hit enter')
+  "set autowrite                       " Automatically write a file when leaving a modified buffer
+
+  "}}}
+
+  "{{{ Load Vundle Plugins
+
+  if filereadable(expand("~/.vimrc.bundles"))
+    source ~/.vimrc.bundles
+  endif
+
+  " }}} // Load Vundle Plugins
+
+  "{{{ Vim default behavior
+
   " Set history and undo levels to more
   set undolevels=300
-  set history=300
+  set history=1000
+
+  " Spell checking on
+  "set spell
 
   " Allow backspace to erase more in insert mode
   set backspace=indent,eol,start
@@ -50,12 +125,31 @@
   au BufEnter /private/tmp/crontab.* setl backupcopy=yes
 
   " Source this and vimrc on write/save
-  if has("win32") || has("win16")
-    autocmd! bufwritepost _vimrc source %
-    autocmd! bufwritepost .syncedvimrc source ~/_vimrc
-  else
-    autocmd! bufwritepost .vimrc source %
-    autocmd! bufwritepost .syncedvimrc source ~/.vimrc
+  autocmd! bufwritepost .vimrc source %
+
+  " http://vim.wikia.com/wiki/Restore_cursor_to_file_position_in_previous_editing_session
+  " Restore cursor to file position in previous editing session
+  " To disable this, add the following to your .vimrc.before.local file:
+  "   let g:spf13_no_restore_cursor = 1
+  if !exists('g:spf13_no_restore_cursor')
+    function! ResCur()
+      if line("'\"") <= line("$")
+        silent! normal! g`"
+        return 1
+      endif
+    endfunction
+
+    augroup resCur
+      autocmd!
+      autocmd BufWinEnter * call ResCur()
+    augroup END
+  endif
+
+  set backup                  " Backups are nice ...
+  if has('persistent_undo')
+    set undofile                " So is persistent undo ...
+    set undolevels=1000         " Maximum number of changes that can be undone
+    set undoreload=10000        " Maximum number lines to save for undo on a buffer reload
   endif
 
   "}}}
@@ -101,6 +195,15 @@
   " Mark end of change-to text with a '$'
   set cpoptions+=$
 
+  " Better Unix / Windows compatibility (not sure what this does exactly)
+  set viewoptions=folds,options,cursor,unix,slash
+
+  " '.' is an end of word designator
+  set iskeyword-=.
+  " '#' is an end of word designator
+  set iskeyword-=#
+  " '-' is an end of word designator
+  set iskeyword-=-
   "}}}
 
   "{{{ Misc Mappings
@@ -126,26 +229,19 @@
   " Close current tab
   nmap <leader>q :tabclose<CR>
   " Alt-q, close tab
-  nmap œ :tabclose<CR>
-  "nmap q :tabclose<CR>
+  nmap <M-q> :tabclose<CR>
   " Alt-j, navigate to last tab
-  map ∆ :tabl<CR>
-  "map j :tabl<CR>
+  map <M-j> :tabl<CR>
   " Alt-k, navigate to first tab
-  map ˚ :tabfir<CR>
-  "map k :tabfir<CR>
+  map <M-k> :tabfir<CR>
   " Alt-h, navigate to previous tab
-  map ˙ :tabp<CR>
-  "map h :tabp<CR>
+  map <M-h> :tabp<CR>
   " Alt-l, navigate to next tab
-  map ¬ :tabn<CR>
-  "map l :tabn<CR>
+  map <M-l> :tabn<CR>
   " Alt-c, create new tab
-  map ç :tabnew<CR>
-  "map c :tabnew<CR>
+  map <M-c> :tabnew<CR>
   " Alt-r, rename tab
-  map ® :TabooRename 
-  "map r :TabooRename 
+  map <M-r> :TabooRename 
 
   " Alias :W as :w, so write command works with caps or not
   " Don't use cnoreabbrev because it breaks case sensitive search (e.g. for capital Q)
@@ -171,7 +267,7 @@
   nmap <leader>s :w<CR>
 
   " Alias alt-w as :w
-  nmap ∑ :w<CR>
+  nmap <M-w> :w<CR>
 
   " Allow jumping between quickfix errors
   nmap ]l :lnext<CR>
@@ -186,6 +282,215 @@
   vnoremap K k
 
   "}}}
+
+  " {{{ Customize bundles/plugins
+
+  " {{{ vim-terraform 
+  if count(g:spf13_bundle_groups, 'terraform')
+    let g:terraform_align=1
+    let g:terraform_fmt_on_save=1
+    " These are set in vim-terraform's ftdetect, not sure why it isn't working
+    autocmd BufRead,BufNewFile *.tf,*.tfvars,.terraformrc,terraform.rc set filetype=terraform
+    autocmd BufRead,BufNewFile *.tfstate,*.tfstate.backup set filetype=json
+  endif
+  " }}}
+
+  "  {{{ golden-ratio
+  if count(g:spf13_bundle_groups, 'general')
+    " disable auto golden ratio resizing
+    let g:golden_ratio_autocommand = 0
+    :map <leader>r :GoldenRatioResize<CR>
+  endif
+  " }}}
+
+  " {{{ rainbow
+  if count(g:spf13_bundle_groups, 'programming')
+    let g:rainbow_active = 1
+    "hue-contrasty order
+    let g:rainbow_conf = {
+          \ 'ctermfgs': ['1', '2', '4', '3', '5', '6', '7'],
+          \ 'guifgs': ['red', 'orange', 'yellow', 'green', 'blue', 'violet', 'white']
+          \ }
+
+    "rainbow order
+    "let g:rainbow_conf = {
+    "      \ 'ctermfgs': ['1', '2', '4', '3', '5', '6', '7']
+    "      \ }
+
+  endif
+  " }}}
+
+  " {{{ xmledit
+  if count(g:spf13_bundle_groups, 'programming')
+    let g:xmledit_enable_html = 1 "make it work on html files
+    " Override xmledit html callback, don't add extra attributes
+    function! HtmlAttribCallback( xml_tag )
+      return 0
+    endfunction
+  endif
+  " }}}
+
+  " {{{ camelcasemotion
+  " Set up default mappings for camelcasemotion
+  if count(g:spf13_bundle_groups, 'programming')
+    call camelcasemotion#CreateMotionMappings('<leader>')
+  endif
+  " }}}
+
+  " {{{ vdebug
+  if count(g:spf13_bundle_groups, 'php')
+    if !exists('g:vdebug_options')
+      let g:vdebug_options = {}
+    endif
+    let g:vdebug_options["break_on_open"]=0
+
+    " Taboo_rename vdebug tab
+    noremap <F8> :TabooRename debugger<CR>
+    " Auto renaming doesn't work because of python waiting or something
+    "let g:vdebug_keymap = { 'run':"" }
+    "noremap <F5> :python debugger.run()<CR> :TabooRename debugger<CR>
+  endif
+  " }}}
+
+  " {{{ taboo
+  if count(g:spf13_bundle_groups, 'general')
+    " Customize renamed tab format
+    let g:taboo_renamed_tab_format=" [%N]%f%m "
+  endif
+  "}}}
+
+  " {{{ vim-indent-guides
+  if count(g:spf13_bundle_groups, 'general')
+    let g:indent_guides_enable_on_vim_startup = 1
+    let g:indent_guides_default_mapping = 1 "leader-ig
+    let g:indent_guides_auto_colors = 0
+    " light bg
+    "autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=0 ctermfg=10 guibg=#f1fdd8
+    "autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=8 ctermfg=10 guibg=#f7f6d2
+    " dark bg
+    autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=0 ctermfg=10 guibg=#012d38
+    autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=8 ctermfg=10 guibg=#073642
+    "
+    "autocmd VimEnter,Colorscheme * :hi link IndentGuidesOdd CursorLine "FIXME broken in macvim
+    "autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=bg ctermfg=10 "FIXME broken in macvim
+  endif
+  "}}}
+
+  " {{{ nerdtree
+  if count(g:spf13_bundle_groups, 'general')
+    " Shortcut to open file explorer
+    :nnoremap <leader>n :NERDTreeToggle<CR>
+    ":nnoremap <leader>m :NERDTreeToggle<CR>
+    " Fix nerdtree weird characters
+    let g:NERDTreeDirArrows=1
+    let g:NERDTreeDirArrowExpandable="+"
+    let g:NERDTreeDirArrowCollapsible="~"
+
+    " ignore .pyc files
+    let NERDTreeIgnore = ['\~$', '\.pyc$']
+
+    " Shortcut to open nerdtree to current file location
+    :map <leader>N :NERDTreeFind<CR>
+  endif
+  " }}}
+
+  " {{{ nerdcommenter
+  if count(g:spf13_bundle_groups, 'general')
+    let g:NERDDefaultAlign = 'left'
+  endif
+  " }}}
+
+  " {{{ ctrlp
+  if count(g:spf13_bundle_groups, 'general')
+    " Shortcut to open file explorer
+    ":map <leader>, :CtrlP<CR>
+    nnoremap <C-p> :CtrlP<CR>
+    let g:ctrlp_map = ''
+    " Ctrlp show hidden files
+    "let g:ctrlp_show_hidden=1
+    " Ignore files and/or directories
+    let g:ctrlp_custom_ignore = {
+          \ 'dir': '\v[\/](\.git|vendor|\.vim)$'
+          \ }
+    " ctrlp search defaults to current dir up to closest .git dir
+    let g:ctrlp_working_path_mode = 'ra'
+  endif
+  " }}}
+
+  " {{{ Syntastic
+  if count(g:spf13_bundle_groups, 'programming')
+    " show errors list when detected
+    "let g:syntastic_auto_loc_list=1
+    " Syntastic, show errors list, close when empty, don't open automatically
+    let g:syntastic_auto_loc_list=2
+    "let g:syntastic_sh_shellcheck_args="-e SC2034"
+  endif
+  " }}}
+
+  " {{{ YouCompleteMe
+  if count(g:spf13_bundle_groups, 'youcompleteme')
+    let g:ycm_key_list_select_completion = ['<Down>']
+  endif
+  " }}}
+
+  " {{{ Snipmate
+  if count(g:spf13_bundle_groups, 'snipmate')
+    let g:snips_author = "Reese Wilson"
+    let g:snipMate = get(g:, 'snipMate', {})
+    let g:snipMate.scope_aliases = {}
+    let g:snipMate.scope_aliases['php'] = 'php,html'
+    let g:snipMate.scope_aliases['javascript'] = 'javascript,javascript-jquery'
+    let g:snipMate.scope_aliases['css'] = 'css'
+
+    let g:snipMate.no_default_aliases = 1
+  endif
+  " }}}
+
+  " {{{ json
+  if count(g:spf13_bundle_groups, 'json')
+    " change json filetype from javascript for eslint
+    au BufNewFile,BufRead *.json set filetype=json
+    " disable json quote concealing
+    let g:vim_json_syntax_conceal = 0
+
+    " enable eslint
+    let g:syntastic_javascript_checkers = ['eslint']
+  endif
+  " }}}
+
+  " {{{ python
+  if count(g:spf13_bundle_groups, 'python')
+    if count(g:spf13_bundle_groups, 'programming')
+      " enable python pep8
+      let g:syntastic_python_checkers = ['python', 'pylint', 'pep8', 'flake8']
+    endif
+  endif
+  " }}}
+
+  " {{{ vim-go
+  if count(g:spf13_bundle_groups, 'go')
+
+    map <leader>t <Plug>(go-def-type-tab)
+    "let g:go_def_reuse_buffer = 1
+
+    " Set go linters (doesn't seem to work, and megacheck takes a long time
+    " anyway, would need to find how to increase deadline timeout)
+    let g:go_meta_linter_enabled = ['vet', 'golint', 'errcheck', 'megacheck']
+
+    if count(g:spf13_bundle_groups, 'programming')
+      let g:syntastic_go_checkers = ['golangci-lint']
+    endif
+
+    " help go_def work with local packages/modules in subdirectories
+    "let g:go_def_mode="godef"
+  endif
+  " }}}
+
+  " Open omnifunc whenever '.' is pressed in go
+  "au filetype go inoremap <buffer> . .<C-x><C-o>
+
+
+  " }}} // customize bundles
 
   "{{{ Custom functions and mappings
 
@@ -383,7 +688,7 @@
   endfunction
   "}}}
 
-  " View diff from last save
+  " {{{ View diff from last save
   if !exists(":DiffOrig")
     command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
       \ | wincmd p | diffthis
@@ -395,6 +700,45 @@
     let g:phpunit_args_append = "--group " . a:group
     exec ":Test"
   endfunction
+  "}}}
+
+  " {{{ Edit vimrc files
+  " The default mappings for editing and applying the spf13 configuration
+  " are <leader>ev and <leader>sv respectively. Change them to your preference
+  " by adding the following to your .vimrc.before.local file:
+  "   let g:spf13_edit_config_mapping='<leader>ec'
+  "   let g:spf13_apply_config_mapping='<leader>sc'
+  if !exists('g:spf13_edit_config_mapping')
+    let s:spf13_edit_config_mapping = '<leader>ev'
+  else
+    let s:spf13_edit_config_mapping = g:spf13_edit_config_mapping
+  endif
+  if !exists('g:spf13_apply_config_mapping')
+    let s:spf13_apply_config_mapping = '<leader>sv'
+  else
+    let s:spf13_apply_config_mapping = g:spf13_apply_config_mapping
+  endif
+
+  function! s:ExpandFilenameAndExecute(command, file)
+    execute a:command . " " . expand(a:file, ":p")
+  endfunction
+  function! s:EditSpf13Config()
+    call <SID>ExpandFilenameAndExecute("tabedit", "~/.vimrc")
+    "call <SID>ExpandFilenameAndExecute("vsplit", "~/.vimrc.before")
+    call <SID>ExpandFilenameAndExecute("vsplit", "~/.vimrc.bundles")
+
+    execute bufwinnr(".vimrc") . "wincmd w"
+    call <SID>ExpandFilenameAndExecute("split", "~/.vimrc.local")
+    wincmd l
+    call <SID>ExpandFilenameAndExecute("split", "~/.vimrc.before.local")
+    wincmd l
+    call <SID>ExpandFilenameAndExecute("split", "~/.vimrc.bundles.local")
+
+    execute bufwinnr(".vimrc.local") . "wincmd w"
+  endfunction
+  execute "noremap " . s:spf13_edit_config_mapping " :call <SID>EditSpf13Config()<CR>"
+  execute "noremap " . s:spf13_apply_config_mapping . " :source ~/.vimrc<CR>"
+  " }}}
 
   " Leader-t runs phpunit on specified group
   "command! -nargs=1 Phpunit call s:PhpUnit(<q-args>)
@@ -470,233 +814,6 @@
 
   "}}}
 
-  "{{{ Bundles
-
-  "{{{ List bundles
-  function! GetBundles()
-    Bundle 'gmarik/vundle'
-    "Add your bundles here
-    "uber awesome syntax and errors highlighter
-    "Bundle 'Syntastic' "old repo?
-    Bundle 'vim-syntastic/syntastic'
-    Bundle 'dense-analysis/ale'
-    Bundle 'altercation/vim-colors-solarized'
-    "Git plugin
-    Bundle 'https://github.com/tpope/vim-fugitive'
-    Bundle 'https://github.com/tpope/vim-unimpaired'
-    "...All your other bundles...
-    "vdebug
-    Bundle 'joonty/vdebug.git'
-    "NERDTree
-    Bundle 'scrooloose/nerdtree'
-    "tab names
-    "Bundle 'shinymayhem/Tab-Rename'
-    Bundle 'shinymayhem/taboo.vim'
-    "fuzzy file finder
-    Bundle 'ctrlpvim/ctrlp.vim'
-    "less syntax highlighting
-    Bundle 'groenewege/vim-less'
-    "snipmate
-    Bundle "MarcWeber/vim-addon-mw-utils"
-    Bundle "tomtom/tlib_vim"
-    Bundle "garbas/vim-snipmate"
-    Bundle "honza/vim-snippets"
-    Bundle "shinymayhem/cypher-vim-syntax"
-    Bundle 'https://github.com/sukima/xmledit'
-    " relative line numbers
-    Bundle "jeffkreeftmeijer/vim-numbertoggle"
-    " jade syntax highlighting
-    Bundle "digitaltoad/vim-jade"
-    " Indent whitespace highlighting
-    Bundle "nathanaelkane/vim-indent-guides"
-    " better json syntax handling
-    Bundle "elzr/vim-json"
-    " leader-w to move to next camelcase or underscore word
-    Bundle "bkad/camelcasemotion"
-    "Bundle "kien/rainbow_parentheses.vim"
-    Bundle "luochen1990/rainbow"
-    " Dynamic window resizing
-    Bundle "roman/golden-ratio"
-    "Plugin 'google/yapf', { 'rtp': 'plugins/vim' }
-    Plugin 'fatih/vim-go'
-    Bundle 'ycm-core/YouCompleteMe'
-    Plugin 'hashivim/vim-terraform'
-  endfunction
-  "}}}
-
-  " Install bundles  {{{
-
-  " On first load, read/source bundles
-  if has("win32") || has("win16")
-    cd ~/
-    "gvim _vimrc
-    let vundle_readme=expand('~/vimfiles/bundle/vundle/README.md')
-    if !filereadable(vundle_readme)
-      echo "follow instructions at https://github.com/gmarik/vundle/wiki/Vundle-for-Windows"
-      echo ""
-    else
-      "echo "vundle already installed"
-    endif
-    set rtp+=~/vimfiles/bundle/vundle/
-    call vundle#rc('~/vimfiles/bundle')
-    call GetBundles()
-  else "linux/mac
-    " Setting up Vundle - the vim plugin bundler
-    let iCanHazVundle=1
-    let vundle_readme=expand('~/.vim/bundle/vundle/README.md')
-    if !filereadable(vundle_readme)
-      echo "Installing Vundle.."
-      echo ""
-      silent !mkdir -p ~/.vim/bundle
-      silent !git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
-      let iCanHazVundle=0
-    endif
-    set rtp+=~/.vim/bundle/vundle/
-    call vundle#rc()
-    call GetBundles()
-    if iCanHazVundle == 0
-      echo "Installing Bundles, please ignore key map error messages"
-      echo ""
-      :BundleInstall
-    endif
-    " Setting up Vundle - the vim plugin bundler end
-  endif
-  "}}}
-
-  " Customize bundles {{{
-
-  let g:terraform_align=1
-  let g:terraform_fmt_on_save=1
-  " These are set in vim-terraform's ftdetect, not sure why it isn't working
-  autocmd BufRead,BufNewFile *.tf,*.tfvars,.terraformrc,terraform.rc set filetype=terraform
-  autocmd BufRead,BufNewFile *.tfstate,*.tfstate.backup set filetype=json
-
-  " disable auto golden ratio resizing
-  let g:golden_ratio_autocommand = 0
-  :map <leader>r :GoldenRatioResize<CR>
-
-  let g:rainbow_active = 1
-  "hue-contrasty order
-  let g:rainbow_conf = {
-        \ 'ctermfgs': ['1', '2', '4', '3', '5', '6', '7'],
-        \ 'guifgs': ['red', 'orange', 'yellow', 'green', 'blue', 'violet', 'white']
-        \}
-
-  "rainbow order
-  "let g:rainbow_conf = {
-  "      \ 'ctermfgs': ['1', '2', '4', '3', '5', '6', '7']
-  "      \}
-
-  " xmledit
-  let g:xmledit_enable_html = 1 "make it work on html files
-  " Override xmledit html callback, don't add extra attributes
-  function! HtmlAttribCallback( xml_tag )
-    return 0
-  endfunction
-
-  " Set up default mappings for camelcasemotion
-  call camelcasemotion#CreateMotionMappings('<leader>')
-
-  " vdebug
-  if !exists('g:vdebug_options')
-    let g:vdebug_options = {}
-  endif
-  let g:vdebug_options["break_on_open"]=0
-
-  " Taboo_rename vdebug tab
-  noremap <F8> :TabooRename debugger<CR>
-  " Auto renaming doesn't work because of python waiting or something
-  "let g:vdebug_keymap = { 'run':"" }
-  "noremap <F5> :python debugger.run()<CR> :TabooRename debugger<CR>
-
-  " Customize renamed tab format
-  let g:taboo_renamed_tab_format=" [%N]%f%m "
-
-  " Syntastic, show errors list when detected
-  "let g:syntastic_auto_loc_list=1
-  " Syntastic, show errors list, close when empty, don't open automatically
-  let g:syntastic_auto_loc_list=2
-  "let g:syntastic_sh_shellcheck_args="-e SC2034"
-
-  " Snipmate
-  let g:snips_author = "Reese Wilson"
-  let g:snipMate = get(g:, 'snipMate', {})
-  let g:snipMate.scope_aliases = {}
-  let g:snipMate.scope_aliases['php'] = 'php,html'
-  let g:snipMate.scope_aliases['javascript'] = 'javascript,javascript-jquery'
-  let g:snipMate.scope_aliases['css'] = 'css'
-
-  let g:snipMate.no_default_aliases = 1
-
-  " Shortcut to open file explorers
-  :map <leader>n :NERDTreeToggle<CR>
-  :map <leader>, :CtrlP<CR>
-  let g:ctrlp_map = ''
-
-  " Fix nerdtree weird characters
-  let g:NERDTreeDirArrows=1
-  let g:NERDTreeDirArrowExpandable="+"
-  let g:NERDTreeDirArrowCollapsible="~"
-
-  " ignore .pyc files
-  let NERDTreeIgnore = ['\~$', '\.pyc$']
-
-  " Shortcut to open nerdtree to current file location
-  :map <leader>N :NERDTreeFind<CR>
-
-  " Ctrlp show hidden files
-  "let g:ctrlp_show_hidden=1
-  " Ignore files and/or directories
-  let g:ctrlp_custom_ignore = {
-    \ 'dir': '\v[\/](\.git|vendor|\.vim)$'
-    \ }
-  " ctrlp search defaults to current dir up to closest .git dir
-  let g:ctrlp_working_path_mode = 'ra'
-
-  " change json filetype from javascript for eslint
-  au BufNewFile,BufRead *.json set filetype=json
-  " disable json quote concealing
-  let g:vim_json_syntax_conceal = 0
-
-  " enable eslint
-  let g:syntastic_javascript_checkers = ['eslint']
-
-  " enable python pep8
-  "let g:syntastic_python_checkers = ['python', 'pyflakes']
-  let g:syntastic_python_checkers = ['python', 'pylint', 'pep8', 'flake8']
-
-  " Open omnifunc whenever '.' is pressed in go
-  "au filetype go inoremap <buffer> . .<C-x><C-o>
-
-  map <leader>t <Plug>(go-def-type-tab)
-  "let g:go_def_reuse_buffer = 1
-
-  " Set go linters (doesn't seem to work, and megacheck takes a long time
-  " anyway, would need to find how to increase deadline timeout)
-  let g:go_meta_linter_enabled = ['vet', 'golint', 'errcheck', 'megacheck']
-
-  let g:syntastic_go_checkers = ['golangci-lint']
-
-  " help go_def work with local packages/modules in subdirectories
-  "let g:go_def_mode="godef"
-
-  " Indent guides configuration
-  let g:indent_guides_enable_on_vim_startup = 1
-  let g:indent_guides_default_mapping = 1 "leader-ig
-  let g:indent_guides_auto_colors = 0
-  " light bg
-  "autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=0 ctermfg=10 guibg=#f1fdd8
-  "autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=8 ctermfg=10 guibg=#f7f6d2
-  " dark bg
-  autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=0 ctermfg=10 guibg=#012d38
-  autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=8 ctermfg=10 guibg=#073642
-  "
-  "autocmd VimEnter,Colorscheme * :hi link IndentGuidesOdd CursorLine "FIXME broken in macvim
-  "autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=bg ctermfg=10 "FIXME broken in macvim
-
-  "}}}
-  "}}}
-
   "{{{ Appearance
 
   " Statusline {{{
@@ -717,6 +834,14 @@
   " Add line numbers
   set nu
 
+  " Allow for cursor beyond last character
+  set virtualedit=onemore
+
+  " Buffer closed when switching
+  set nohidden
+  " Allow buffer switching without saving
+  "set hidden
+
   " show tabs as '| '
   set list
   set listchars=tab:\|\ 
@@ -728,7 +853,24 @@
 
   " Set colorscheme *after* solarized bundle sourced
   set bg=dark
+
+  " Allow to trigger background
+  function! ToggleBG()
+    let s:tbg = &background
+    " Inversion
+    if s:tbg == "dark"
+      set background=light
+    else
+      set background=dark
+    endif
+  endfunction
+  noremap <leader>bg :call ToggleBG()<CR>
+
   colorscheme solarized
+
+  set mouse=a                 " Automatically enable mouse usage
+  set mousehide               " Hide the mouse cursor while typing
+
   if has("gui_running")
     " Mac Font
     "set guifont=Monaco:h10
@@ -846,6 +988,10 @@
 
   "{{{ Misc
 
+  " Instead of reverting the cursor to the last position in the buffer, we
+  " set it to the first line when editing a git commit message
+  au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
+
   " Custom file type behavior {{{
   autocmd FileType yaml setlocal sw=2 ts=2
   autocmd FileType javascript setlocal sw=2 ts=2
@@ -874,6 +1020,11 @@
   let g:ale_sh_shellcheck_options="-e SC2034"
   "let g:sonyntastic_sh_shellcheck_args="-e SC2034"
 
+" Use local vimrc if available {
+    if filereadable(expand("~/.vimrc.local"))
+        source ~/.vimrc.local
+    endif
+" }
 
   " Enable syntax highlighting. this should go near the end of vimrc
   syntax on

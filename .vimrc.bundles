@@ -1,0 +1,354 @@
+" Environment {
+
+echom "Parsing bundles vimrc"
+" Basics {
+set nocompatible        " Must be first line
+set background=dark     " Assume a dark background
+" }
+
+" Windows Compatible {
+" On Windows, also use '.vim' instead of 'vimfiles'; this makes synchronization
+" across (heterogeneous) systems easier.
+if has('win32') || has('win64')
+  set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$HOME/.vim/after
+
+  " Be nice and check for multi_byte even if the config requires
+  " multi_byte support most of the time
+  if has("multi_byte")
+    " Windows cmd.exe still uses cp850. If Windows ever moved to
+    " Powershell as the primary terminal, this would be utf-8
+    set termencoding=cp850
+    " Let Vim use utf-8 internally, because many scripts require this
+    set encoding=utf-8
+    setglobal fileencoding=utf-8
+    " Windows has traditionally used cp1252, so it's probably wise to
+    " fallback into cp1252 instead of eg. iso-8859-15.
+    " Newer Windows files might contain utf-8 or utf-16 LE so we might
+    " want to try them first.
+    set fileencodings=ucs-bom,utf-8,utf-16le,cp1252,iso-8859-15
+  endif
+endif
+" }
+
+" Setup Bundle Support {
+" }
+
+" Add an UnBundle command {
+function! UnBundle(arg, ...)
+  let bundle = vundle#config#init_bundle(a:arg, a:000)
+  call filter(g:vundle#bundles, 'v:val["name_spec"] != "' . a:arg . '"')
+endfunction
+
+com! -nargs=+         UnBundle
+      \ call UnBundle(<args>)
+" }
+
+" }
+
+"" On first load,installvundle
+"if has("win32") || has("win16")
+"  cd ~/
+"  "gvim _vimrc
+"  let vundle_readme=expand('~/vimfiles/bundle/vundle/README.md')
+"  if !filereadable(vundle_readme)
+"    echo "follow instructions at https://github.com/gmarik/vundle/wiki/Vundle-for-Windows"
+"    echo ""
+"  else
+"    "echo "vundle already installed"
+"  endif
+"  call vundle#rc('~/vimfiles/bundle')
+"else "linux/mac
+"  " Setting up Vundle - the vim plugin bundler
+"  " Setting up Vundle - the vim plugin bundler end
+"endif
+""}}}
+"
+" Bundles {
+
+let vundleFirstRun=0
+let vundle_readme=expand('~/.vim/bundle/vundle/README.md')
+if !filereadable(vundle_readme)
+  echo "Installing Vundle.."
+  echo ""
+  silent !mkdir -p ~/.vim/bundle
+  silent !git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
+  let vundleFirstRun=1
+endif
+
+filetype off
+set rtp+=~/.vim/bundle/vundle
+call vundle#begin()
+
+" Deps for snipmate, ack, and others {
+Plugin 'gmarik/vundle'
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'tomtom/tlib_vim'
+if executable('ag')
+  Plugin 'mileszs/ack.vim'
+  let g:ackprg = 'ag --nogroup --nocolor --column --smart-case'
+elseif executable('ack-grep')
+  let g:ackprg="ack-grep -H --nocolor --nogroup --column"
+  Plugin 'mileszs/ack.vim'
+elseif executable('ack')
+  Plugin 'mileszs/ack.vim'
+endif
+" }
+
+
+" In your .vimrc.before.local file
+" list only the plugin groups you will use
+if !exists('g:spf13_bundle_groups')
+  let g:spf13_bundle_groups=['general', 'writing', 'neocomplete', 'programming', 'php', 'ruby', 'python', 'javascript', 'html', 'misc',]
+endif
+
+" To override all the included bundles, add the following to your
+" .vimrc.bundles.local file:
+"   let g:override_spf13_bundles = 1
+if !exists("g:override_spf13_bundles")
+
+  " General {
+  if count(g:spf13_bundle_groups, 'general')
+    echom "Evaluating general plugins"
+    " file navigator
+    Plugin 'preservim/nerdtree'
+    " solarized colors
+    Plugin 'altercation/vim-colors-solarized'
+    " fuzzy file finder
+    Plugin 'ctrlpvim/ctrlp.vim'
+    Plugin 'spf13/vim-colors'
+    Plugin 'tpope/vim-surround'
+    Plugin 'tpope/vim-repeat'
+    Plugin 'rhysd/conflict-marker.vim'
+    Plugin 'jiangmiao/auto-pairs'
+    Plugin 'tacahiroy/ctrlp-funky'
+    Plugin 'terryma/vim-multiple-cursors'
+    Plugin 'vim-scripts/sessionman.vim'
+    Plugin 'matchit.zip'
+    if (has("python") || has("python3")) && exists('g:spf13_use_powerline') && !exists('g:spf13_use_old_powerline')
+      Plugin 'Lokaltog/powerline', {'rtp':'/powerline/bindings/vim'}
+    elseif exists('g:spf13_use_powerline') && exists('g:spf13_use_old_powerline')
+      Plugin 'Lokaltog/vim-powerline'
+    else
+      Plugin 'vim-airline/vim-airline'
+      Plugin 'vim-airline/vim-airline-themes'
+    endif
+    Plugin 'powerline/fonts'
+    Plugin 'bling/vim-bufferline'
+    Plugin 'easymotion/vim-easymotion'
+    Plugin 'flazz/vim-colorschemes'
+    Plugin 'mbbill/undotree'
+    if !exists('g:spf13_no_views')
+      Plugin 'vim-scripts/restore_view.vim'
+    endif
+    Plugin 'mhinz/vim-signify'
+    Plugin 'tpope/vim-abolish.git'
+    Plugin 'osyo-manga/vim-over'
+    Plugin 'kana/vim-textobj-user'
+    Plugin 'kana/vim-textobj-indent'
+    Plugin 'gcmt/wildfire.vim'
+    " Indent whitespace highlighting
+    Plugin 'nathanaelkane/vim-indent-guides'
+    " relative line numbers
+    Plugin 'jeffkreeftmeijer/vim-numbertoggle'
+    " Dynamic window resizing
+    Plugin 'roman/golden-ratio'
+    " <leader> r to rename and alt-h/j/k/l tab navigation
+    Plugin 'figadore/taboo.vim'
+  endif
+  " }
+
+  " Writing {
+  if count(g:spf13_bundle_groups, 'writing')
+    Plugin 'reedes/vim-litecorrect'
+    Plugin 'reedes/vim-textobj-sentence'
+    Plugin 'reedes/vim-textobj-quote'
+    Plugin 'reedes/vim-wordy'
+  endif
+  " }
+
+  " General Programming {
+  if count(g:spf13_bundle_groups, 'programming')
+    " Pick one of the checksyntax, jslint, or syntastic
+    Plugin 'vim-syntastic/syntastic'
+    " Linter
+    Plugin 'dense-analysis/ale'
+    " Movement using parens, brackets, etc
+    Plugin 'tpope/vim-unimpaired'
+    " Git in vim
+    Plugin 'tpope/vim-fugitive'
+    " mappings such as <leader>cc to comment current line
+    Plugin 'preservim/nerdcommenter'
+    " gc to comment/uncomment
+    Plugin 'tpope/vim-commentary'
+    " Easily align text
+    Plugin 'godlygeek/tabular'
+    " Rainbowize parens, brackets and tags and such to make matching easier
+    Plugin 'luochen1990/rainbow'
+    " leader-w to move to next camelcase or underscore word
+    Plugin 'bkad/camelcasemotion'
+    " Edit and move around xml files
+    Plugin 'sukima/xmledit'
+    if executable('ctags')
+      Plugin 'majutsushi/tagbar'
+    endif
+  endif
+  " }
+
+  " Snippets & AutoComplete {
+  if count(g:spf13_bundle_groups, 'snipmate')
+    Plugin 'garbas/vim-snipmate'
+    Plugin 'honza/vim-snippets'
+    " Source support_function.vim to support vim-snippets.
+    if filereadable(expand("~/.vim/bundle/vim-snippets/snippets/support_functions.vim"))
+      source ~/.vim/bundle/vim-snippets/snippets/support_functions.vim
+    endif
+  elseif count(g:spf13_bundle_groups, 'youcompleteme')
+    Plugin 'ycm-core/YouCompleteMe'
+    Plugin 'SirVer/ultisnips'
+    Plugin 'honza/vim-snippets'
+  elseif count(g:spf13_bundle_groups, 'neocomplcache')
+    Plugin 'Shougo/neocomplcache'
+    Plugin 'Shougo/neosnippet'
+    Plugin 'Shougo/neosnippet-snippets'
+    Plugin 'honza/vim-snippets'
+  elseif count(g:spf13_bundle_groups, 'neocomplete')
+    Plugin 'Shougo/neocomplete.vim.git'
+    Plugin 'Shougo/neosnippet'
+    Plugin 'Shougo/neosnippet-snippets'
+    Plugin 'honza/vim-snippets'
+  endif
+  " }
+
+  " PHP {
+  if count(g:spf13_bundle_groups, 'php')
+    Plugin 'spf13/PIV'
+    Plugin 'arnaud-lb/vim-php-namespace'
+    Plugin 'beyondwords/vim-twig'
+    Plugin 'joonty/vdebug.git'
+  endif
+  " }
+
+  " Python {
+  if count(g:spf13_bundle_groups, 'python')
+    " Pick either python-mode or pyflakes & pydoc
+    Plugin 'klen/python-mode'
+    Plugin 'yssource/python.vim'
+    Plugin 'python_match.vim'
+    Plugin 'pythoncomplete'
+  endif
+  " }
+
+  " Javascript {
+  if count(g:spf13_bundle_groups, 'javascript')
+    Plugin 'elzr/vim-json'
+    Plugin 'pangloss/vim-javascript'
+    Plugin 'briancollins/vim-jst'
+    Plugin 'kchmck/vim-coffee-script'
+  endif
+  " }
+
+  " Scala {
+  if count(g:spf13_bundle_groups, 'scala')
+    Plugin 'derekwyatt/vim-scala'
+    Plugin 'derekwyatt/vim-sbt'
+    Plugin 'xptemplate'
+  endif
+  " }
+
+  " Haskell {
+  if count(g:spf13_bundle_groups, 'haskell')
+    Plugin 'travitch/hasksyn'
+    Plugin 'dag/vim2hs'
+    Plugin 'Twinside/vim-haskellConceal'
+    Plugin 'Twinside/vim-haskellFold'
+    Plugin 'lukerandall/haskellmode-vim'
+    Plugin 'eagletmt/neco-ghc'
+    Plugin 'eagletmt/ghcmod-vim'
+    Plugin 'Shougo/vimproc.vim'
+    Plugin 'adinapoli/cumino'
+    Plugin 'bitc/vim-hdevtools'
+  endif
+  " }
+
+  " HTML {
+  if count(g:spf13_bundle_groups, 'html')
+    Plugin 'vim-scripts/HTML-AutoCloseTag'
+    Plugin 'hail2u/vim-css3-syntax'
+    Plugin 'gorodinskiy/vim-coloresque'
+    Plugin 'groenewege/vim-less'
+    Plugin 'tpope/vim-haml'
+    Plugin 'mattn/emmet-vim'
+  endif
+  " }
+
+  " Cypher {
+  if count(g:spf13_bundle_groups, 'cypher')
+    Plugin 'shinymayhem/cypher-vim-syntax'
+  endif
+  " }
+
+  " Ruby {
+  if count(g:spf13_bundle_groups, 'ruby')
+    Plugin 'tpope/vim-rails'
+    let g:rubycomplete_buffer_loading = 1
+    "let g:rubycomplete_classes_in_global = 1
+    "let g:rubycomplete_rails = 1
+  endif
+  " }
+
+  " Puppet {
+  if count(g:spf13_bundle_groups, 'puppet')
+    Plugin 'rodjek/vim-puppet'
+  endif
+  " }
+
+  " Go Lang {
+  if count(g:spf13_bundle_groups, 'go')
+    "Plugin 'Blackrush/vim-gocode'
+    Plugin 'fatih/vim-go'
+  endif
+  " }
+
+  " Terraform {
+  if count(g:spf13_bundle_groups, 'terraform')
+    Plugin 'hashivim/vim-terraform'
+  endif
+  " }
+
+  " Elixir {
+  if count(g:spf13_bundle_groups, 'elixir')
+    Plugin 'elixir-lang/vim-elixir'
+    Plugin 'carlosgaldino/elixir-snippets'
+    Plugin 'mattreduce/vim-mix'
+  endif
+  " }
+
+  " Misc {
+  if count(g:spf13_bundle_groups, 'misc')
+    Plugin 'rust-lang/rust.vim'
+    Plugin 'tpope/vim-markdown'
+    Plugin 'spf13/vim-preview'
+    Plugin 'tpope/vim-cucumber'
+    Plugin 'cespare/vim-toml'
+    Plugin 'quentindecock/vim-cucumber-align-pipes'
+    Plugin 'saltstack/salt-vim'
+  endif
+  " }
+
+endif
+
+" }
+
+" Use local bundles config if available {
+if filereadable(expand("~/.vimrc.bundles.local"))
+  source ~/.vimrc.bundles.local
+endif
+" }
+
+call vundle#end()
+
+if vundleFirstRun == 1
+  echo "Installing Bundles, please ignore key map error messages"
+  echo ""
+  :PluginInstall
+endif
