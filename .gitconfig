@@ -1,6 +1,7 @@
 [user]
 	email = 3253971+figadore@users.noreply.github.com
 	name = Reese Wilson
+	signingkey = E4839B74088B1DC6B4711B906950332147457958
 [push]
 	default = current
 [core]
@@ -37,3 +38,5 @@
 	ff = only
 [init]
 	defaultBranch = main
+[commit]
+	gpgsign = true
