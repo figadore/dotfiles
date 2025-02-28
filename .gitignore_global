@@ -43,9 +43,14 @@ Thumbs.db
 
 # terraform secrets #
 ######################
-*.tfvars
+codespace.auto.tfvars
+backend.hcl
 *.tfstate*
 *.terraform
+
+# other terraform #
+######################
+.terraform.lock.hcl
 
 # compiled/external #
 ######################
