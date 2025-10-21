@@ -46,6 +46,7 @@ pathadd() {
 pathadd $HOME/bin front=true
 pathadd $HOME/.rvm/bin
 pathadd $HOME/.local/bin
+pathadd $HOME/go/bin
 
 # Disable auto renaming terminal
 PROMPT_COMMAND=""
