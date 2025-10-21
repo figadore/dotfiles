@@ -1,0 +1,15 @@
+""linux key mappings for alt-* tab navigation
+"" Alt-q, close tab
+"nmap ñ :tabclose<CR>
+"" Alt-j, navigate to last tab
+"map ê :tabl<CR>
+"" Alt-k, navigate to first tab
+"map ë :tabfir<CR>
+"" Alt-h, navigate to previous tab
+"map è :tabp<CR>
+"" Alt-l, navigate to next tab
+"map ì :tabn<CR>
+"" Alt-c, create new tab
+"map ã :tabnew<CR>
+"" Alt-r, rename tab
+"map ò :TabooRename 

@@ -21,8 +21,9 @@
 	p = "push"
 	s = "status"
 	branch-clean = "! git branch -l --merged | xargs git branch -d"
-#[url "git@github.com:"]
-#	insteadOf = https://github.com/
+# Remove these when using codespaces
+[url "git@github.com:"]
+	insteadOf = https://github.com/
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
