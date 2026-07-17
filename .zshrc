@@ -133,6 +133,7 @@ pathadd() {
 }
 
 export GOPATH=$HOME/go
+export GHOSTTY_EDITOR="vim"
 
 pathadd $HOME/bin front=true
 pathadd $HOME/.rvm/bin
