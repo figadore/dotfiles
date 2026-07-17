@@ -50,3 +50,4 @@
 # resize-overlay-duration = 4s 200ms
 keybind = global:ctrl+grave_accent=toggle_quick_terminal
 font-family = "MesloLGS NF"
+theme = solarized dark
