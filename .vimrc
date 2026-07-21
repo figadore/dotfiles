@@ -852,7 +852,7 @@
   "set listchars+=extends:#
 
   " Set colorscheme *after* solarized bundle sourced
-  set bg=dark
+  "set bg=dark
 
   " Allow to trigger background
   function! ToggleBG()
@@ -865,6 +865,8 @@
     endif
   endfunction
   noremap <leader>bg :call ToggleBG()<CR>
+
+  let g:solarized_termtrans=1
 
   colorscheme solarized
 
