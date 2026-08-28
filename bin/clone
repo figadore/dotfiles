@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ORG="cambiahealth"
+
+usage() {
+  cat <<EOF
+Usage: clone <repo-name> [git-clone-args...]
+
+Clones git@github.com:${ORG}/<repo-name>.git
+
+Examples:
+  clone camcode-devcontainer
+  clone camcode-devcontainer my-dir   # clone into ./my-dir
+EOF
+}
+
+if [[ $# -lt 1 || "$1" == "-h" || "$1" == "--help" ]]; then
+  usage
+  # Exit non-zero only when no repo was given, so --help is a clean success.
+  [[ $# -lt 1 ]] && exit 1 || exit 0
+fi
+
+repo="$1"
+shift
+
+# Strip a trailing .git if the user included it, so we don't double it up.
+repo="${repo%.git}"
+
+exec git clone "git@github.com:${ORG}/${repo}.git" "$@"
