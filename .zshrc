@@ -141,7 +141,7 @@ pathadd() {
 
 export GOPATH=$HOME/go
 export GHOSTTY_EDITOR="vim"
-export HOST_DEVCONTAINER_REPO_PATH=/Users/r631269@regence.com/repos/camcode-devcontainer
+export HOST_DEVCONTAINER_REPO_PATH=/Users/r631269@regence.com/camcode/workspaces/repos/camcode-devcontainer
 
 
 pathadd $HOME/bin front=true
@@ -255,3 +255,4 @@ setopt no_share_history
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+export CAMCODE_WORKSPACES=/Users/r631269@regence.com/camcode/workspaces

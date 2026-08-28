@@ -22,9 +22,6 @@
 	p = "push"
 	s = "status"
 	branch-clean = "! git branch -l --merged | xargs git branch -d"
-# Remove these when using codespaces
-[url "git@github.com:"]
-	insteadOf = https://github.com/
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
@@ -40,3 +37,9 @@
 	defaultBranch = main
 [commit]
 	gpgsign = true
+#[url "git@github.com:"]
+#  insteadOf = https://github.com/
+# insteadOf for ssh replacement lives in ~/.gitconfig-hostonly
+# This helps codespaces and devcontainers use their http github auth instead of ssh keys
+[include]
+	path = /Users/r631269@regence.com/.gitconfig-hostonly
