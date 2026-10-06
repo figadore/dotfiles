@@ -604,6 +604,19 @@
             "complex_modifications": {
                 "rules": [
                     {
+                        "description": "Change caps_lock to control.",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "caps_lock",
+                                    "modifiers": { "optional": ["any"] }
+                                },
+                                "to": [{ "key_code": "left_control" }],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
                         "description": "Press command-shift+2 to enable programmer profile",
                         "manipulators": [
                             {
@@ -611,7 +624,7 @@
                                     "key_code": "2",
                                     "modifiers": { "mandatory": ["left_shift", "left_command"] }
                                 },
-                                "to": [{ "shell_command": "'/Library/Application Support/org.pqrs/Karabiner-Elements/bin/karabiner_cli' --select-profile 'programmer'" }],
+                                "to": [{ "shell_command": "'/Library/Application Support/org.pqrs/Karabiner-Elements/bin/karabiner_cli' --select-profile 'pr'" }],
                                 "type": "basic"
                             }
                         ]
