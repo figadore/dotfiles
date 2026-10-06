@@ -847,7 +847,7 @@
   set listchars=tab:\|\ 
 
   " show trailing whitespace chars
-  set listchars+=trail:¯,nbsp:¯
+  set listchars+=trail:`,nbsp:`
   " Show symbol if line wraps
   "set listchars+=extends:#
 
@@ -866,6 +866,8 @@
   endfunction
   noremap <leader>bg :call ToggleBG()<CR>
 
+  " Enable syntax highlighting before applying the colorscheme.
+  syntax enable
   colorscheme solarized
 
   set mouse=a                 " Automatically enable mouse usage
@@ -875,9 +877,9 @@
     " Mac Font
     "set guifont=Monaco:h10
     " Powerline Font
-    set guifont=MesloLGS\ NF\ Regular\ 8
+    set guifont=MesloLGS\ NF:h12
     " Other
-    set guifont=SourceCodePro\ 8
+    "set guifont=SourceCodePro:h8
     " Menu bar
     set guioptions-=m
     " Toolbar
@@ -952,18 +954,33 @@
     se bg=light
   endfunction
 
+  function! FontSizeAdjust(delta)
+    " MacVim uses :h<size>; retain support for a trailing space-size too.
+    let l:pattern = ':h\zs\d\+\%(\.\d\+\)\?'
+    let l:size = matchstr(&guifont, l:pattern)
+    if empty(l:size)
+      let l:pattern = ' \zs\d\+\%(\.\d\+\)\?$'
+      let l:size = matchstr(&guifont, l:pattern)
+    endif
+    if empty(l:size)
+      return
+    endif
+
+    let l:new_size = str2float(l:size) + a:delta
+    if l:new_size < 1
+      let l:new_size = 1.0
+    endif
+    let l:new_font_size = l:new_size == float2nr(l:new_size)
+          \ ? string(float2nr(l:new_size)) : printf('%g', l:new_size)
+    let &guifont = substitute(&guifont, l:pattern, l:new_font_size, '')
+  endfunction
+
   function! FontSizePlus ()
-    let l:gf_size_whole = matchstr(&guifont, '\( \)\@<=\d\+$')
-    let l:gf_size_whole = l:gf_size_whole + 1
-    let l:new_font_size = ' '.l:gf_size_whole
-    let &guifont = substitute(&guifont, ' \d\+$', l:new_font_size, '')
+    call FontSizeAdjust(1)
   endfunction
 
   function! FontSizeMinus ()
-    let l:gf_size_whole = matchstr(&guifont, '\( \)\@<=\d\+$')
-    let l:gf_size_whole = l:gf_size_whole - 1
-    let l:new_font_size = ' '.l:gf_size_whole
-    let &guifont = substitute(&guifont, ' \d\+$', l:new_font_size, '')
+    call FontSizeAdjust(-1)
   endfunction
 
   if has("gui_running")
@@ -996,7 +1013,7 @@
   autocmd FileType yaml setlocal sw=2 ts=2
   autocmd FileType javascript setlocal sw=2 ts=2
   autocmd FileType vim setlocal sw=2 ts=2 expandtab
-  autocmd FileType go setlocal sw=4 ts=4 noexpandtab listchars=trail:¯,nbsp:¯,tab:\ \ 
+  autocmd FileType go setlocal sw=4 ts=4 noexpandtab | let &l:listchars = 'trail:`,nbsp:`,tab:  '
   autocmd FileType go let b:ale_linters = ['golangci-lint']
   "}}}
 
@@ -1025,10 +1042,6 @@
         source ~/.vimrc.local
     endif
 " }
-
-  " Enable syntax highlighting. this should go near the end of vimrc
-  syntax on
-  syntax enable
 
   "}}}
 
