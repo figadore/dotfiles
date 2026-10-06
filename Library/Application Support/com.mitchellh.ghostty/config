@@ -50,3 +50,5 @@
 # resize-overlay-duration = 4s 200ms
 keybind = global:ctrl+grave_accent=toggle_quick_terminal
 font-family = "MesloLGS NF"
+theme = iTerm2 Solarized Dark
+palette = 8=#002b36

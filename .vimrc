@@ -993,6 +993,9 @@
   autocmd WinEnter * setlocal cursorline
   autocmd WinLeave * setlocal nocursorline
 
+  " Fix ghostty vim colors
+  :hi Normal ctermbg=NONE | hi Comment ctermfg=14 guifg=#93a1a1
+
   " Undo italic gui comments
   highlight Comment cterm=none gui=none
 
