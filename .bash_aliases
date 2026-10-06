@@ -4,5 +4,13 @@ alias ll='ls -lh -FG'
 alias gcurl='curl -u figadore:$(kr github-pat) '
 alias tf='terraform'
 alias bat='batcat'
-alias pbcopy='xclip -selection clipboard'
-alias pbpaste='xclip -selection clipboard -o'
+
+# Use xclip only when native clipboard commands are unavailable.
+if command -v xclip >/dev/null 2>&1; then
+    if ! command -v pbcopy >/dev/null 2>&1; then
+        alias pbcopy='xclip -selection clipboard'
+    fi
+    if ! command -v pbpaste >/dev/null 2>&1; then
+        alias pbpaste='xclip -selection clipboard -o'
+    fi
+fi
