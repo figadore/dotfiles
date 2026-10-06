@@ -14,3 +14,9 @@ if command -v xclip >/dev/null 2>&1; then
         alias pbpaste='xclip -selection clipboard -o'
     fi
 fi
+
+# Prefer Podman when available; docker-real bypasses the alias.
+if command -v podman >/dev/null 2>&1; then
+    alias docker='podman'
+    alias docker-real='command \docker'
+fi
