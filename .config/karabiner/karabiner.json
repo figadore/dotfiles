@@ -604,7 +604,7 @@
             "complex_modifications": {
                 "rules": [
                     {
-                        "description": "Change caps_lock to control.",
+                        "description": "Change caps_lock to control if pressed with other keys, to caps_lock if pressed alone.",
                         "manipulators": [
                             {
                                 "from": {
@@ -612,6 +612,12 @@
                                     "modifiers": { "optional": ["any"] }
                                 },
                                 "to": [{ "key_code": "left_control" }],
+                                "to_if_alone": [
+                                    {
+                                        "hold_down_milliseconds": 100,
+                                        "key_code": "caps_lock"
+                                    }
+                                ],
                                 "type": "basic"
                             }
                         ]
