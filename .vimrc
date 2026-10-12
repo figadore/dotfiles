@@ -852,7 +852,7 @@
   "set listchars+=extends:#
 
   " Set colorscheme *after* solarized bundle sourced
-  set bg=dark
+  "set bg=dark
 
   " Allow to trigger background
   function! ToggleBG()
@@ -868,6 +868,7 @@
 
   " Enable syntax highlighting before applying the colorscheme.
   syntax enable
+  "let g:solarized_termtrans=1
   colorscheme solarized
 
   set mouse=a                 " Automatically enable mouse usage

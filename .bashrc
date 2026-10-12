@@ -88,3 +88,4 @@ alias grep='grep --color'
 
 export GOPATH=$HOME/go
 pathadd $GOPATH/bin
+export CAMCODE_WORKSPACES=/Users/r631269@regence.com/camcode/workspaces

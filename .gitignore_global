@@ -40,6 +40,8 @@ Thumbs.db
 ######################
 *.swo
 *.swp
+*.un~
+*~
 
 # terraform secrets #
 ######################

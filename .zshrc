@@ -93,6 +93,13 @@ if [ -f ~/.profile ]; then
   source ~/.profile
 fi
 
+# Load secret environment variables
+if [ -f "$HOME/.secrets.env" ]; then
+  set -a
+  source "$HOME/.secrets.env"
+  set +a
+fi
+
 # Increase scrollback
 HISTSIZE=10000
 HISTFILESIZE=20000
@@ -133,6 +140,9 @@ pathadd() {
 }
 
 export GOPATH=$HOME/go
+export GHOSTTY_EDITOR="vim"
+export HOST_DEVCONTAINER_REPO_PATH=/Users/r631269@regence.com/camcode/workspaces/repos/camcode-devcontainer
+
 
 pathadd $HOME/bin front=true
 pathadd $HOME/.rvm/bin
@@ -140,6 +150,7 @@ pathadd $HOME/.local/bin
 pathadd $HOME/go/bin
 pathadd /usr/local/sbin
 pathadd $HOME/node_modules/.bin
+pathadd $HOST_DEVCONTAINER_REPO_PATH
 
 # Disable auto renaming terminal
 PROMPT_COMMAND=""
@@ -244,3 +255,4 @@ setopt no_share_history
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+export CAMCODE_WORKSPACES=/Users/r631269@regence.com/camcode/workspaces

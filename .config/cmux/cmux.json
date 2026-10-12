@@ -1,0 +1,28 @@
+{
+  "$schema" : "https://raw.githubusercontent.com/manaflow-ai/cmux/main/web/data/cmux.schema.json",
+  "schemaVersion" : 1,
+  "shortcuts" : {
+    "bindings" : {
+      "nextSidebarTab" : {
+        "first" : {
+          "command" : true,
+          "control" : false,
+          "key" : "j",
+          "keyCode" : 38,
+          "option" : false,
+          "shift" : false
+        }
+      },
+      "prevSidebarTab" : {
+        "first" : {
+          "command" : true,
+          "control" : false,
+          "key" : "k",
+          "keyCode" : 40,
+          "option" : false,
+          "shift" : false
+        }
+      }
+    }
+  }
+}
